@@ -1,47 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import { useColors } from "../context/ColorContext";
 import { Link } from "react-router-dom";
 
 import LogoIcon from "assets/logo/logo.svg";
 import LogoName from "assets/logo/logo_name.svg";
 
-const Header = () => {
-  const colors = useColors();
-
+const AdminHeader = () => {
   return (
-    <HeaderMain>
-      <Link to="/">
+    <HeaderAdmin>
+      <Link to="/admin">
         <Logo>
           <img src={LogoIcon} alt="logo-icon" />
           <img src={LogoName} alt="logo-name" />
+          관리자
         </Logo>
       </Link>
-
-      <Menus>
-        <Link to="/hotel-search">
-          <Menu color={colors.main}>Hotel Search</Menu>
-        </Link>
-        {/* <Link to="/booking-history">
-          <Menu color={colors.main}>Booking History</Menu>
-        </Link> */}
-        <Link to="/my-info">
-          <Menu color={colors.main}>My Info</Menu>
-        </Link>
-        <Link to="/login">
-          <Menu color={colors.main}>Login</Menu>
-        </Link>
-        {/* <Link to="/admin/login">
-          <Menu color={colors.main}>관리자</Menu>
-        </Link> */}
-      </Menus>
-    </HeaderMain>
+    </HeaderAdmin>
   );
 };
 
-export default Header;
+export default AdminHeader;
 
-const HeaderMain = styled.header`
+const HeaderAdmin = styled.header`
   height: 10vh;
   padding: 0 10rem;
   display: flex;

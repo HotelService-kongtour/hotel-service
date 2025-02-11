@@ -1,11 +1,15 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-
-import XIcon from "assets/icons/x-mark.svg";
 import { useColors } from "context/ColorContext";
 import CustomButton from "components/custom/CustomButton";
 
-const EmailVerifymodal = ({ setShowEmailModal, onContinueClick }) => {
+import XIcon from "assets/icons/x-mark.svg";
+
+const EmailVerifymodal = ({
+  setShowEmailModal,
+  onContinueClick,
+  language = "en",
+}) => {
   const colors = useColors();
   const inputRefs = useRef([]);
 
@@ -35,7 +39,11 @@ const EmailVerifymodal = ({ setShowEmailModal, onContinueClick }) => {
 
   const handleContinueClick = () => {
     if (verifyNumber.includes("")) {
-      setNumberError("Please enter all your authentication numbers");
+      setNumberError(
+        language === "ko"
+          ? "모든 인증 번호를 입력해주세요"
+          : "Please enter all your authentication numbers"
+      );
     } else {
       setNumberError("");
       onContinueClick();
@@ -43,7 +51,11 @@ const EmailVerifymodal = ({ setShowEmailModal, onContinueClick }) => {
   };
 
   const handleClickResendBtn = () => {
-    alert("The authentication number has been retransmitted.");
+    alert(
+      language === "ko"
+        ? "인증 번호가 재전송되었습니다."
+        : "The authentication number has been retransmitted."
+    );
     setNumberError("");
     setVerifyNumber(Array(6).fill(""));
   };
@@ -54,9 +66,15 @@ const EmailVerifymodal = ({ setShowEmailModal, onContinueClick }) => {
         <CloseBtn onClick={() => setShowEmailModal(false)}>
           <img src={XIcon} alt="x-icon" />
         </CloseBtn>
-        <Title>Email Verification</Title>
+        <Title>
+          {language === "ko" ? "이메일 인증" : "Email Verification"}
+        </Title>
 
-        <Script>Please check the authentication number.</Script>
+        <Script>
+          {language === "ko"
+            ? "인증 번호를 확인해주세요."
+            : "Please check the authentication number."}
+        </Script>
 
         <NumberWrapper>
           <NumberContainer>
@@ -80,11 +98,15 @@ const EmailVerifymodal = ({ setShowEmailModal, onContinueClick }) => {
 
         <BtnContainer>
           <ContinueBtn onClick={handleContinueClick}>
-            <CustomButton>Continue</CustomButton>
+            <CustomButton>
+              {language === "ko" ? "인증" : "Continue"}
+            </CustomButton>
           </ContinueBtn>
           <ResendBtn onClick={handleClickResendBtn}>
             <CustomButton bgColor={"#ececec"} textColor={"#333"}>
-              Resend Verification Code
+              {language === "ko"
+                ? "인증 코드 재전송"
+                : "Resend Verification Code"}
             </CustomButton>
           </ResendBtn>
         </BtnContainer>

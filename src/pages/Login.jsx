@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import { useColors } from "context/ColorContext";
+import axiosInstance, { loginApi } from "axiosInstance";
 
 import XIcon from "assets/icons/x-mark.svg";
 import Logo from "assets/logo/logo.svg";
@@ -13,9 +14,33 @@ import GoogleLogo from "assets/logo/logo-Google.svg";
 
 const Login = () => {
   const colors = useColors();
+  const navigate = useNavigate();
 
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+
+  const [autoLogin, setAutoLogin] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      const response = await loginApi(emailValue, passwordValue);
+
+      const { accessToken, refreshToken } = response.data;
+
+      // JWT 토큰을 Authorization 헤더에 담아서 저장
+      axiosInstance.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
+
+      // 리프레시 토큰을 쿠키에 저장
+      if (autoLogin) {
+        document.cookie = `refreshToken=${refreshToken}; path=/; max-age=604800`; // 쿠키에 리프레시 토큰 저장 (1주일)
+      }
+
+      navigate("/");
+    } catch (error) {
+      console.error("Error logging in:", error.response || error.message);
+      alert("로그인 실패. 이메일 또는 비밀번호를 확인해주세요.");
+    }
+  };
 
   return (
     <Wrapper>

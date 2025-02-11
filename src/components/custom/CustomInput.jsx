@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useColors } from "../../context/ColorContext";
-import { isValidEmail, isValidPassword, isValidPhone } from "utils/validation";
+import { isValidEmail, isValidPassword } from "utils/validation";
 
 const CustomInput = ({
   placeholder,
@@ -16,6 +16,7 @@ const CustomInput = ({
   serverError,
   onIconClick,
   isVisible,
+  language = "en",
 }) => {
   const colors = useColors();
   const [error, setError] = useState("");
@@ -27,11 +28,23 @@ const CustomInput = ({
     // 이메일 유효성 검사
     if (validateType === "email") {
       if (!value) {
-        setError("Please enter your email");
+        setError(
+          language === "ko"
+            ? "이메일을 입력해주세요"
+            : "Please enter your email"
+        );
       } else if (!isValidEmail(value)) {
-        setError("Please enter a valid email address");
+        setError(
+          language === "ko"
+            ? "유효한 이메일 주소를 입력해주세요"
+            : "Please enter a valid email address"
+        );
       } else if (serverError && serverError === "email_not_registered") {
-        setError("This email is not registered");
+        setError(
+          language === "ko"
+            ? "등록되지 않은 이메일입니다"
+            : "This email is not registered"
+        );
       } else {
         setError("");
       }
@@ -39,13 +52,23 @@ const CustomInput = ({
     // 비밀번호 유효성 검사
     else if (validateType === "password") {
       if (!value) {
-        setError("Please enter your password");
+        setError(
+          language === "ko"
+            ? "비밀번호를 입력해주세요"
+            : "Please enter your password"
+        );
       } else if (!isValidPassword(value)) {
         setError(
-          "Passwords must contain 8-20 characters, letters, numbers, and special characters"
+          language === "ko"
+            ? "비밀번호는 8~20자, 영문, 숫자, 특수문자가 포함되어야 합니다"
+            : "Passwords must contain 8-20 characters, letters, numbers, and special characters"
         );
       } else if (serverError && serverError === "incorrect_password") {
-        setError("Email or password is incorrect");
+        setError(
+          language === "ko"
+            ? "이메일 또는 비밀번호가 틀렸습니다"
+            : "Email or password is incorrect"
+        );
       } else {
         setError("");
       }
@@ -70,7 +93,7 @@ const CustomInput = ({
         {imageSrc && (
           <IconWrapper
             onClick={onIconClick}
-            style={{ opacity: isVisible ? "1" : "0.5" }}
+            style={{ opacity: isVisible ? "0.5" : "1" }}
           >
             <Icon src={imageSrc} alt="input-icon" />
           </IconWrapper>

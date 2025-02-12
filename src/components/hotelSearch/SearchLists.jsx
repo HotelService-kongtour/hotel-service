@@ -2,51 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import CustomMainInput from "../custom/CustomMainInput";
+import { useColors } from "context/ColorContext";
 
 const hotelLists = [
   {
-    name: "Hotel_1",
-    place: "Jeju",
-    check_in_time: "15:00",
-    check_out_time: "11:00",
-    sale: "4%",
-    price: "204,000",
+    name: "Lotte Hotel Seoul",
+    place: "Seoul",
+    room_type_01: "Superior Twin",
+    room_type_02: "Superior Double",
+    room_type_01_price: "169,000",
+    room_type_02_price: "204,000",
   },
   {
-    name: "Hotel_2",
-    place: "Jeju",
-    check_in_time: "15:00",
-    check_out_time: "11:00",
-    sale: "4%",
-    price: "204,000",
-  },
-  {
-    name: "Hotel_3",
-    place: "Jeju",
-    check_in_time: "15:00",
-    check_out_time: "11:00",
-    sale: "4%",
-    price: "204,000",
-  },
-  {
-    name: "Hotel_4",
-    place: "Jeju",
-    check_in_time: "15:00",
-    check_out_time: "11:00",
-    sale: "4%",
-    price: "204,000",
-  },
-  {
-    name: "Hotel_5",
-    place: "Jeju",
-    check_in_time: "15:00",
-    check_out_time: "11:00",
-    sale: "4%",
-    price: "204,000",
+    name: "Best Western",
+    place: "Seoul",
+    room_type_01: "Superior Twin",
+    room_type_02: "Superior Double",
+    room_type_01_price: "169,000",
+    room_type_02_price: "204,000",
   },
 ];
 
 const SearchLists = () => {
+  const colors = useColors();
+
   return (
     <Wrapper>
       <CustomMainInput />
@@ -54,20 +33,23 @@ const SearchLists = () => {
         <Lists>
           {hotelLists.map((list) => (
             <Link to={`/hotel-detail/${list.name}`} key={list.name}>
-              <List>
-                <ImgBox />
+              <List color={colors.mainLight}>
                 <InfoBox>
                   <TitleBox>
                     <Title>{list.name}</Title>
                     <Place>{list.place}</Place>
                   </TitleBox>
-                  <PriceBox>
-                    <ChechInTime>
-                      Check-in at {list.check_in_time} | Check-out at{" "}
-                      {list.check_out_time}
-                    </ChechInTime>
-                    <Price>${list.price}~</Price>
-                  </PriceBox>
+
+                  <PriceWrapper>
+                    <PriceBox>
+                      <RoomTypeName>{list.room_type_01} Room</RoomTypeName>
+                      <Price>₩ {list.room_type_01_price}</Price>
+                    </PriceBox>
+                    <PriceBox>
+                      <RoomTypeName>{list.room_type_02} Room</RoomTypeName>
+                      <Price>₩ {list.room_type_02_price}</Price>
+                    </PriceBox>
+                  </PriceWrapper>
                 </InfoBox>
               </List>
             </Link>
@@ -89,7 +71,6 @@ const Wrapper = styled.div`
 
 const ListsBox = styled.div`
   height: 100%;
-  padding-right: 2rem;
   overflow-y: auto;
 `;
 
@@ -99,20 +80,19 @@ const Lists = styled.ul`
   gap: 1rem;
 `;
 const List = styled.li`
-  padding-bottom: 1rem;
+  padding: 1.5rem;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #ececec;
+  border: 2px solid #ececec;
+  border-radius: 1rem;
+
+  &:hover {
+    border-color: ${(props) => props.color};
+  }
 `;
 
-const ImgBox = styled.div`
-  width: 250px;
-  aspect-ratio: 1/1;
-  border-radius: 1rem;
-  background-color: #d6dcd970;
-`;
 const InfoBox = styled.div`
-  width: calc(100% - 300px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -120,15 +100,25 @@ const InfoBox = styled.div`
 
 const TitleBox = styled.div``;
 const Title = styled.h3``;
-const Place = styled.p``;
+const Place = styled.p`
+  font-size: 1rem;
+  color: #666;
+`;
 
-const PriceBox = styled.div`
+const PriceWrapper = styled.div`
   width: 100%;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  gap: 0.5rem;
 `;
-const ChechInTime = styled.p`
+const PriceBox = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+`;
+const RoomTypeName = styled.p`
   color: #666;
 `;
 const Price = styled.h3``;

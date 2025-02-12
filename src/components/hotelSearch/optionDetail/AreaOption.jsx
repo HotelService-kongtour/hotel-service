@@ -5,6 +5,7 @@ import { useColors } from "../../../context/ColorContext";
 import GlobeIcon from "assets/icons/globe-outline.svg";
 import MapIcon from "assets/icons/map-outline.svg";
 import XIcon from "assets/icons/x-mark.svg";
+import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 const locationList = [
   { area: "Seoul", nation: "Korea" },
@@ -21,12 +22,13 @@ const locationList = [
 const AreaOption = () => {
   const colors = useColors();
 
-  const [showPlaceOptions, setShowPlaceOptions] = useState(false);
+  const { showPlaceOptions, setShowPlaceOptions } = useSearchOptionsStore();
+
   const [selectedArea, setSeletedArea] = useState("Seoul");
 
   useEffect(() => {
     if (showPlaceOptions) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "scroll";
     } else {
       document.body.style.overflow = "auto";
     }

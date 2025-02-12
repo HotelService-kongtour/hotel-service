@@ -15,5 +15,9 @@ const Home = () => {
 export default Home;
 
 const Wrapper = styled.div`
-  padding: 2rem 10rem;
+  padding: 2rem 20rem;
+
+  @media screen and (max-width: 1440px) {
+    padding: 2rem 10rem;
+  }
 `;

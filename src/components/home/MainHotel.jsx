@@ -74,7 +74,13 @@ const MainHotel = () => {
           <ListTitle>Theme</ListTitle>
           <Lists>
             {themes.map((theme) => (
-              <List key={theme}>{theme}</List>
+              <List key={theme}>
+                <Text>
+                  {theme.split(" ").map((word, index) => (
+                    <p key={index}>{word}</p>
+                  ))}
+                </Text>
+              </List>
             ))}
           </Lists>
         </ListContainer>
@@ -122,4 +128,9 @@ const List = styled.li`
     background-color: #606060;
     border: 4px solid #ececec;
   }
+`;
+const Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 `;

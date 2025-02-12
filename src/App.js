@@ -13,12 +13,6 @@ import HotelDetail from "./pages/HotelDetail";
 import SignUp from "pages/SignUp";
 import FindPassword from "pages/FindPassword";
 import ResetPassword from "pages/ResetPassword";
-import AdminHeader from "components/admin/AdminHeader";
-import Admin from "pages/admin/Admin";
-import AdminLogin from "pages/admin/AdminLogin";
-import AdminSignUp from "pages/admin/AdminSignUp";
-import AdminFindPassword from "pages/admin/AdminFindPassword";
-import AdminResetPassword from "pages/admin/AdminResetPassword";
 import HotelRoomDetail from "pages/HotelRoomDetail";
 
 function Layout() {
@@ -27,14 +21,6 @@ function Layout() {
       <Header />
       <Outlet />
       <Footer />
-    </>
-  );
-}
-function AdminLayout() {
-  return (
-    <>
-      <AdminHeader />
-      <Outlet />
     </>
   );
 }
@@ -69,17 +55,8 @@ function App() {
             path="/hotel-detail/:hotelName/:roomName"
             element={<HotelRoomDetail />}
           />
-          <Route path="/booking-history" element={<BookingHistory />} />
+          {/* <Route path="/booking-history" element={<BookingHistory />} /> */}
         </Route>
-
-        <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<Admin />} />
-        </Route>
-
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/sign-up" element={<AdminSignUp />} />
-        <Route path="/admin/find-password" element={<AdminFindPassword />} />
-        <Route path="/admin/reset-password" element={<AdminResetPassword />} />
       </Routes>
     </BrowserRouter>
   );

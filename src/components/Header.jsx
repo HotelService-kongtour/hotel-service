@@ -20,20 +20,14 @@ const Header = () => {
 
       <Menus>
         <Link to="/hotel-search">
-          <Menu color={colors.main}>Hotel Search</Menu>
+          <Menu color={colors.main}>Hotel Reservation</Menu>
         </Link>
-        {/* <Link to="/booking-history">
-          <Menu color={colors.main}>Booking History</Menu>
-        </Link> */}
         <Link to="/my-info">
           <Menu color={colors.main}>My Info</Menu>
         </Link>
         <Link to="/login">
           <Menu color={colors.main}>Login</Menu>
         </Link>
-        {/* <Link to="/admin/login">
-          <Menu color={colors.main}>관리자</Menu>
-        </Link> */}
       </Menus>
     </HeaderMain>
   );

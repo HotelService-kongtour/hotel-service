@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useSearchOptionsStore from "store/useSearchOptionsStore";
 import { useColors } from "context/ColorContext";
@@ -10,6 +10,8 @@ import PlusIcon from "assets/icons/plus.svg";
 
 const PersonsOption = () => {
   const colors = useColors();
+
+  const modalRef = useRef(null);
 
   const { showPersonsOption, setShowPersonsOption } = useSearchOptionsStore();
   const [adults, setAdults] = useState(2);
@@ -35,11 +37,28 @@ const PersonsOption = () => {
     }
   };
 
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setShowPersonsOption(false);
+    }
+  };
+  useEffect(() => {
+    if (showPersonsOption) {
+      document.addEventListener("click", handleClickOutside);
+    } else {
+      document.removeEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [showPersonsOption]);
+
   return (
     <OptionWrapper>
       <PersonsInput
         color={colors.main}
-        onClick={() => setShowPersonsOption((prev) => !prev)}
+        onClick={() => setShowPersonsOption(true)}
       >
         <InputIcon>
           <img src={PeopleIcon} alt="people-icon" />
@@ -140,7 +159,7 @@ const PersonsInput = styled.div`
 
 const OptionsModal = styled.div`
   width: 100%;
-  border: 1px solid #dfdfdf;
+  border: 2px solid #ececec;
   border-radius: 0.5rem;
   background-color: #fff;
   color: #333;
@@ -152,7 +171,7 @@ const OptionsModal = styled.div`
 const TitleContainer = styled.div`
   padding: 0.75rem 0;
   text-align: center;
-  border-bottom: 1px solid #dfdfdf;
+  border-bottom: 2px solid #ececec;
   position: relative;
 `;
 
@@ -167,11 +186,17 @@ const CloseBtn = styled.button`
   &:hover {
     opacity: 1;
   }
+
+  @media screen and (max-width: 1440px) {
+    img {
+      width: 20px;
+    }
+  }
 `;
 
 const Options = styled.div`
   height: 100%;
-  padding: 2rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -209,9 +234,10 @@ const NumberBtn = styled.button`
 const Number = styled.div`
   width: 50px;
   text-align: center;
+  font-size: 1.2rem;
 
   @media screen and (max-width: 1440px) {
     width: 40px;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 `;

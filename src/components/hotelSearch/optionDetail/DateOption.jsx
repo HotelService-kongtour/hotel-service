@@ -5,6 +5,7 @@ import moment from "moment";
 
 import CalendarIcon from "assets/icons/calendar-outline.svg";
 import Calendar from "react-calendar";
+import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 const DateOption = () => {
   const colors = useColors();
@@ -12,8 +13,7 @@ const DateOption = () => {
   const today = moment();
   const tomorrow = moment().add(1, "days");
 
-  const [showDateOptions, setShowDateOptions] = useState(false);
-
+  const { showDateOptions, setShowDateOptions } = useSearchOptionsStore();
   const [selectedDate, setSelectedDate] = useState(
     `${today.format("YYYY.MM.DD")} - ${tomorrow.format("YYYY.MM.DD")}`
   );

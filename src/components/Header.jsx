@@ -43,11 +43,15 @@ export default Header;
 
 const HeaderMain = styled.header`
   height: 10vh;
-  padding: 0 10rem;
+  padding: 0 20rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #ccc;
+
+  @media screen and (max-width: 1440px) {
+    padding: 2rem 10rem;
+  }
 `;
 const Logo = styled.div`
   display: flex;

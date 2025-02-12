@@ -43,8 +43,12 @@ export default Footer;
 
 const MainFooter = styled.div`
   width: 100%;
-  padding: 2rem 10rem;
+  padding: 2rem 20rem;
   background-color: #ececec;
+
+  @media screen and (max-width: 1440px) {
+    padding: 2rem 10rem;
+  }
 `;
 const Logo = styled.div`
   display: flex;

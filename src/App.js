@@ -19,6 +19,7 @@ import AdminLogin from "pages/admin/AdminLogin";
 import AdminSignUp from "pages/admin/AdminSignUp";
 import AdminFindPassword from "pages/admin/AdminFindPassword";
 import AdminResetPassword from "pages/admin/AdminResetPassword";
+import HotelRoomDetail from "pages/HotelRoomDetail";
 
 function Layout() {
   return (
@@ -64,6 +65,10 @@ function App() {
           <Route path="/my-info" element={<MyInfo />} />
           <Route path="/hotel-search" element={<HotelSearch />} />
           <Route path="/hotel-detail/:hotelName" element={<HotelDetail />} />
+          <Route
+            path="/hotel-detail/:hotelName/:roomName"
+            element={<HotelRoomDetail />}
+          />
           <Route path="/booking-history" element={<BookingHistory />} />
         </Route>
 

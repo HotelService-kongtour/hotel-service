@@ -159,6 +159,12 @@ const CloseBtn = styled.button`
   &:hover {
     opacity: 1;
   }
+
+  @media screen and (max-width: 1440px) {
+    img {
+      width: 20px;
+    }
+  }
 `;
 
 const Options = styled.ul`
@@ -168,10 +174,18 @@ const OptionText = styled.div``;
 const TextArea = styled.p`
   font-size: 1.1rem;
   line-height: 1;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 1rem;
+  }
 `;
 const TextNation = styled.span`
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 600;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+  }
 `;
 const Option = styled.li`
   padding: 0.75rem 0;

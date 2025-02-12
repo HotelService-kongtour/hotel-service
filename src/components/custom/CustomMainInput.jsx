@@ -23,7 +23,7 @@ const CustomMainInput = () => {
       </InputIcon>
       <SearchInput
         type="text"
-        placeholder={"Search for place"}
+        placeholder={"Search for Hotel"}
         $borderColor={colors.main}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}

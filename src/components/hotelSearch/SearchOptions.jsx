@@ -2,27 +2,23 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import AreaOption from "./optionDetail/AreaOption";
 import DateOption from "./optionDetail/DateOption";
-import PersonsOption from "../hotelDetail/PersonsOption";
 import CustomButton from "components/custom/CustomButton";
 import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 const SearchOptions = () => {
   const optionsRef = useRef(null);
 
-  const { setShowPlaceOptions, setShowDateOptions, setShowPersonsOption } =
-    useSearchOptionsStore();
+  const { setShowPlaceOptions, setShowDateOptions } = useSearchOptionsStore();
 
   const handleClickCompleteBtn = () => {
     setShowPlaceOptions(false);
     setShowDateOptions(false);
-    setShowPersonsOption(false);
   };
 
   const handleClickOutside = (event) => {
     if (optionsRef.current && !optionsRef.current.contains(event.target)) {
       setShowPlaceOptions(false);
       setShowDateOptions(false);
-      setShowPersonsOption(false);
     }
   };
 
@@ -39,7 +35,6 @@ const SearchOptions = () => {
       <OptionsContainer ref={optionsRef}>
         <AreaOption />
         <DateOption />
-        {/* <PersonsOption /> */}
       </OptionsContainer>
 
       <BtnWrapper onClick={handleClickCompleteBtn}>

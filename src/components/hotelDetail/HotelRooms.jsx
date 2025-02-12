@@ -30,7 +30,7 @@ const HotelRooms = () => {
 
   const handleChangeCount = (type) => {};
 
-  const handleClickRoomDetail = () => {};
+  const handleClickRoomResercation = () => {};
 
   return (
     <RoomsContainer>
@@ -47,14 +47,14 @@ const HotelRooms = () => {
               <RoomPrice>{`₩ ${room.price}`}</RoomPrice>
               <CountBox>
                 <CountBtn
-                  color={colors}
+                  color={colors.main}
                   onClick={() => handleChangeCount("minus")}
                 >
                   <img src={MinusIcon} alt="minus-icon" />
                 </CountBtn>
                 <Count>{roomCount}</Count>
                 <CountBtn
-                  color={colors}
+                  color={colors.main}
                   onClick={() => handleChangeCount("plus")}
                 >
                   <img src={PlusIcon} alt="plus-icon" />
@@ -65,11 +65,7 @@ const HotelRooms = () => {
         </RoomBox>
       ))}
       <Btn>
-        <CustomButton
-        // padding="0.5rem"
-        // fontSize="0.8rem"
-        // onClick={handleClickRoomDetail}
-        >
+        <CustomButton onClick={handleClickRoomResercation}>
           Room Reservation
         </CustomButton>
       </Btn>
@@ -80,6 +76,7 @@ const HotelRooms = () => {
 export default HotelRooms;
 
 const RoomsContainer = styled.div`
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -142,10 +139,11 @@ const CountBtn = styled.button`
 const Count = styled.div`
   width: 50px;
   text-align: center;
+  font-size: 1.2rem;
 
   @media screen and (max-width: 1440px) {
     width: 40px;
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 `;
 

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useColors } from "context/ColorContext";
+import PersonsOption from "./PersonsOption";
 
 import ForwardArrow from "assets/icons/arrow_forward.svg";
 import BackArrow from "assets/icons/arrow_back.svg";
 import PinIcon from "assets/icons/pin.svg";
 import ClockIcon from "assets/icons/clock.svg";
-import PeopleIcon from "assets/icons/people-outline.svg";
-import { useColors } from "context/ColorContext";
-import PersonsOption from "./PersonsOption";
 
 const hotelImages = ["1", "2", "3"];
 const hotelServices = ["Breakfast Provided", "Fitness Center", "Swimming Pool"];
@@ -28,6 +27,7 @@ const HotelInfomation = () => {
       setCurrentIndex(currentIndex + 1);
     }
   };
+
   const handleBreakfastChange = () => {
     setIsBreakfastIncluded((prevState) => !prevState);
   };
@@ -35,7 +35,7 @@ const HotelInfomation = () => {
   return (
     <InfoWrapper>
       <ImagesContainer>
-        <Images style={{ transform: `translateX(-${currentIndex * 1000}px)` }}>
+        <Images style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {hotelImages.map((img) => (
             <Image key={img}>{img}</Image>
           ))}
@@ -116,6 +116,8 @@ const Image = styled.div`
   width: 100%;
   height: 100%;
   flex-shrink: 0;
+  text-align: center;
+  font-size: 100px;
 `;
 const ArrowBox = styled.div`
   width: 100%;
@@ -138,8 +140,7 @@ const ArrowBtn = styled.button`
 
 const InfoContainer = styled.div`
   width: 100%;
-  padding: 1rem 0;
-  margin-bottom: 2rem;
+  padding: 2rem 0;
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid #ececec;

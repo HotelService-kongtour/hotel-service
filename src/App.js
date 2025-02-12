@@ -8,12 +8,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import MyInfo from "./pages/MyInfo";
 import HotelSearch from "./pages/HotelSearch";
-import BookingHistory from "./pages/BookingHistory";
 import HotelDetail from "./pages/HotelDetail";
 import SignUp from "pages/SignUp";
 import FindPassword from "pages/FindPassword";
 import ResetPassword from "pages/ResetPassword";
-import HotelRoomDetail from "pages/HotelRoomDetail";
 
 function Layout() {
   return (
@@ -51,11 +49,6 @@ function App() {
           <Route path="/my-info" element={<MyInfo />} />
           <Route path="/hotel-search" element={<HotelSearch />} />
           <Route path="/hotel-detail/:hotelName" element={<HotelDetail />} />
-          <Route
-            path="/hotel-detail/:hotelName/:roomName"
-            element={<HotelRoomDetail />}
-          />
-          {/* <Route path="/booking-history" element={<BookingHistory />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

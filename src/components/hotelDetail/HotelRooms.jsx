@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CustomButton from "components/custom/CustomButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useColors } from "context/ColorContext";
 
 import RoomImgPlaceholder from "assets/images/Room101.jpg";
@@ -10,27 +10,53 @@ import PlusIcon from "assets/icons/plus.svg";
 
 const hotelRoomInfo = [
   {
-    name: "Premium Family Room",
-    beds: "2 Single Beds",
-    Personnel: "Standard for 2 Guests (up to 3 Guests)",
-    price: "165,000",
+    name: "Deluxe Room",
+    beds: "1 King Bed",
+    Personnel: "Standard for 2 Guests",
+    price: "100,000",
   },
   {
-    name: "Premium Family Room",
+    name: "Standard Room",
     beds: "2 Single Beds",
-    Personnel: "Standard for 2 Guests (up to 3 Guests)",
-    price: "165,000",
+    Personnel: "Standard for 2 Guests",
+    price: "80,000",
+  },
+  {
+    name: "Family Suite",
+    beds: "2 Double Beds",
+    Personnel: "Standard for 4 Guests (up to 6 Guests)",
+    price: "150,000",
   },
 ];
 
 const HotelRooms = () => {
   const colors = useColors();
+  const navigate = useNavigate();
 
-  const [roomCount, setRoomCount] = useState(0);
+  const [roomCounts, setRoomCounts] = useState({});
 
-  const handleChangeCount = (type) => {};
+  const handleChangeCount = (roomName, type) => {
+    setRoomCounts((prevCounts) => {
+      const currentCount = prevCounts[roomName] || 0;
+      let newCount = currentCount;
 
-  const handleClickRoomResercation = () => {};
+      if (type === "plus") {
+        newCount = currentCount < 5 ? currentCount + 1 : 5;
+      } else if (type === "minus" && currentCount > 0) {
+        newCount = currentCount - 1;
+      }
+
+      return {
+        ...prevCounts,
+        [roomName]: newCount,
+      };
+    });
+  };
+
+  const handleClickRoomResercation = () => {
+    alert("Your reservation is complete!");
+    navigate("/reservation-complete");
+  };
 
   return (
     <RoomsContainer>
@@ -48,14 +74,14 @@ const HotelRooms = () => {
               <CountBox>
                 <CountBtn
                   color={colors.main}
-                  onClick={() => handleChangeCount("minus")}
+                  onClick={() => handleChangeCount(room.name, "minus")}
                 >
                   <img src={MinusIcon} alt="minus-icon" />
                 </CountBtn>
-                <Count>{roomCount}</Count>
+                <Count>{roomCounts[room.name] || 0}</Count>
                 <CountBtn
                   color={colors.main}
-                  onClick={() => handleChangeCount("plus")}
+                  onClick={() => handleChangeCount(room.name, "plus")}
                 >
                   <img src={PlusIcon} alt="plus-icon" />
                 </CountBtn>
@@ -65,7 +91,10 @@ const HotelRooms = () => {
         </RoomBox>
       ))}
       <Btn>
-        <CustomButton onClick={handleClickRoomResercation}>
+        <CustomButton
+          padding={"0.75rem 0"}
+          onClick={handleClickRoomResercation}
+        >
           Room Reservation
         </CustomButton>
       </Btn>

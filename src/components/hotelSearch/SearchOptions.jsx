@@ -5,7 +5,7 @@ import DateOption from "./optionDetail/DateOption";
 import CustomButton from "components/custom/CustomButton";
 import useSearchOptionsStore from "store/useSearchOptionsStore";
 
-const SearchOptions = () => {
+const SearchOptions = ({ selectedArea }) => {
   const optionsRef = useRef(null);
 
   const { setShowPlaceOptions, setShowDateOptions } = useSearchOptionsStore();
@@ -33,7 +33,7 @@ const SearchOptions = () => {
   return (
     <Options>
       <OptionsContainer ref={optionsRef}>
-        <AreaOption />
+        <AreaOption selectedArea={selectedArea} />
         <DateOption />
       </OptionsContainer>
 

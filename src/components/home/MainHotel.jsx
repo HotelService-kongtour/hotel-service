@@ -1,19 +1,34 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import { useColors } from "context/ColorContext";
 
-const areas = [
-  "Seoul",
-  "Incheon",
-  "Daejeon",
-  "Gwangju",
-  "Daegu",
-  "Busan",
-  "Jeju",
+import MainPrepare from "assets/images/main-prepare.png";
+import MainSeoul from "assets/images/main-seoul.jpeg";
+import MainBusan from "assets/images/main-busan.jpeg";
+import MainCasino from "assets/images/main-casino.jpeg";
+import MainTradition from "assets/images/main-tradition.jpeg";
+import { Link } from "react-router-dom";
+
+const locations = [
+  { area: "Seoul", imageURL: MainSeoul },
+  { area: "Busan", imageURL: MainBusan },
+  { area: "Incheon", imageURL: MainPrepare },
+  { area: "Gangneung", imageURL: MainPrepare },
+  { area: "Daejeon", imageURL: MainPrepare },
+  { area: "Daegu", imageURL: MainPrepare },
+  { area: "Gyeongju", imageURL: MainPrepare },
+  { area: "Jeju", imageURL: MainPrepare },
+  { area: "Other", imageURL: MainPrepare },
+];
+const themes = [
+  { area: "Casino", imageURL: MainCasino },
+  { area: "Korea Traditional", imageURL: MainTradition },
+  { area: "Pet Friendly", imageURL: MainPrepare },
+  { area: "Eco Friendly", imageURL: MainPrepare },
 ];
 
-const themes = ["Casino", "Korea Tranditional", "Pet Friendly", "Eco Friendly"];
-
 const MainHotel = () => {
+  const colors = useColors();
   const areasRef = useRef(null);
   const themesRef = useRef(null);
 
@@ -47,7 +62,7 @@ const MainHotel = () => {
   return (
     <MainWrapper>
       <ListContainer>
-        <ListTitle>Area</ListTitle>
+        <ListTitle>Hotels by Location</ListTitle>
         <DragScrollContainer
           onMouseDown={(e) => onMouseDown(e, areasRef)}
           onMouseLeave={onMouseLeave}
@@ -56,8 +71,12 @@ const MainHotel = () => {
           ref={areasRef}
         >
           <Lists>
-            {areas.map((area) => (
-              <List key={area}>{area}</List>
+            {locations.map((loc) => (
+              <Link to={`/hotel-search?area=${loc.area}`} key={loc.area}>
+                <List imageUrl={loc.imageURL} color={colors.mainLight}>
+                  <Text>{loc.area}</Text>
+                </List>
+              </Link>
             ))}
           </Lists>
         </DragScrollContainer>
@@ -71,12 +90,16 @@ const MainHotel = () => {
         ref={themesRef}
       >
         <ListContainer>
-          <ListTitle>Theme</ListTitle>
+          <ListTitle>Hotels by Theme</ListTitle>
           <Lists>
             {themes.map((theme) => (
-              <List key={theme}>
+              <List
+                key={theme.area}
+                imageUrl={theme.imageURL}
+                color={colors.mainLight}
+              >
                 <Text>
-                  {theme.split(" ").map((word, index) => (
+                  {theme.area.split(" ").map((word, index) => (
                     <p key={index}>{word}</p>
                   ))}
                 </Text>
@@ -114,23 +137,44 @@ const Lists = styled.ul`
 const List = styled.li`
   flex-shrink: 0;
   width: 250px;
-  height: 300px;
+  height: 350px;
   padding: 1rem;
-  background-color: #8e8e8e;
-  color: #fff;
   border-radius: 1rem;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
   font-weight: 600;
+  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1rem;
+    z-index: 1;
+  }
 
   &:hover {
-    background-color: #606060;
-    border: 4px solid #ececec;
+    border: 4px solid ${(props) => props.color};
+  }
+
+  @media screen and (max-width: 1440px) {
+    width: 200px;
+    height: 300px;
   }
 `;
 const Text = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  color: #fff;
+  z-index: 2;
 `;

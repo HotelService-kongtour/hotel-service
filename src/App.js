@@ -12,6 +12,7 @@ import HotelDetail from "./pages/HotelDetail";
 import SignUp from "pages/SignUp";
 import FindPassword from "pages/FindPassword";
 import ResetPassword from "pages/ResetPassword";
+import ReservationComplete from "pages/ReservationComplete";
 
 function Layout() {
   return (
@@ -49,6 +50,10 @@ function App() {
           <Route path="/my-info" element={<MyInfo />} />
           <Route path="/hotel-search" element={<HotelSearch />} />
           <Route path="/hotel-detail/:hotelName" element={<HotelDetail />} />
+          <Route
+            path="/reservation-complete"
+            element={<ReservationComplete />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

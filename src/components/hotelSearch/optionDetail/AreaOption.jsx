@@ -19,12 +19,16 @@ const locationList = [
   { area: "Other", nation: "Korea" },
 ];
 
-const AreaOption = () => {
+const AreaOption = ({ selectedArea }) => {
   const colors = useColors();
 
   const { showPlaceOptions, setShowPlaceOptions } = useSearchOptionsStore();
 
-  const [selectedArea, setSeletedArea] = useState("Seoul");
+  const [selected, setSelected] = useState(selectedArea);
+
+  useEffect(() => {
+    setSelected(selectedArea);
+  }, [selectedArea]);
 
   useEffect(() => {
     if (showPlaceOptions) {
@@ -39,7 +43,7 @@ const AreaOption = () => {
   }, [showPlaceOptions]);
 
   const handleChangeArea = (area) => {
-    setSeletedArea(area);
+    setSelected(area);
     setShowPlaceOptions(false);
   };
 
@@ -52,7 +56,7 @@ const AreaOption = () => {
         color={colors.main}
         onClick={() => setShowPlaceOptions((prev) => !prev)}
       >
-        {selectedArea}
+        {selected}
       </PlaceInput>
 
       {showPlaceOptions && (

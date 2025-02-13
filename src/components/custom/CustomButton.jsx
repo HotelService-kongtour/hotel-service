@@ -66,7 +66,7 @@ const Button = styled.button`
   } */
 
   @media screen and (max-width: 1440px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 const Icon = styled.img`

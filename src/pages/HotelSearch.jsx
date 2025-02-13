@@ -2,11 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import SearchOptions from "../components/hotelSearch/SearchOptions";
 import SearchLists from "../components/hotelSearch/SearchLists";
+import { useLocation } from "react-router-dom";
 
 const HotelSearch = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const areaFromUrl = queryParams.get("area") || "Seoul";
+
   return (
     <Wrapper>
-      <SearchOptions />
+      <SearchOptions selectedArea={areaFromUrl} />
       <SearchLists />
     </Wrapper>
   );

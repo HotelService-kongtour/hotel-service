@@ -44,7 +44,7 @@ const HeaderMain = styled.header`
   border-bottom: 1px solid #ccc;
 
   @media screen and (max-width: 1440px) {
-    padding: 2rem 10rem;
+    padding: 0 10rem;
   }
 `;
 const Logo = styled.div`
@@ -64,5 +64,9 @@ const Menu = styled.li`
   &:hover {
     color: ${(props) => props.color};
     text-decoration: underline;
+  }
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.9rem;
   }
 `;

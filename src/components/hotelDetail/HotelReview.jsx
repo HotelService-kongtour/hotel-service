@@ -1,5 +1,6 @@
 import CustomButton from "components/custom/CustomButton";
-import React from "react";
+import ReviewModal from "components/ReviewModal";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const reviews = [
@@ -42,11 +43,21 @@ const StarRating = ({ rating }) => {
 };
 
 const HotelReview = () => {
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
+  const handleClickAddReview = () => {
+    setShowReviewModal(true);
+  };
+
   return (
     <ReviewContainer>
       <TitleBox>
         <Title>Review</Title>
-        <CustomButton width="15%" padding="0.5rem 1rem" fontSize="0.8rem">
+        <CustomButton
+          width="15%"
+          padding="0.5rem 1rem"
+          onClick={handleClickAddReview}
+        >
           Add rewiew
         </CustomButton>
       </TitleBox>
@@ -62,6 +73,10 @@ const HotelReview = () => {
           <Script>{review.text}</Script>
         </ReviewBox>
       ))}
+
+      {showReviewModal && (
+        <ReviewModal setShowReviewModal={setShowReviewModal} />
+      )}
     </ReviewContainer>
   );
 };

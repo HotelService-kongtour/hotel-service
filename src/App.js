@@ -1,6 +1,8 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "axiosInstance";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";

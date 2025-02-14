@@ -1,13 +1,16 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useColors } from "context/ColorContext";
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
 
-import MainPrepare from "assets/images/main-prepare.png";
 import MainSeoul from "assets/images/main-seoul.jpeg";
 import MainBusan from "assets/images/main-busan.jpeg";
 import MainCasino from "assets/images/main-casino.jpeg";
 import MainTradition from "assets/images/main-tradition.jpeg";
-import { Link } from "react-router-dom";
+import MainPrepare from "assets/images/main-prepare.png";
+import NextArrowIcon from "assets/icons/arrow_forward_dark.svg";
+import PrevArrowIcon from "assets/icons/arrow_back_dark.svg";
 
 const locations = [
   { area: "Seoul", imageURL: MainSeoul },
@@ -20,6 +23,7 @@ const locations = [
   { area: "Jeju", imageURL: MainPrepare },
   { area: "Other", imageURL: MainPrepare },
 ];
+
 const themes = [
   { area: "Casino", imageURL: MainCasino },
   { area: "Korea Traditional", imageURL: MainTradition },
@@ -29,68 +33,49 @@ const themes = [
 
 const MainHotel = () => {
   const colors = useColors();
-  const areasRef = useRef(null);
-  const themesRef = useRef(null);
-
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [targetRef, setTargetRef] = useState(null);
-
-  const onMouseDown = (e, ref) => {
-    setTargetRef(ref);
-    setIsDragging(true);
-    setStartX(e.clientX);
-    setScrollLeft(ref.current.scrollLeft);
+  const PrevArrow = ({ onClick }) => {
+    return (
+      <ArrowButton onClick={onClick} style={{ left: "-30px" }}>
+        <img src={PrevArrowIcon} alt="prev-arrow" />
+      </ArrowButton>
+    );
   };
 
-  const onMouseLeave = () => {
-    setIsDragging(false);
+  const NextArrow = ({ onClick }) => {
+    return (
+      <ArrowButton onClick={onClick} style={{ right: "-30px" }}>
+        <img src={NextArrowIcon} alt="next-arrow" />
+      </ArrowButton>
+    );
   };
 
-  const onMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const onMouseMove = (e) => {
-    if (!isDragging || !targetRef) return;
-
-    const distance = e.clientX - startX;
-    targetRef.current.scrollLeft = scrollLeft - distance;
+  const locationSettings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
   return (
     <MainWrapper>
       <ListContainer>
         <ListTitle>Hotels by Location</ListTitle>
-        <DragScrollContainer
-          onMouseDown={(e) => onMouseDown(e, areasRef)}
-          onMouseLeave={onMouseLeave}
-          onMouseUp={onMouseUp}
-          onMouseMove={onMouseMove}
-          ref={areasRef}
-        >
-          <Lists>
-            {locations.map((loc) => (
-              <Link to={`/hotel-search?area=${loc.area}`} key={loc.area}>
-                <List imageUrl={loc.imageURL} color={colors.mainLight}>
-                  <Text>{loc.area}</Text>
-                </List>
-              </Link>
-            ))}
-          </Lists>
-        </DragScrollContainer>
+        <Slider {...locationSettings}>
+          {locations.map((loc) => (
+            <Link to={`/hotel-search?area=${loc.area}`} key={loc.area}>
+              <List imageUrl={loc.imageURL} color={colors.mainLight}>
+                <Text>{loc.area}</Text>
+              </List>
+            </Link>
+          ))}
+        </Slider>
       </ListContainer>
 
-      <DragScrollContainer
-        onMouseDown={(e) => onMouseDown(e, themesRef)}
-        onMouseLeave={onMouseLeave}
-        onMouseUp={onMouseUp}
-        onMouseMove={onMouseMove}
-        ref={themesRef}
-      >
-        <ListContainer>
-          <ListTitle>Hotels by Theme</ListTitle>
+      <ListContainer>
+        <ListTitle>Hotels by Theme</ListTitle>
+        <ListWrapper>
           <Lists>
             {themes.map((theme) => (
               <List
@@ -106,8 +91,8 @@ const MainHotel = () => {
               </List>
             ))}
           </Lists>
-        </ListContainer>
-      </DragScrollContainer>
+        </ListWrapper>
+      </ListContainer>
     </MainWrapper>
   );
 };
@@ -120,24 +105,44 @@ const MainWrapper = styled.div`
 
 const ListContainer = styled.div`
   margin-bottom: 2rem;
+  position: relative;
 `;
+
 const ListTitle = styled.h3`
   margin-bottom: 1rem;
 `;
+const ArrowButton = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.3;
 
-const DragScrollContainer = styled.div`
+  img {
+    width: 32px;
+    height: 32px;
+  }
+
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const ListWrapper = styled.div`
+  width: 100%;
   overflow: hidden;
 `;
+
 const Lists = styled.ul`
   display: flex;
-  flex-wrap: nowrap;
   gap: 1rem;
-  user-select: none;
+  transition: transform 0.3s ease;
 `;
+
 const List = styled.li`
-  flex-shrink: 0;
-  width: 250px;
-  height: 350px;
+  width: 240px;
+  height: 300px;
   padding: 1rem;
   border-radius: 1rem;
   display: flex;
@@ -149,17 +154,18 @@ const List = styled.li`
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
+  z-index: 1;
 
-  &::after {
+  &::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
     border-radius: 1rem;
-    z-index: 1;
+    z-index: 2;
   }
 
   &:hover {
@@ -167,14 +173,15 @@ const List = styled.li`
   }
 
   @media screen and (max-width: 1440px) {
-    width: 200px;
-    height: 300px;
+    width: 205px;
+    height: 260px;
   }
 `;
+
 const Text = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   color: #fff;
-  z-index: 2;
+  z-index: 3;
 `;

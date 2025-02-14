@@ -29,13 +29,12 @@ function Layout() {
 function App() {
   // useEffect(() => {
   //   axiosInstance
-  //     .get("/api/auth/login")
+  //     .get("/endpoint")
   //     .then((response) => {
-  //       console.log("Server response:", response.data);
-  //       console.log("Server status:", response.status);
+  //       console.log("서버 응답:", response.data);
   //     })
   //     .catch((error) => {
-  //       console.error("Error connecting to server:", error);
+  //       console.error("서버 연결 오류:", error);
   //     });
   // }, []);
 

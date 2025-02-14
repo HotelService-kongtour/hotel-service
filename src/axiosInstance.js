@@ -4,6 +4,7 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("authToken")}`,
   },
 });
 
@@ -17,7 +18,7 @@ export const signupApi = async (
   lastName,
   companyName
 ) => {
-  return await axiosInstance.post("/auth/signup", {
+  return await axiosInstance.post("/api/auth/signup", {
     email,
     password,
     firstName,
@@ -29,7 +30,7 @@ export const signupApi = async (
 
 // 이메일인증 API
 export const verifyEmailApi = async (email, code) => {
-  return await axiosInstance.post("/auth/verify-email", {
+  return await axiosInstance.post("/api/auth/verify-email", {
     email,
     code,
     verificationType: "SIGNUP",
@@ -39,17 +40,17 @@ export const verifyEmailApi = async (email, code) => {
 // 이메일인증코드요청 API
 
 // 로그인 API
-export const loginApi = async (email, password) => {
-  return await axiosInstance.post("/auth/login", {
+export const loginApi = async (email, password, autoLogin) => {
+  return await axiosInstance.post("/api/auth/login", {
     email,
     password,
-    autoLogin: true,
+    autoLogin,
   });
 };
 
 // 비밀번호재설정 API
 export const resetPasswordApi = async (email, code, password) => {
-  return await axiosInstance.post("/auth/reset-password", {
+  return await axiosInstance.post("/api/auth/reset-password", {
     email,
     code,
     password,

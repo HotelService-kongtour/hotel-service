@@ -5,12 +5,8 @@ export const isValidEmail = (email) => {
 };
 
 // 비밀번호 유효성검사
-// const passwordRegex =
-//   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,16}$/;
-// export const isValidPassword = (password) => {
-//   return passwordRegex.test(password);
-// };
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+const passwordRegex =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,16}$/;
 export const isValidPassword = (password) => {
   return passwordRegex.test(password);
 };

@@ -33,6 +33,7 @@ const themes = [
 
 const MainHotel = () => {
   const colors = useColors();
+
   const PrevArrow = ({ onClick }) => {
     return (
       <ArrowButton onClick={onClick} style={{ left: "-30px" }}>
@@ -65,7 +66,7 @@ const MainHotel = () => {
         <Slider {...locationSettings}>
           {locations.map((loc) => (
             <Link to={`/hotel-search?area=${loc.area}`} key={loc.area}>
-              <List imageUrl={loc.imageURL} color={colors.mainLight}>
+              <List $imageurl={loc.imageURL} color={colors.mainLight}>
                 <Text>{loc.area}</Text>
               </List>
             </Link>
@@ -80,7 +81,7 @@ const MainHotel = () => {
             {themes.map((theme) => (
               <List
                 key={theme.area}
-                imageUrl={theme.imageURL}
+                $imageurl={theme.imageURL}
                 color={colors.mainLight}
               >
                 <Text>
@@ -149,7 +150,7 @@ const List = styled.li`
   align-items: flex-end;
   justify-content: flex-start;
   font-weight: 600;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
+  background-image: ${({ $imageurl }) => `url(${$imageurl})`};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

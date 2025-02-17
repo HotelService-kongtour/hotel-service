@@ -31,22 +31,22 @@ const SearchOptions = ({ selectedArea }) => {
   }, []);
 
   return (
-    <Options>
-      <OptionsContainer ref={optionsRef}>
+    <OptionsContainer>
+      <Options ref={optionsRef}>
         <AreaOption selectedArea={selectedArea} />
         <DateOption />
-      </OptionsContainer>
+      </Options>
 
       <BtnWrapper onClick={handleClickCompleteBtn}>
         <CustomButton>Complete</CustomButton>
       </BtnWrapper>
-    </Options>
+    </OptionsContainer>
   );
 };
 
 export default SearchOptions;
 
-const Options = styled.div`
+const OptionsContainer = styled.div`
   width: 28%;
   height: 100%;
   padding: 0.5rem 1.5rem 0 0;
@@ -54,7 +54,7 @@ const Options = styled.div`
   position: relative;
 `;
 
-const OptionsContainer = styled.div`
+const Options = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;

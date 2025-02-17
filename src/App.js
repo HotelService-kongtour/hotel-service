@@ -1,4 +1,4 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "axiosInstance";
 import "slick-carousel/slick/slick.css";
@@ -15,6 +15,9 @@ import SignUp from "pages/SignUp";
 import FindPassword from "pages/FindPassword";
 import ResetPassword from "pages/ResetPassword";
 import ReservationComplete from "pages/ReservationComplete";
+import HotelManagement from "pages/admin/HotelManagement";
+import ReservationManagement from "pages/admin/ReservationManagement";
+import AdminLayout from "./components/AdminLayout";
 
 function Layout() {
   return (
@@ -55,6 +58,11 @@ function App() {
             path="/reservation-complete"
             element={<ReservationComplete />}
           />
+        </Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="/admin/hotel-management" replace />} />
+          <Route path="hotel-management" element={<HotelManagement />} />
+          <Route path="reservation-management" element={<ReservationManagement />} />
         </Route>
       </Routes>
     </BrowserRouter>

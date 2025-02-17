@@ -1,4 +1,10 @@
-import { BrowserRouter, Outlet, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Outlet,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "axiosInstance";
 import "slick-carousel/slick/slick.css";
@@ -30,17 +36,6 @@ function Layout() {
 }
 
 function App() {
-  // useEffect(() => {
-  //   axiosInstance
-  //     .get("/endpoint")
-  //     .then((response) => {
-  //       console.log("서버 응답:", response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("서버 연결 오류:", error);
-  //     });
-  // }, []);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -60,9 +55,15 @@ function App() {
           />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="/admin/hotel-management" replace />} />
+          <Route
+            index
+            element={<Navigate to="/admin/hotel-management" replace />}
+          />
           <Route path="hotel-management" element={<HotelManagement />} />
-          <Route path="reservation-management" element={<ReservationManagement />} />
+          <Route
+            path="reservation-management"
+            element={<ReservationManagement />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

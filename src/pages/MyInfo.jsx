@@ -1,16 +1,17 @@
 import BookingHistory from "components/myInfo/BookingHistory";
 import EditMyInfo from "components/myInfo/EditMyInfo";
 import Nav from "components/myInfo/Nav";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const MyInfo = () => {
+  const [activeMenu, setActiveMenu] = useState("myinfo");
+
   return (
     <Wrapper>
-      <Nav />
+      <Nav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
       <ContentsWrapper>
-        <EditMyInfo />
-        <BookingHistory />
+        {activeMenu === "myinfo" ? <EditMyInfo /> : <BookingHistory />}
       </ContentsWrapper>
     </Wrapper>
   );
@@ -30,5 +31,5 @@ const Wrapper = styled.div`
 `;
 
 const ContentsWrapper = styled.div`
-  width: 70%;
+  width: 60%;
 `;

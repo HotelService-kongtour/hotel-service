@@ -6,6 +6,21 @@ import UserIcon from "assets/icons/user.svg";
 import ClipboardIcon from "assets/icons/clipboard.svg";
 import ArrowIcon from "assets/icons/arrow_forward_dark.svg";
 
+const MenuItems = [
+  {
+    id: "myinfo",
+    icon: UserIcon,
+    title: "Edit My Info",
+    description: "View and Edit My Info",
+  },
+  {
+    id: "booking",
+    icon: ClipboardIcon,
+    title: "Booking History",
+    description: "View All Reservations and Payment Details",
+  },
+];
+
 const Nav = ({ activeMenu, setActiveMenu }) => {
   const colors = useColors();
 
@@ -17,38 +32,25 @@ const Nav = ({ activeMenu, setActiveMenu }) => {
       </NameBox>
 
       <Menus>
-        <Menu
-          onClick={() => setActiveMenu("myinfo")}
-          $isactive={activeMenu === "myinfo"}
-          color={colors.main}
-        >
-          <MenuInner>
-            <img src={UserIcon} alt="user-icon" />
-            <MenuText>
-              <div>Edit My Info</div>
-              <p>View and Edit My Info</p>
-            </MenuText>
-          </MenuInner>
-          <Arrow>
-            <img src={ArrowIcon} alt="arrow-icon" />
-          </Arrow>
-        </Menu>
-        <Menu
-          onClick={() => setActiveMenu("booking")}
-          $isactive={activeMenu === "booking"}
-          color={colors.main}
-        >
-          <MenuInner>
-            <img src={ClipboardIcon} alt="clipboard-icon" />
-            <MenuText>
-              <div>Booking History</div>
-              <p>View All Reservations and Payment Details</p>
-            </MenuText>
-          </MenuInner>
-          <Arrow>
-            <img src={ArrowIcon} alt="arrow-icon" />
-          </Arrow>
-        </Menu>
+        {MenuItems.map((item) => (
+          <Menu
+            key={item.id}
+            onClick={() => setActiveMenu(item.id)}
+            $isactive={activeMenu === item.id}
+            color={colors.main}
+          >
+            <MenuInner>
+              <img src={item.icon} alt={`${item.id}-icon`} />
+              <MenuText>
+                <div>{item.title}</div>
+                <p>{item.description}</p>
+              </MenuText>
+            </MenuInner>
+            <Arrow>
+              <img src={ArrowIcon} alt="arrow-icon" />
+            </Arrow>
+          </Menu>
+        ))}
       </Menus>
     </NavContainer>
   );

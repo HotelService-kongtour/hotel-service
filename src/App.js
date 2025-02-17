@@ -1,6 +1,4 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
-import axiosInstance from "axiosInstance";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -27,17 +25,6 @@ function Layout() {
 }
 
 function App() {
-  // useEffect(() => {
-  //   axiosInstance
-  //     .get("/endpoint")
-  //     .then((response) => {
-  //       console.log("서버 응답:", response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("서버 연결 오류:", error);
-  //     });
-  // }, []);
-
   return (
     <BrowserRouter>
       <Routes>

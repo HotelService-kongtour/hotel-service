@@ -2,57 +2,24 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    // Authorization: `Bearer ${localStorage.getItem("authToken")}`,
   },
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;
-
-// 회원가입 API
-export const signupApi = async (
-  email,
-  password,
-  firstName,
-  lastName,
-  companyName
-) => {
-  return await axiosInstance.post("/api/auth/signup", {
-    email,
-    password,
-    firstName,
-    lastName,
-    companyName,
-    loginType: "EMAIL",
-  });
-};
-
-// 이메일인증 API
-export const verifyEmailApi = async (email, code) => {
-  return await axiosInstance.post("/api/auth/verify-email", {
-    email,
-    code,
-    verificationType: "SIGNUP",
-  });
-};
-
-// 이메일인증코드요청 API
-
-// 로그인 API
-export const loginApi = async (email, password, autoLogin) => {
-  return await axiosInstance.post("/api/auth/login", {
-    email,
-    password,
-    autoLogin,
-  });
-};
-
-// 비밀번호재설정 API
-export const resetPasswordApi = async (email, code, password) => {
-  return await axiosInstance.post("/api/auth/reset-password", {
-    email,
-    code,
-    password,
-  });
-};

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import { useColors } from "context/ColorContext";
-import axiosInstance, { loginApi } from "axiosInstance";
+import { loginApi } from "api";
 
 import XIcon from "assets/icons/x-mark.svg";
 import Logo from "assets/logo/logo.svg";
@@ -29,42 +29,40 @@ const Login = () => {
       return;
     }
 
-    alert("로그인성공");
-    navigate("/");
+    try {
+      const response = await loginApi(emailValue, passwordValue, autoLogin);
+      const { token } = response.data;
 
-    // try {
-    //   const response = await loginApi(emailValue, passwordValue, autoLogin);
-    //   const { token } = response.data;
+      if (!token) {
+        throw new Error("토큰이 없습니다.");
+      }
 
-    //   localStorage.setItem("authToken", token);
+      localStorage.setItem("authToken", token);
 
-    //   if (response.status === 200) {
-    //     console.log(response, "로그인성공");
-    //     navigate("/");
-    //   } else {
-    //     console.log(response.status, "서버오류");
-    //   }
-    // } catch (error) {
-    //   if (error.response) {
-    //     // 서버 응답이 있는 경우
-    //     console.error("Error status:", error.response.status);
-    //     if (error.response.status === 400) {
-    //       alert("잘못된 요청입니다.");
-    //     } else if (error.response.status === 401) {
-    //       alert("이메일 또는 비밀번호가 잘못되었습니다.");
-    //     } else {
-    //       alert("서버 오류가 발생했습니다.");
-    //     }
-    //   } else if (error.request) {
-    //     // 요청이 서버로 전달되지 않은 경우
-    //     console.error("Error request:", error.request);
-    //     alert("서버와의 연결에 문제가 발생했습니다.");
-    //   } else {
-    //     // 그 외의 에러
-    //     console.error("Error message:", error.message);
-    //     alert("알 수 없는 오류가 발생했습니다.");
-    //   }
-    // }
+      alert("로그인성공");
+      console.log(response, "로그인성공");
+      navigate("/");
+    } catch (error) {
+      if (error.response) {
+        // 서버 응답이 있는 경우
+        console.error("Error status:", error.response.status);
+        if (error.response.status === 400) {
+          alert("잘못된 요청입니다.");
+        } else if (error.response.status === 401) {
+          alert("이메일 또는 비밀번호가 잘못되었습니다.");
+        } else {
+          alert("서버 오류가 발생했습니다.");
+        }
+      } else if (error.request) {
+        // 요청이 서버로 전달되지 않은 경우
+        console.error("Error request:", error.request);
+        alert("서버와의 연결에 문제가 발생했습니다.");
+      } else {
+        // 그 외의 에러
+        console.error("Error message:", error.message);
+        alert("알 수 없는 오류가 발생했습니다.");
+      }
+    }
   };
 
   return (

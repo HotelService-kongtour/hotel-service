@@ -11,6 +11,7 @@ import Logo from "assets/logo/logo.svg";
 import LogoName from "assets/logo/logo_name.svg";
 import AppleLogo from "assets/logo/logo-Apple.svg";
 import GoogleLogo from "assets/logo/logo-Google.svg";
+import axios from "axios";
 
 const Login = () => {
   const colors = useColors();
@@ -22,78 +23,59 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   // 유효성 검사
-  //   if (emailError || passwordError) {
-  //     console.log("유효성 검사 오류:", { emailError, passwordError });
-  //     return;
-  //   }
-
-  //   try {
-  //     // 로그인 API 호출
-  //     const response = await loginApi(emailValue, passwordValue, autoLogin);
-  //     console.log("로그인 응답:", response);
-
-  //     // 헤더에서 Authorization 토큰을 추출
-  //     const token =
-  //       response.headers?.authorization || response.headers?.Authorization;
-
-  //     // 토큰이 존재하면 로컬 스토리지에 저장
-  //     if (token) {
-  //       localStorage.setItem("accessToken", token);
-  //       console.log("로그인 성공, 토큰:", token);
-  //       navigate("/", { replace: true }); // 로그인 성공 후 홈으로 이동
-  //     } else {
-  //       console.log("로그인 실패: 헤더에서 토큰을 받지 못했습니다.");
-  //     }
-  //   } catch (error) {
-  //     console.error("로그인 오류 상세정보:", error);
-  //   }
-  // };
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // 유효성 검사
     if (emailError || passwordError) {
       console.log("유효성 검사 오류:", { emailError, passwordError });
       return;
     }
 
     try {
-      const response = await fetch("http://210.178.0.131/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await axios.post(
+        "http://210.178.0.131/api/auth/login",
+        {
           email: emailValue,
           password: passwordValue,
           autoLogin,
-        }),
-      });
-
-      // 응답 상태가 200인 경우
-      if (response.ok) {
-        const token =
-          response.headers?.get("Authorization") ||
-          response.headers?.get("authorization");
-
-        // 토큰이 존재하면 로컬 스토리지에 저장
-        if (token) {
-          localStorage.setItem("accessToken", token);
-          console.log("로그인 성공, 토큰:", token);
-          navigate("/", { replace: true });
-        } else {
-          console.log("로그인 실패: 헤더에서 토큰을 받지 못했습니다.");
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
+      );
+
+      console.log("로그인 응답:", response.data);
+
+      const { accessToken, refreshToken, ...userInfo } = response.data.data;
+
+      if (accessToken) {
+        // Access Token 저장
+        localStorage.setItem("accessToken", `Bearer ${accessToken}`);
+        console.log("Access Token 저장 완료");
+
+        // Refresh Token 저장 (자동 로그인 선택 시)
+        if (autoLogin && refreshToken) {
+          localStorage.setItem("refreshToken", refreshToken);
+          console.log("Refresh Token 저장 완료");
+        }
+
+        // 사용자 정보 저장 (토큰 제외)
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        console.log("사용자 정보 저장됨:", userInfo);
+
+        console.log("로그인 성공:", response.data.message);
+        navigate("/", { replace: true });
       } else {
-        console.log("로그인 실패:", response.statusText);
+        console.error("Access Token이 응답에 없습니다");
       }
     } catch (error) {
-      console.error("로그인 오류 상세정보:", error);
+      console.error("로그인 실패:", {
+        에러메시지: error.response?.data || error.message,
+        상태코드: error.response?.status,
+      });
     }
   };
 

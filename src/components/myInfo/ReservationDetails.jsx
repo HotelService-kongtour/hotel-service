@@ -1,0 +1,261 @@
+import React from "react";
+import styled from "styled-components";
+import CustomButton from "components/custom/CustomButton";
+import { useColors } from "context/ColorContext";
+import { useNavigate } from "react-router-dom";
+
+import HotelImage from "assets/images/myinfo-hotel-img.jpg";
+import PinIcon from "assets/icons/pin.svg";
+import ShelterIcon from "assets/icons/night_shelter_color.svg";
+
+const hotelInfo = [
+  {
+    state: "booked",
+    name: "Lotte Hotel Seoul",
+    reservation_number: 72973820281017,
+    night: 2,
+    adults: 2,
+    child: 0,
+    room_name: "standard room",
+    check_in: "2025-02-18, 3:00PM",
+    check_out: "2025-02-19, 11:00AM",
+    address: "30, Eulji-ro, Jung-gu, Seoul",
+    one_night_price: 204000,
+    tax: 12300,
+    payment_method: "Visa Card",
+  },
+];
+
+const ReservationDetails = ({ state }) => {
+  const hotel = {
+    ...hotelInfo[0],
+    state: state || "booked",
+  };
+
+  const navigate = useNavigate();
+  const colors = useColors();
+
+  const handleCancelReservation = () => {
+    alert("Your reservation cancellation application has been completed.");
+    navigate("/my-info/booking-history");
+    window.location.reload();
+  };
+
+  return (
+    <Wrapper>
+      <HotelName>{hotel.name}</HotelName>
+
+      <HotelInfoContainer>
+        <img src={HotelImage} alt="hotel-img" />
+        <InfoTextBox>
+          <State color={colors.main}>{hotel.state}</State>
+          <RoomInfo $bgcolor={colors.subLight}>
+            <img src={ShelterIcon} alt="shelter-icon" />
+            <RoomInfoText $textcolor={colors.sub}>
+              {hotel.night} Nights, {hotel.adults} Adults
+              {hotel.child > 0 && `, ${hotel.child} Child`}, {hotel.room_name}
+              <br />
+              <span>Reservation</span>#{hotel.reservation_number}
+            </RoomInfoText>
+          </RoomInfo>
+          <DateInfo>
+            <DateCheckIn>
+              <span>Check-in</span>
+              <div>Thu,Feb 13,</div>
+              <div>2025, 3:00 PM</div>
+            </DateCheckIn>
+            <DateCheckOut>
+              <span>Check-out</span>
+              <div>Fri,Feb 14,</div>
+              <div>2025, 11:00 AM</div>
+            </DateCheckOut>
+          </DateInfo>
+        </InfoTextBox>
+      </HotelInfoContainer>
+
+      <HotelLacationContainer>
+        <ContainerTitle>Location</ContainerTitle>
+        <Location>
+          <img src={PinIcon} alt="pin-icon" />
+          {hotel.address}
+        </Location>
+        <Map />
+      </HotelLacationContainer>
+
+      <HotelDetailContainer>
+        <ContainerTitle>Reservation Details</ContainerTitle>
+        <RoomeInfoDetail>
+          <DetailInfoBox>
+            <DetailInfoName>Room Type</DetailInfoName>
+            <DetailInfoContents>{hotel.room_name}</DetailInfoContents>
+          </DetailInfoBox>
+
+          <DetailInfoBox>
+            <DetailInfoName>Payment Method</DetailInfoName>
+            <DetailInfoContents>{hotel.payment_method}</DetailInfoContents>
+          </DetailInfoBox>
+
+          <DetailInfoBox>
+            <DetailInfoName>Price per Night</DetailInfoName>
+            <DetailInfoContents>
+              ₩{hotel.one_night_price.toLocaleString()}
+            </DetailInfoContents>
+          </DetailInfoBox>
+
+          <DetailInfoBox>
+            <DetailInfoName>Tax</DetailInfoName>
+            <DetailInfoContents>
+              ₩{hotel.tax.toLocaleString()}
+            </DetailInfoContents>
+          </DetailInfoBox>
+        </RoomeInfoDetail>
+
+        <PriceBox>
+          <h4>Total Amount</h4>₩
+          {(hotel.one_night_price * hotel.night + hotel.tax).toLocaleString()}
+        </PriceBox>
+      </HotelDetailContainer>
+
+      <CustomButton onClick={handleCancelReservation}>
+        Cancel Reservation
+      </CustomButton>
+    </Wrapper>
+  );
+};
+
+export default ReservationDetails;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 5rem;
+`;
+
+const HotelName = styled.h3``;
+
+const HotelInfoContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+const ContainerTitle = styled.h4`
+  padding-bottom: 1rem;
+`;
+
+const InfoTextBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+`;
+const State = styled.div`
+  text-transform: uppercase;
+  background-color: ${(props) => props.color};
+  color: #fff;
+  font-size: 1rem;
+  width: fit-content;
+  padding: 0.25rem 0.75rem;
+  border-radius: 3rem;
+`;
+const RoomInfo = styled.div`
+  width: 100%;
+  background-color: ${(props) => props.$bgcolor};
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  img {
+    width: 40px;
+  }
+`;
+const RoomInfoText = styled.div`
+  line-height: 2;
+  font-size: 1rem;
+  font-weight: 600;
+  color: ${(props) => props.$textcolor};
+
+  span {
+    margin-right: 0.5rem;
+  }
+`;
+
+const DateInfo = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  img {
+    width: 36px;
+  }
+`;
+const DateCheckIn = styled.div`
+  width: 49%;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  background-color: #ececec;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  font-weight: 600;
+
+  span {
+    font-size: 1rem;
+    color: #999;
+  }
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+
+    span {
+      font-size: 0.8rem;
+    }
+  }
+`;
+const DateCheckOut = styled(DateCheckIn)`
+  align-items: flex-end;
+`;
+
+const HotelLacationContainer = styled.div``;
+const Location = styled.div`
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  img {
+    width: 24px;
+  }
+`;
+const Map = styled.div`
+  width: 100%;
+  height: 400px;
+  background-color: #ececec;
+  border-radius: 0.5rem;
+`;
+
+const HotelDetailContainer = styled.div``;
+const RoomeInfoDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+const DetailInfoBox = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+`;
+const DetailInfoName = styled.h5``;
+const DetailInfoContents = styled.p``;
+
+const PriceBox = styled.div`
+  padding: 1rem 0;
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top: 1px solid #ececec;
+`;

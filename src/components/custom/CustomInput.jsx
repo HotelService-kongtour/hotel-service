@@ -17,6 +17,7 @@ const CustomInput = ({
   onIconClick,
   isVisible,
   language = "en",
+  onError,
 }) => {
   const colors = useColors();
   const [error, setError] = useState("");
@@ -33,20 +34,24 @@ const CustomInput = ({
             ? "이메일을 입력해주세요"
             : "Please enter your email"
         );
+        onError(true);
       } else if (!isValidEmail(value)) {
         setError(
           language === "ko"
             ? "유효한 이메일 주소를 입력해주세요"
             : "Please enter a valid email address"
         );
+        onError(true);
       } else if (serverError && serverError === "email_not_registered") {
         setError(
           language === "ko"
             ? "등록되지 않은 이메일입니다"
             : "This email is not registered"
         );
+        onError(true);
       } else {
         setError("");
+        onError(false);
       }
     }
     // 비밀번호 유효성 검사
@@ -57,20 +62,24 @@ const CustomInput = ({
             ? "비밀번호를 입력해주세요"
             : "Please enter your password"
         );
+        onError(true);
       } else if (!isValidPassword(value)) {
         setError(
           language === "ko"
             ? "비밀번호는 8~20자, 영문, 숫자, 특수문자가 포함되어야 합니다"
             : "Passwords must contain 8-20 characters, letters, numbers, and special characters"
         );
+        onError(true);
       } else if (serverError && serverError === "incorrect_password") {
         setError(
           language === "ko"
             ? "이메일 또는 비밀번호가 틀렸습니다"
             : "Email or password is incorrect"
         );
+        onError(true);
       } else {
         setError("");
+        onError(false);
       }
     }
   };

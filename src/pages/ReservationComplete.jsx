@@ -3,8 +3,15 @@ import React from "react";
 import CompleteImg from "assets/images/complete.jpg";
 import styled from "styled-components";
 import CustomButton from "components/custom/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 const ReservationComplete = () => {
+  const navigate = useNavigate();
+
+  const handleClickViewDetail = () => {
+    navigate("/my-info/booking-history");
+  };
+
   return (
     <Wrapper>
       <ImgContainer>
@@ -15,7 +22,9 @@ const ReservationComplete = () => {
         <InfoTitle>
           <h2>Your reservation is Confirmed!</h2>
           <p>Lotte Hotel Seoul</p>
-          <span>123456</span>
+          <div>
+            Reservation #<span>123456</span>
+          </div>
         </InfoTitle>
 
         <InfoRoomBox>
@@ -32,12 +41,14 @@ const ReservationComplete = () => {
             <DateCheckOut>
               <span>Check-out</span>
               <div>Fri,Feb 14,</div>
-              <div>2025, 12:00 PM</div>
+              <div>2025, 11:00 AM</div>
             </DateCheckOut>
           </InfoRoomDate>
         </InfoRoomBox>
 
-        <CustomButton>View reservation details</CustomButton>
+        <CustomButton onClick={handleClickViewDetail}>
+          View reservation details
+        </CustomButton>
       </InfoContainer>
     </Wrapper>
   );
@@ -87,7 +98,7 @@ const InfoTitle = styled.div`
   p {
     padding: 0.5rem 0;
   }
-  span {
+  div {
     font-weight: 600;
     font-size: 1rem;
   }
@@ -134,10 +145,10 @@ const DateCheckIn = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.3rem;
+  font-weight: 600;
 
   span {
     font-size: 1rem;
-    font-weight: 600;
     color: #999;
   }
 

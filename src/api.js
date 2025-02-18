@@ -1,35 +1,61 @@
-// import axiosInstance from "axiosInstance";
+import axiosInstance from "axiosInstance";
 
-import axios from "axios";
+// import axios from "axios";
 
-const axiosInstance = axios.create({
-  // baseURL: process.env.REACT_APP_API_BASE_URL,
-  baseURL: "http://210.178.0.131",
-  withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+// const axiosInstance = axios.create({
+//   // baseURL: process.env.REACT_APP_API_BASE_URL,
+//   baseURL: "http://210.178.0.131",
+//   withCredentials: true,
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     const token = localStorage.getItem("accessToken");
+//     if (token) {
+//       config.headers["Authorization"] = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
+
 // 로그인 API
+// export const loginApi = async (email, password, autoLogin) => {
+//   return await axiosInstance.post("/api/auth/login", {
+//     email,
+//     password,
+//     autoLogin,
+//   });
+// };
 export const loginApi = async (email, password, autoLogin) => {
-  return await axiosInstance.post("/api/auth/login", {
-    email,
-    password,
-    autoLogin,
-  });
+  try {
+    const response = await axiosInstance.post("/api/auth/login", {
+      email,
+      password,
+      autoLogin,
+    });
+
+    const { accessToken, refreshToken, ...userInfo } = response.data.data;
+
+    // 토큰 저장
+    if (accessToken) {
+      localStorage.setItem("accessToken", `Bearer ${accessToken}`);
+      if (autoLogin && refreshToken) {
+        localStorage.setItem("refreshToken", refreshToken);
+      }
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("API 에러:", error);
+    throw error;
+  }
 };
 
 // 회원가입 API

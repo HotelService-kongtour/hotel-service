@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import { useColors } from "context/ColorContext";
-import axiosInstance, { loginApi } from "axiosInstance";
+import { loginApi } from "api";
 
 import XIcon from "assets/icons/x-mark.svg";
 import Logo from "assets/logo/logo.svg";
 import LogoName from "assets/logo/logo_name.svg";
 import AppleLogo from "assets/logo/logo-Apple.svg";
 import GoogleLogo from "assets/logo/logo-Google.svg";
+import axios from "axios";
 
 const Login = () => {
   const colors = useColors();
@@ -18,27 +19,58 @@ const Login = () => {
 
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-
   const [autoLogin, setAutoLogin] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (emailError || passwordError) {
+      console.log("유효성 검사 오류:", { emailError, passwordError });
+      return;
+    }
+
     try {
-      const response = await loginApi(emailValue, passwordValue);
+      const response = await axios.post(
+        "http://210.178.0.131/api/auth/login",
+        {
+          email: emailValue,
+          password: passwordValue,
+          autoLogin,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
-      const { accessToken, refreshToken } = response.data;
+      console.log("로그인 응답:", response);
 
-      // JWT 토큰을 Authorization 헤더에 담아서 저장
-      axiosInstance.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
+      const accessToken = response.headers["authorization"];
+      const refreshToken =
+        response.data.refreshToken || response.data.data?.refreshToken;
+      const userInfo = response.data.userInfo || response.data.data;
 
-      // 리프레시 토큰을 쿠키에 저장
-      if (autoLogin) {
-        document.cookie = `refreshToken=${refreshToken}; path=/; max-age=604800`; // 쿠키에 리프레시 토큰 저장 (1주일)
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken); // ✅ "Bearer " 포함됨
+        console.log("Access Token 저장 완료:", accessToken);
+
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        console.log("사용자 정보 저장됨:", userInfo);
+
+        console.log("로그인 성공:", response.data.message);
+        navigate("/", { replace: true });
+      } else {
+        console.error("❌ Access Token이 응답 헤더에 없습니다.");
       }
-
-      navigate("/");
     } catch (error) {
-      console.error("Error logging in:", error.response || error.message);
-      alert("로그인 실패. 이메일 또는 비밀번호를 확인해주세요.");
+      console.error("로그인 실패:", {
+        에러메시지: error.response?.data || error.message,
+        상태코드: error.response?.status,
+      });
     }
   };
 
@@ -63,13 +95,14 @@ const Login = () => {
               Find the perfect space for your cherished moments with Kong tour
             </Script>
           </LogoContainer>
-          <LoginForm>
+          <LoginForm onSubmit={handleLogin}>
             <CustomInput
               labelText={"Email"}
               placeholder={"Email"}
               type={"email"}
               onChange={setEmailValue}
               validateType={"email"}
+              onError={setEmailError}
             />
             <CustomInput
               labelText={"Password"}
@@ -77,11 +110,16 @@ const Login = () => {
               type={"password"}
               onChange={setPasswordValue}
               validateType={"password"}
+              onError={setPasswordError}
             />
 
             <CheckboxContainer>
               <CheckboxLabel>
-                <Checkbox type="checkbox" />
+                <Checkbox
+                  type="checkbox"
+                  checked={autoLogin}
+                  onChange={() => setAutoLogin(!autoLogin)}
+                />
                 Auto Login
               </CheckboxLabel>
               <Link to="/find-password">
@@ -89,7 +127,13 @@ const Login = () => {
               </Link>
             </CheckboxContainer>
 
-            <CustomButton fontWeight={"600"}>Login</CustomButton>
+            <CustomButton
+              type="submit"
+              fontWeight={"600"}
+              disabled={emailError || passwordError}
+            >
+              Login
+            </CustomButton>
             <Link to="/sign-up">
               <CustomButton
                 bgColor={"#fff"}

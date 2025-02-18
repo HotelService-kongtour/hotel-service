@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useColors } from "context/ColorContext";
 
 import UserIcon from "assets/icons/user.svg";
@@ -21,8 +22,9 @@ const MenuItems = [
   },
 ];
 
-const Nav = ({ activeMenu, setActiveMenu }) => {
+const Nav = ({ activeMenu }) => {
   const colors = useColors();
+  const navigate = useNavigate();
 
   return (
     <NavContainer>
@@ -35,7 +37,13 @@ const Nav = ({ activeMenu, setActiveMenu }) => {
         {MenuItems.map((item) => (
           <Menu
             key={item.id}
-            onClick={() => setActiveMenu(item.id)}
+            onClick={() =>
+              navigate(
+                item.id === "myinfo"
+                  ? "/my-info/edit"
+                  : "/my-info/booking-history"
+              )
+            }
             $isactive={activeMenu === item.id}
             color={colors.main}
           >

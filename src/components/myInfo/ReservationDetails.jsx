@@ -137,6 +137,10 @@ const HotelName = styled.h3``;
 const HotelInfoContainer = styled.div`
   display: flex;
   gap: 1rem;
+
+  img {
+    width: 40%;
+  }
 `;
 const ContainerTitle = styled.h4`
   padding-bottom: 1rem;
@@ -157,6 +161,10 @@ const State = styled.div`
   width: fit-content;
   padding: 0.25rem 0.75rem;
   border-radius: 3rem;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+  }
 `;
 const RoomInfo = styled.div`
   width: 100%;
@@ -187,10 +195,6 @@ const DateInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  img {
-    width: 36px;
-  }
 `;
 const DateCheckIn = styled.div`
   width: 49%;
@@ -201,6 +205,7 @@ const DateCheckIn = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 0.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
 
   span {
@@ -209,7 +214,7 @@ const DateCheckIn = styled.div`
   }
 
   @media screen and (max-width: 1440px) {
-    font-size: 0.8rem;
+    font-size: 1rem;
 
     span {
       font-size: 0.8rem;
@@ -226,8 +231,13 @@ const Location = styled.div`
   display: flex;
   align-items: center;
   gap: 0.25rem;
+
   img {
     width: 24px;
+  }
+
+  @media screen and (max-width: 1440px) {
+    font-size: 1rem;
   }
 `;
 const Map = styled.div`
@@ -248,8 +258,20 @@ const DetailInfoBox = styled.div`
   align-items: flex-end;
   justify-content: space-between;
 `;
-const DetailInfoName = styled.h5``;
-const DetailInfoContents = styled.p``;
+const DetailInfoName = styled.h5`
+  font-size: 1rem;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.9rem;
+  }
+`;
+const DetailInfoContents = styled.p`
+  font-size: 1.2rem;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 1rem;
+  }
+`;
 
 const PriceBox = styled.div`
   padding: 1rem 0;
@@ -258,4 +280,5 @@ const PriceBox = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   border-top: 1px solid #ececec;
+  font-weight: 600;
 `;

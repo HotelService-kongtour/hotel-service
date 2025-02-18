@@ -72,7 +72,7 @@ export default ReviewModal;
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
@@ -82,7 +82,7 @@ const Wrapper = styled.div`
 `;
 
 const Modal = styled.div`
-  width: 30%;
+  width: 40%;
   padding: 2rem;
   background-color: #fff;
   border-radius: 0.5rem;

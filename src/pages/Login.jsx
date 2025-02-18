@@ -47,29 +47,24 @@ const Login = () => {
         }
       );
 
-      console.log("로그인 응답:", response.data);
+      console.log("로그인 응답:", response);
 
-      const { accessToken, refreshToken, ...userInfo } = response.data.data;
+      const accessToken = response.headers["authorization"];
+      const refreshToken =
+        response.data.refreshToken || response.data.data?.refreshToken;
+      const userInfo = response.data.userInfo || response.data.data;
 
       if (accessToken) {
-        // Access Token 저장
-        localStorage.setItem("accessToken", `Bearer ${accessToken}`);
-        console.log("Access Token 저장 완료");
+        localStorage.setItem("accessToken", accessToken); // ✅ "Bearer " 포함됨
+        console.log("Access Token 저장 완료:", accessToken);
 
-        // Refresh Token 저장 (자동 로그인 선택 시)
-        if (autoLogin && refreshToken) {
-          localStorage.setItem("refreshToken", refreshToken);
-          console.log("Refresh Token 저장 완료");
-        }
-
-        // 사용자 정보 저장 (토큰 제외)
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
         console.log("사용자 정보 저장됨:", userInfo);
 
         console.log("로그인 성공:", response.data.message);
         navigate("/", { replace: true });
       } else {
-        console.error("Access Token이 응답에 없습니다");
+        console.error("❌ Access Token이 응답 헤더에 없습니다.");
       }
     } catch (error) {
       console.error("로그인 실패:", {

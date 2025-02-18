@@ -2,32 +2,48 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PendingApproval from "./PendingApproval";
 import Approved from "./Approved";
+import ReservationDetails from "./ReservationDetails";
+
+import XIcon from "assets/icons/x-mark.svg";
 
 const BookingHistory = () => {
   const [activeMenu, setActiveMenu] = useState("pending");
+  const [showDetails, setShowDetails] = useState(false);
+
   const menuItems = [
     { label: "Pending Approval", value: "pending" },
     { label: "Approved", value: "approved" },
   ];
 
   return (
-    <Wrapper>
+    <Wrapper className="booking-wrapper">
+      {showDetails && (
+        <DetailsWrapper>
+          <ReservationDetails />
+          <CloseButton onClick={() => setShowDetails(false)}>
+            <img src={XIcon} alt="x-icon" />
+          </CloseButton>
+        </DetailsWrapper>
+      )}
+
       <Menus>
-        <Menus>
-          {menuItems.map((item) => (
-            <Menu
-              key={item.value}
-              onClick={() => setActiveMenu(item.value)}
-              $isactive={activeMenu === item.value}
-            >
-              {item.label}
-            </Menu>
-          ))}
-        </Menus>
+        {menuItems.map((item) => (
+          <Menu
+            key={item.value}
+            onClick={() => setActiveMenu(item.value)}
+            $isactive={activeMenu === item.value}
+          >
+            {item.label}
+          </Menu>
+        ))}
       </Menus>
 
       <BookingContainer>
-        {activeMenu === "pending" ? <PendingApproval /> : <Approved />}
+        {activeMenu === "pending" ? (
+          <PendingApproval onShowDetails={() => setShowDetails(true)} />
+        ) : (
+          <Approved onShowDetails={() => setShowDetails(true)} />
+        )}
       </BookingContainer>
     </Wrapper>
   );
@@ -37,8 +53,11 @@ export default BookingHistory;
 
 const Wrapper = styled.div`
   width: 100%;
+  height: calc(90vh - 4rem);
   border: 2px solid #ececec;
   border-radius: 0.5rem;
+  position: relative;
+  overflow-y: auto;
 `;
 
 const Menus = styled.div`
@@ -60,5 +79,28 @@ const Menu = styled.div`
 `;
 
 const BookingContainer = styled.div`
-  padding: 2rem 1rem;
+  padding: 0 1.5rem;
+  padding-bottom: 2rem;
+`;
+
+const DetailsWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  z-index: 10;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
 `;

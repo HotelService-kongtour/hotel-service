@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import LogoIcon from "../assets/logo/logo_H.svg";
-import LogoName from "../assets/logo/logo_Hantour.svg";
+import LogoIcon from "../assets/logo/logo-H.svg";
+import LogoName from "../assets/logo/logo-Hantour.svg";
 import { Link } from "react-router-dom";
 
 const Footer = () => {

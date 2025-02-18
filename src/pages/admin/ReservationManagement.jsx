@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CustomSearchbar from "components/custom/CustomSearchBar";
 import AdminTable from "components/admin/AdminTable";
 import Pagination from "components/admin/Pagination";
+
 const reservationData = [
   {
     reservationDate: "24.02.17",

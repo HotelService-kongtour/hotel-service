@@ -1,6 +1,6 @@
-import BookingHistory from "components/myInfo/BookingHistory";
-import EditMyInfo from "components/myInfo/EditMyInfo";
-import Nav from "components/myInfo/Nav";
+import BookingHistory from "../components/myInfo/BookingHistory";
+import EditMyInfo from "../components/myInfo/EditMyInfo";
+import Nav from "../components/myInfo/Nav";
 import React, { useState } from "react";
 import styled from "styled-components";
 

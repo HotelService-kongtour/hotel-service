@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
+import CustomButton from "components/custom/CustomButton";
+import { isValidPassword } from "utils/validation";
 
 import EyeOffIcon from "assets/icons/eye-off-outline.svg";
 import XIcon from "assets/icons/x-mark.svg";
-import CustomButton from "components/custom/CustomButton";
-import { isValidPassword } from "utils/validation";
 
 const ResetPassword = () => {
   const navigate = useNavigate();

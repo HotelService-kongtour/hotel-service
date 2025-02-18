@@ -1,6 +1,6 @@
 import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import LogoImage from "assets/logo/hantour_admin_logo.svg";
+import LogoImage from "assets/logo/hantour-admin-logo.svg";
 
 function AdminLayout() {
   return (

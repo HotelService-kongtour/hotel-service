@@ -4,14 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import { useColors } from "context/ColorContext";
-import { loginApi } from "api";
+import axios from "axios";
 
 import XIcon from "assets/icons/x-mark.svg";
-import Logo from "assets/logo/logo_H.svg";
-import LogoName from "assets/logo/logo_Hantour.svg";
+import Logo from "assets/logo/logo-H.svg";
+import LogoName from "assets/logo/logo-Hantour.svg";
 import AppleLogo from "assets/logo/logo-Apple.svg";
 import GoogleLogo from "assets/logo/logo-Google.svg";
-import axios from "axios";
 
 const Login = () => {
   const colors = useColors();

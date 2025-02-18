@@ -4,7 +4,7 @@ import AdminTable from "components/admin/AdminTable";
 import Pagination from "components/admin/Pagination";
 const reservationData = [
   {
-    reservationDate: "2024-02-17",
+    reservationDate: "24.02.17",
     reservationNumber: "RSV001",
     agencyName: "행복여행사",
     agencyId: "AGC001",
@@ -16,7 +16,7 @@ const reservationData = [
     payment: "미결제",
   },
   {
-    reservationDate: "2024-02-18",
+    reservationDate: "24.02.18",
     reservationNumber: "RSV002",
     agencyName: "즐거운여행",
     agencyId: "AGC002",

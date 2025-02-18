@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useColors } from "../../../context/ColorContext";
 import styled from "styled-components";
 import moment from "moment";
+import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 import CalendarIcon from "assets/icons/calendar-outline.svg";
 import Calendar from "react-calendar";
-import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 const DateOption = () => {
   const colors = useColors();

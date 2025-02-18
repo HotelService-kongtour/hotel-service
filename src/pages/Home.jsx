@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import MainHotel from "../components/home/MainHotel";
 import CustomMainInput from "../components/custom/CustomMainInput";

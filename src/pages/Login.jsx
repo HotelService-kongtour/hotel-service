@@ -7,8 +7,8 @@ import { useColors } from "context/ColorContext";
 import { loginApi } from "api";
 
 import XIcon from "assets/icons/x-mark.svg";
-import Logo from "assets/logo/logo.svg";
-import LogoName from "assets/logo/logo_name.svg";
+import Logo from "assets/logo/logo_H.svg";
+import LogoName from "assets/logo/logo_Hantour.svg";
 import AppleLogo from "assets/logo/logo-Apple.svg";
 import GoogleLogo from "assets/logo/logo-Google.svg";
 import axios from "axios";

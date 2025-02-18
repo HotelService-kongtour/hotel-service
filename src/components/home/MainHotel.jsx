@@ -9,8 +9,8 @@ import MainBusan from "assets/images/main-busan.jpeg";
 import MainCasino from "assets/images/main-casino.jpeg";
 import MainTradition from "assets/images/main-tradition.jpeg";
 import MainPrepare from "assets/images/main-prepare.png";
-import NextArrowIcon from "assets/icons/arrow_forward_dark.svg";
-import PrevArrowIcon from "assets/icons/arrow_back_dark.svg";
+import NextArrowIcon from "assets/icons/arrow-forward-dark.svg";
+import PrevArrowIcon from "assets/icons/arrow-back-dark.svg";
 
 const locations = [
   { area: "Seoul", imageURL: MainSeoul },

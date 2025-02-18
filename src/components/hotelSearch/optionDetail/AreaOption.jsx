@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useColors } from "../../../context/ColorContext";
+import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 import GlobeIcon from "assets/icons/globe-outline.svg";
 import MapIcon from "assets/icons/map-outline.svg";
 import XIcon from "assets/icons/x-mark.svg";
-import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 const locationList = [
   { area: "Seoul", nation: "Korea" },

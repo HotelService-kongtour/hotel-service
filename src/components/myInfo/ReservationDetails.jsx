@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import HotelImage from "assets/images/myinfo-hotel-img.jpg";
 import PinIcon from "assets/icons/pin.svg";
-import ShelterIcon from "assets/icons/night_shelter_color.svg";
+import ShelterIcon from "assets/icons/night-shelter-color.svg";
 
 const hotelInfo = [
   {

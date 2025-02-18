@@ -5,7 +5,7 @@ import { useColors } from "context/ColorContext";
 
 import UserIcon from "assets/icons/user.svg";
 import ClipboardIcon from "assets/icons/clipboard.svg";
-import ArrowIcon from "assets/icons/arrow_forward_dark.svg";
+import ArrowIcon from "assets/icons/arrow-forward-dark.svg";
 
 const MenuItems = [
   {

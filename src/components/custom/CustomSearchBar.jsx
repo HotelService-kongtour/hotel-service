@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useColors } from "../../context/ColorContext";
-import SearchIcon from "../../assets/icons/Search.svg";
+import SearchIcon from "../../assets/icons/search-glass.svg";
 
 const CustomSearchbar = ({ placeholder, onSearch, className }) => {
   const colors = useColors();

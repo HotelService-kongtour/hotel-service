@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useColors } from "context/ColorContext";
 import PersonsOption from "./PersonsOption";
 
-import ForwardArrow from "assets/icons/arrow_forward.svg";
-import BackArrow from "assets/icons/arrow_back.svg";
+import ForwardArrow from "assets/icons/arrow-forward.svg";
+import BackArrow from "assets/icons/arrow-back.svg";
 import PinIcon from "assets/icons/pin.svg";
 import ClockIcon from "assets/icons/clock.svg";
 

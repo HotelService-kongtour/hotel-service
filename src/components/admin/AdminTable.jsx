@@ -139,7 +139,7 @@ const TH = styled.th`
   border-bottom: 0.125rem solid #ddd;
   background-color: #f5f5f5;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -155,6 +155,7 @@ const TD = styled.td`
   overflow: hidden;
   text-overflow: ellipsis;
   height: 3.75rem;
+  font-size: 0.9rem;
 
   &:empty {
     height: 3.75rem;

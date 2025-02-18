@@ -10,7 +10,7 @@ const hotelData = [
     theme: "Korean-Traditional",
     availableRooms: 15,
     reservationCount: 45,
-    hotelNumber: "HTL001",
+    hotelNumber: "02-2292-2222",
     review: null,
   },
   {
@@ -19,7 +19,7 @@ const hotelData = [
     theme: "Pet-friendly",
     availableRooms: 8,
     reservationCount: 32,
-    hotelNumber: "HTL002",
+    hotelNumber: "02-2292-2222",
     review: null,
   },
 ];

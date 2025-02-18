@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import LogoIcon from "../assets/logo/logo.svg";
-import LogoName from "../assets/logo/logo_name.svg";
+import LogoIcon from "../assets/logo/logo_H.svg";
+import LogoName from "../assets/logo/logo_Hantour.svg";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -14,7 +15,7 @@ const Footer = () => {
         </Logo>
         <Script>
           <Text>
-            (주) kongtour
+            (주) Hantour
             <br />
             대표이사: 홍길동 | 사업자등록번호: 000-00-00000
             <br />
@@ -37,6 +38,11 @@ const Footer = () => {
             사업자정보
           </Term>
         </Terms>
+
+        {/* 임시 관리자 */}
+        <Link to={"/admin"}>
+          <Admin>관리자</Admin>
+        </Link>
       </FooterInner>
     </MainFooter>
   );
@@ -63,6 +69,21 @@ const MainFooter = styled.div`
 const FooterInner = styled.div`
   width: 100%;
   height: fit-content;
+  position: relative;
+`;
+
+const Admin = styled.div`
+  width: fit-content;
+  background-color: #fff;
+  padding: 0.5rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 const Logo = styled.div`

@@ -5,8 +5,6 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { useEffect } from "react";
-import axiosInstance from "axiosInstance";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -24,6 +22,8 @@ import ReservationComplete from "pages/ReservationComplete";
 import HotelManagement from "pages/admin/HotelManagement";
 import ReservationManagement from "pages/admin/ReservationManagement";
 import AdminLayout from "./components/AdminLayout";
+import EditMyInfo from "components/myInfo/EditMyInfo";
+import BookingHistory from "components/myInfo/BookingHistory";
 
 function Layout() {
   return (
@@ -46,7 +46,11 @@ function App() {
 
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/my-info" element={<MyInfo />} />
+          <Route path="/my-info" element={<MyInfo />}>
+            <Route index element={<Navigate to="/my-info/edit" replace />} />
+            <Route path="edit" element={<EditMyInfo />} />
+            <Route path="booking-history" element={<BookingHistory />} />
+          </Route>
           <Route path="/hotel-search" element={<HotelSearch />} />
           <Route path="/hotel-detail/:hotelName" element={<HotelDetail />} />
           <Route

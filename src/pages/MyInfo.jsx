@@ -1,17 +1,19 @@
-import BookingHistory from "components/myInfo/BookingHistory";
-import EditMyInfo from "components/myInfo/EditMyInfo";
 import Nav from "components/myInfo/Nav";
-import React, { useState } from "react";
+import React from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 const MyInfo = () => {
-  const [activeMenu, setActiveMenu] = useState("myinfo");
+  const location = useLocation();
+  const activeMenu = location.pathname.includes("booking-history")
+    ? "booking"
+    : "myinfo";
 
   return (
     <Wrapper>
-      <Nav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+      <Nav activeMenu={activeMenu} />
       <ContentsWrapper>
-        {activeMenu === "myinfo" ? <EditMyInfo /> : <BookingHistory />}
+        <Outlet />
       </ContentsWrapper>
     </Wrapper>
   );

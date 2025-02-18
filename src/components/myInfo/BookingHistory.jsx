@@ -9,17 +9,23 @@ import XIcon from "assets/icons/x-mark.svg";
 const BookingHistory = () => {
   const [activeMenu, setActiveMenu] = useState("pending");
   const [showDetails, setShowDetails] = useState(false);
+  const [reservationState, setReservationState] = useState("");
 
   const menuItems = [
     { label: "Pending Approval", value: "pending" },
     { label: "Approved", value: "approved" },
   ];
 
+  const handleShowDetails = (state) => {
+    setReservationState(state);
+    setShowDetails(true);
+  };
+
   return (
     <Wrapper className="booking-wrapper">
       {showDetails && (
         <DetailsWrapper>
-          <ReservationDetails />
+          <ReservationDetails state={reservationState} />
           <CloseButton onClick={() => setShowDetails(false)}>
             <img src={XIcon} alt="x-icon" />
           </CloseButton>
@@ -40,9 +46,9 @@ const BookingHistory = () => {
 
       <BookingContainer>
         {activeMenu === "pending" ? (
-          <PendingApproval onShowDetails={() => setShowDetails(true)} />
+          <PendingApproval onShowDetails={() => handleShowDetails("pending")} />
         ) : (
-          <Approved onShowDetails={() => setShowDetails(true)} />
+          <Approved onShowDetails={() => handleShowDetails("booked")} />
         )}
       </BookingContainer>
     </Wrapper>
@@ -58,6 +64,7 @@ const Wrapper = styled.div`
   border-radius: 0.5rem;
   position: relative;
   overflow-y: auto;
+  overscroll-behavior: contain;
 `;
 
 const Menus = styled.div`

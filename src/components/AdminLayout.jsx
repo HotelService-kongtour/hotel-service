@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import LogoImage from "assets/logo/hantour_admin_logo.svg";
 
@@ -12,7 +12,10 @@ function AdminLayout() {
             <MenuLink to="/admin/hotel-management">호텔 내역</MenuLink>
             <MenuLink to="/admin/reservation-management">예약 내역</MenuLink>
           </MenuList>
-          <LogoutButton>로그아웃</LogoutButton>
+          {/* 임시링크 */}
+          <Link to={"/"}>
+            <LogoutButton>로그아웃</LogoutButton>
+          </Link>
         </NavContainer>
       </Sidebar>
       <Content>

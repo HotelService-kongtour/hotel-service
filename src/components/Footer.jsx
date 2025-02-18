@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import LogoIcon from "../assets/logo/logo.svg";
-import LogoName from "../assets/logo/logo_name.svg";
+import LogoIcon from "../assets/logo/logo_H.svg";
+import LogoName from "../assets/logo/logo_Hantour.svg";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -15,7 +15,7 @@ const Footer = () => {
         </Logo>
         <Script>
           <Text>
-            (주) kongtour
+            (주) Hantour
             <br />
             대표이사: 홍길동 | 사업자등록번호: 000-00-00000
             <br />

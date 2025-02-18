@@ -11,6 +11,7 @@ import Logo from "assets/logo/logo.svg";
 import LogoName from "assets/logo/logo_name.svg";
 import AppleLogo from "assets/logo/logo-Apple.svg";
 import GoogleLogo from "assets/logo/logo-Google.svg";
+import axios from "axios";
 
 const Login = () => {
   const colors = useColors();
@@ -26,42 +27,50 @@ const Login = () => {
     e.preventDefault();
 
     if (emailError || passwordError) {
+      console.log("유효성 검사 오류:", { emailError, passwordError });
       return;
     }
 
     try {
-      const response = await loginApi(emailValue, passwordValue, autoLogin);
-      const { token } = response.data;
-
-      if (!token) {
-        throw new Error("토큰이 없습니다.");
-      }
-
-      localStorage.setItem("authToken", token);
-
-      alert("로그인성공");
-      console.log(response, "로그인성공");
-      navigate("/");
-    } catch (error) {
-      if (error.response) {
-        // 서버 응답이 있는 경우
-        console.error("Error status:", error.response.status);
-        if (error.response.status === 400) {
-          alert("잘못된 요청입니다.");
-        } else if (error.response.status === 401) {
-          alert("이메일 또는 비밀번호가 잘못되었습니다.");
-        } else {
-          alert("서버 오류가 발생했습니다.");
+      const response = await axios.post(
+        "http://210.178.0.131/api/auth/login",
+        {
+          email: emailValue,
+          password: passwordValue,
+          autoLogin,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
-      } else if (error.request) {
-        // 요청이 서버로 전달되지 않은 경우
-        console.error("Error request:", error.request);
-        alert("서버와의 연결에 문제가 발생했습니다.");
+      );
+
+      console.log("로그인 응답:", response);
+
+      const accessToken = response.headers["authorization"];
+      const refreshToken =
+        response.data.refreshToken || response.data.data?.refreshToken;
+      const userInfo = response.data.userInfo || response.data.data;
+
+      if (accessToken) {
+        localStorage.setItem("accessToken", accessToken); // ✅ "Bearer " 포함됨
+        console.log("Access Token 저장 완료:", accessToken);
+
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        console.log("사용자 정보 저장됨:", userInfo);
+
+        console.log("로그인 성공:", response.data.message);
+        navigate("/", { replace: true });
       } else {
-        // 그 외의 에러
-        console.error("Error message:", error.message);
-        alert("알 수 없는 오류가 발생했습니다.");
+        console.error("❌ Access Token이 응답 헤더에 없습니다.");
       }
+    } catch (error) {
+      console.error("로그인 실패:", {
+        에러메시지: error.response?.data || error.message,
+        상태코드: error.response?.status,
+      });
     }
   };
 

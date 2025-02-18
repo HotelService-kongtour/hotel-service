@@ -1,6 +1,10 @@
-import { BrowserRouter, Outlet, Route, Routes, Navigate } from "react-router-dom";
-import { useEffect } from "react";
-import axiosInstance from "axiosInstance";
+import {
+  BrowserRouter,
+  Outlet,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -18,6 +22,8 @@ import ReservationComplete from "pages/ReservationComplete";
 import HotelManagement from "pages/admin/HotelManagement";
 import ReservationManagement from "pages/admin/ReservationManagement";
 import AdminLayout from "./components/AdminLayout";
+import EditMyInfo from "components/myInfo/EditMyInfo";
+import BookingHistory from "components/myInfo/BookingHistory";
 
 function Layout() {
   return (
@@ -30,17 +36,6 @@ function Layout() {
 }
 
 function App() {
-  // useEffect(() => {
-  //   axiosInstance
-  //     .get("/endpoint")
-  //     .then((response) => {
-  //       console.log("서버 응답:", response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("서버 연결 오류:", error);
-  //     });
-  // }, []);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -51,7 +46,11 @@ function App() {
 
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/my-info" element={<MyInfo />} />
+          <Route path="/my-info" element={<MyInfo />}>
+            <Route index element={<Navigate to="/my-info/edit" replace />} />
+            <Route path="edit" element={<EditMyInfo />} />
+            <Route path="booking-history" element={<BookingHistory />} />
+          </Route>
           <Route path="/hotel-search" element={<HotelSearch />} />
           <Route path="/hotel-detail/:hotelName" element={<HotelDetail />} />
           <Route
@@ -60,9 +59,15 @@ function App() {
           />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="/admin/hotel-management" replace />} />
+          <Route
+            index
+            element={<Navigate to="/admin/hotel-management" replace />}
+          />
           <Route path="hotel-management" element={<HotelManagement />} />
-          <Route path="reservation-management" element={<ReservationManagement />} />
+          <Route
+            path="reservation-management"
+            element={<ReservationManagement />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

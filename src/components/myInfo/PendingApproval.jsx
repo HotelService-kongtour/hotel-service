@@ -93,7 +93,11 @@ const PriceBox = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const Price = styled.h3``;
+const Price = styled.h3`
+  @media screen and (max-width: 1440px) {
+    font-size: 1.1rem;
+  }
+`;
 const BtnBox = styled.div`
   display: flex;
   gap: 1rem;
@@ -110,6 +114,10 @@ const Btn = styled.button`
 
   &:hover {
     border-color: ${(props) => props.color};
+  }
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
   }
 `;
 

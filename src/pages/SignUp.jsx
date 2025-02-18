@@ -5,8 +5,8 @@ import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import EmailVerifymodal from "components/Login/EmailVerifymodal";
 
-import Logo from "assets/logo/logo.svg";
-import LogoName from "assets/logo/logo_name.svg";
+import Logo from "assets/logo/logo_H.svg";
+import LogoName from "assets/logo/logo_Hantour.svg";
 import EyeOffIcon from "assets/icons/eye-off-outline.svg";
 import XIcon from "assets/icons/x-mark.svg";
 

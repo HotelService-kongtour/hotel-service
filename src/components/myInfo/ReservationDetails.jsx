@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import CustomButton from "components/custom/CustomButton";
 import { useColors } from "context/ColorContext";
-import { useNavigate } from "react-router-dom";
+import ReservationCancelModal from "./ReservationCancelModal";
 
 import HotelImage from "assets/images/myinfo-hotel-img.jpg";
 import PinIcon from "assets/icons/pin.svg";
@@ -32,17 +32,16 @@ const ReservationDetails = ({ state }) => {
     state: state || "booked",
   };
 
-  const navigate = useNavigate();
   const colors = useColors();
 
-  const handleCancelReservation = () => {
-    alert("Your reservation cancellation application has been completed.");
-    navigate("/my-info/booking-history");
-    window.location.reload();
-  };
+  const [isShowCancelModal, setIsShowCancelModal] = useState(false);
 
   return (
     <Wrapper>
+      {isShowCancelModal && (
+        <ReservationCancelModal setIsShowCancelModal={setIsShowCancelModal} />
+      )}
+
       <HotelName>{hotel.name}</HotelName>
 
       <HotelInfoContainer>
@@ -116,7 +115,7 @@ const ReservationDetails = ({ state }) => {
         </PriceBox>
       </HotelDetailContainer>
 
-      <CustomButton onClick={handleCancelReservation}>
+      <CustomButton onClick={() => setIsShowCancelModal(true)}>
         Cancel Reservation
       </CustomButton>
     </Wrapper>

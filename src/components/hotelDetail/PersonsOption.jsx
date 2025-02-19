@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import useSearchOptionsStore from "store/useSearchOptionsStore";
 import { useColors } from "context/ColorContext";
+import CustomButton from "components/custom/CustomButton";
 
 import PeopleIcon from "assets/icons/people-outline.svg";
 import XIcon from "assets/icons/x-mark.svg";
@@ -13,7 +13,7 @@ const PersonsOption = () => {
 
   const modalRef = useRef(null);
 
-  const { showPersonsOption, setShowPersonsOption } = useSearchOptionsStore();
+  const [showPersonsOption, setShowPersonsOption] = useState(false);
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
 
@@ -55,10 +55,10 @@ const PersonsOption = () => {
   }, [showPersonsOption]);
 
   return (
-    <OptionWrapper>
+    <OptionWrapper ref={modalRef}>
       <PersonsInput
         color={colors.main}
-        onClick={() => setShowPersonsOption(true)}
+        onClick={() => setShowPersonsOption((prev) => !prev)}
       >
         <InputIcon>
           <img src={PeopleIcon} alt="people-icon" />
@@ -92,6 +92,15 @@ const PersonsOption = () => {
               colors={colors.main}
             />
           </Options>
+
+          <Btn>
+            <CustomButton
+              padding={"0.5rem 1rem"}
+              onClick={() => setShowPersonsOption(false)}
+            >
+              Apply
+            </CustomButton>
+          </Btn>
         </OptionsModal>
       )}
     </OptionWrapper>
@@ -159,6 +168,7 @@ const PersonsInput = styled.div`
 
 const OptionsModal = styled.div`
   width: 100%;
+  padding-bottom: 1rem;
   border: 2px solid #ececec;
   border-radius: 0.5rem;
   background-color: #fff;
@@ -240,4 +250,9 @@ const Number = styled.div`
     width: 40px;
     font-size: 1rem;
   }
+`;
+
+const Btn = styled.div`
+  width: 30%;
+  margin: 0 auto;
 `;

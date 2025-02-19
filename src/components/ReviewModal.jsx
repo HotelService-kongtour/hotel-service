@@ -17,7 +17,6 @@ const ReviewModal = ({ setShowReviewModal, reviews }) => {
   const [contentValue, setContentValue] = useState("");
   const [errors, setErrors] = useState({});
 
-  // 유효성 검사
   const validateForm = () => {
     const newErrors = {};
 
@@ -34,20 +33,19 @@ const ReviewModal = ({ setShowReviewModal, reviews }) => {
     setRating(index + 1);
   };
 
-  // 리뷰등록
   const handleClickCreate = () => {
-    // if (!validateForm()) return;
-    // const maskedId = idValue.slice(0, 3) + "***";
-    // const reviewData = {
-    //   id: reviews.length + 1,
-    //   userId: maskedId,
-    //   rating,
-    //   text: contentValue,
-    //   createdAt: new Date().toISOString().split("T")[0], // YYYY-MM-DD 형식
-    // };
-    // console.log("New Review Data:", reviewData);
-    // alert("Your review has been registered.");
-    // setShowReviewModal(false);
+    if (!validateForm()) return;
+    const maskedId = idValue.slice(0, 3) + "***";
+    const reviewData = {
+      id: reviews.length + 1,
+      userId: maskedId,
+      rating,
+      text: contentValue,
+      createdAt: new Date().toISOString().split("T")[0],
+    };
+    console.log("New Review Data:", reviewData);
+    alert("Your review has been registered.");
+    setShowReviewModal(false);
   };
 
   return (

@@ -30,7 +30,7 @@ const Pagination = ({
       pageNumbers.push(
         <PageButton
           key={i}
-          isActive={currentPage === i}
+          $isActive={currentPage === i}
           onClick={() => handlePageChange(i)}
         >
           {i}
@@ -87,8 +87,8 @@ const PaginationContainer = styled.div`
 const PageButton = styled.button`
   padding: 8px 12px;
   border: 1px solid #e2e8f0;
-  background-color: ${(props) => (props.isActive ? "#3182ce" : "white")};
-  color: ${(props) => (props.isActive ? "white" : "#4a5568")};
+  background-color: ${(props) => (props.$isActive ? "#3182ce" : "white")};
+  color: ${(props) => (props.$isActive ? "white" : "#4a5568")};
   border-radius: 4px;
   cursor: pointer;
   display: flex;
@@ -98,7 +98,7 @@ const PageButton = styled.button`
   font-family: Arial, sans-serif;
 
   &:hover {
-    background-color: ${(props) => (props.isActive ? "#2c5282" : "#edf2f7")};
+    background-color: ${(props) => (props.$isActive ? "#2c5282" : "#edf2f7")};
   }
 
   &:disabled {

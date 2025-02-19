@@ -18,23 +18,23 @@ const PersonsOption = () => {
   const [children, setChildren] = useState(0);
 
   const handleChangeNumber = (type, opt) => {
-    if (type === "adults") {
-      setAdults((prev) =>
-        opt === "minus" && prev > 0
-          ? prev - 1
-          : opt === "plus"
-          ? prev + 1
-          : prev
-      );
-    } else if (type === "children") {
-      setChildren((prev) =>
-        opt === "minus" && prev > 0
-          ? prev - 1
-          : opt === "plus"
-          ? prev + 1
-          : prev
-      );
-    }
+    // if (type === "adults") {
+    //   setAdults((prev) =>
+    //     opt === "minus" && prev > 0
+    //       ? prev - 1
+    //       : opt === "plus"
+    //       ? prev + 1
+    //       : prev
+    //   );
+    // } else if (type === "children") {
+    //   setChildren((prev) =>
+    //     opt === "minus" && prev > 0
+    //       ? prev - 1
+    //       : opt === "plus"
+    //       ? prev + 1
+    //       : prev
+    //   );
+    // }
   };
 
   const handleClickOutside = (e) => {

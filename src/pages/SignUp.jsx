@@ -96,7 +96,7 @@ const SignUp = () => {
                   type={isPasswordVisible ? "text" : "password"}
                   onChange={setPasswordValue}
                   validateType={"password"}
-                  imageSrc={EyeOffIcon}
+                  // imageSrc={EyeOffIcon}
                   isVisible={isPasswordVisible}
                   onIconClick={() => setIsPasswordVisible((prev) => !prev)}
                 />
@@ -111,7 +111,7 @@ const SignUp = () => {
                   placeholder={"Verify Password"}
                   type={isConfirmPasswordVisible ? "text" : "password"}
                   onChange={setConfirmPasswordValue}
-                  imageSrc={EyeOffIcon}
+                  // imageSrc={EyeOffIcon}
                   isVisible={isConfirmPasswordVisible}
                   onIconClick={() =>
                     setIsConfirmPasswordVisible((prev) => !prev)

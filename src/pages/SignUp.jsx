@@ -16,6 +16,13 @@ const SignUp = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  // const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
@@ -76,8 +83,10 @@ const SignUp = () => {
                   labelText={"Email"}
                   placeholder={"Email"}
                   type={"email"}
+                  value={emailValue}
                   onChange={setEmailValue}
                   validateType={"email"}
+                  onError={setEmailError}
                 />
                 <VerifyBtn onClick={() => setShowEmailModal(true)}>
                   <CustomButton
@@ -94,8 +103,10 @@ const SignUp = () => {
                   labelText={"Password"}
                   placeholder={"Password"}
                   type={isPasswordVisible ? "text" : "password"}
+                  value={passwordValue}
                   onChange={setPasswordValue}
                   validateType={"password"}
+                  onError={setPasswordError}
                   imageSrc={EyeOffIcon}
                   isVisible={isPasswordVisible}
                   onIconClick={() => setIsPasswordVisible((prev) => !prev)}
@@ -110,7 +121,10 @@ const SignUp = () => {
                   labelText={"Verify Password"}
                   placeholder={"Verify Password"}
                   type={isConfirmPasswordVisible ? "text" : "password"}
+                  value={confirmPasswordValue}
                   onChange={setConfirmPasswordValue}
+                  // validateType={"password"}
+                  // onError={setPasswordError}
                   imageSrc={EyeOffIcon}
                   isVisible={isConfirmPasswordVisible}
                   onIconClick={() =>
@@ -126,15 +140,21 @@ const SignUp = () => {
                 <CustomInput
                   labelText={"First Name"}
                   placeholder={"First Name"}
+                  value={firstName}
+                  onChange={setFirstName}
                 />
                 <CustomInput
                   labelText={"Last Name"}
                   placeholder={"Last Name"}
+                  value={lastName}
+                  onChange={setLastName}
                 />
               </NameBox>
               <CustomInput
                 labelText={"Company Name"}
                 placeholder={"Company Name"}
+                value={companyName}
+                onChange={setCompanyName}
               />
             </FormInner>
             <BtnBox onClick={handleClickCreateBtn}>

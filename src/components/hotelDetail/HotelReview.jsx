@@ -9,18 +9,21 @@ const reviews = [
     userId: "asd***",
     rating: 4,
     text: "좋은 호텔이에요! 만족스럽습니다.",
+    createdAt: "2024-03-21",
   },
   {
     id: 2,
     userId: "qwe***",
     rating: 2,
     text: "청결상태는 나쁘지 않지만 아쉬워요.",
+    createdAt: "2024-03-22",
   },
   {
     id: 3,
     userId: "zxc***",
     rating: 5,
     text: "정말 훌륭합니다! 나중에 가족이랑 재방문하고싶어요.",
+    createdAt: "2024-03-23",
   },
 ];
 
@@ -49,6 +52,18 @@ const HotelReview = () => {
     setShowReviewModal(true);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\. /g, ".")
+      .replace(/\.$/, "");
+  };
+
   return (
     <ReviewContainer>
       <TitleBox>
@@ -69,13 +84,17 @@ const HotelReview = () => {
             <GradeBox>
               <StarRating rating={review.rating} />
             </GradeBox>
+            <ReviewDate>{formatDate(review.createdAt)}</ReviewDate>
           </ReviewTitle>
           <Script>{review.text}</Script>
         </ReviewBox>
       ))}
 
       {showReviewModal && (
-        <ReviewModal setShowReviewModal={setShowReviewModal} />
+        <ReviewModal
+          setShowReviewModal={setShowReviewModal}
+          reviews={reviews}
+        />
       )}
     </ReviewContainer>
   );
@@ -109,5 +128,12 @@ const ReviewTitle = styled.div`
 `;
 const UserID = styled.h5``;
 const GradeBox = styled.div``;
+
+const ReviewDate = styled.span`
+  color: #666;
+  font-size: 0.9rem;
+  margin-left: auto;
+`;
+
 const GradeStar = styled.img``;
 const Script = styled.div``;

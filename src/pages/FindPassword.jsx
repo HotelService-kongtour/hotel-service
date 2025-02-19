@@ -11,6 +11,7 @@ const FindPassword = () => {
   const navigate = useNavigate();
 
   const [emailValue, setEmailValue] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
 
   const handleClickContinue = () => {
@@ -35,12 +36,17 @@ const FindPassword = () => {
                 labelText={"Email"}
                 placeholder={"Email"}
                 type={"email"}
-                onChange={setEmailValue}
+                value={emailValue}
+                onChange={(value) => setEmailValue(value)}
                 validateType={"email"}
+                onError={setEmailError}
               />
               <p>Please enter the email you registered with during sign-up</p>
             </EmailBox>
-            <CustomButton onClick={() => setShowEmailModal(true)}>
+            <CustomButton
+              onClick={() => setShowEmailModal(true)}
+              disabled={emailError || !emailValue}
+            >
               Continue
             </CustomButton>
           </FindForm>

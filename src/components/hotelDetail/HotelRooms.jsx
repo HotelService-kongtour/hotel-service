@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CustomButton from "components/custom/CustomButton";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useColors } from "context/ColorContext";
 
 import RoomImgPlaceholder from "assets/images/Room101.jpg";
@@ -39,13 +39,11 @@ const HotelRooms = () => {
     setRoomCounts((prevCounts) => {
       const currentCount = prevCounts[roomName] || 0;
       let newCount = currentCount;
-
       if (type === "plus") {
         newCount = currentCount < 5 ? currentCount + 1 : 5;
       } else if (type === "minus" && currentCount > 0) {
         newCount = currentCount - 1;
       }
-
       return {
         ...prevCounts,
         [roomName]: newCount,

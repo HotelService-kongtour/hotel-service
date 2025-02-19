@@ -13,6 +13,10 @@ const ResetPassword = () => {
 
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
+
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
@@ -20,17 +24,19 @@ const ResetPassword = () => {
 
   const isPasswordMatch = passwordValue === confirmPasswordValue;
 
-  const handleClickFinish = () => {
+  const handleClickContinue = () => {
     if (!passwordValue || !confirmPasswordValue) {
       setError("Please fill out both password fields.");
       return;
     }
 
-    if (
-      passwordValue !== confirmPasswordValue ||
-      !isValidPassword(passwordValue)
-    ) {
-      setError("Invalid value entered, please check the password.");
+    if (passwordError) {
+      setError("Please enter a valid password.");
+      return;
+    }
+
+    if (!isPasswordMatch) {
+      setError("Passwords do not match.");
       return;
     }
 
@@ -55,8 +61,10 @@ const ResetPassword = () => {
                 labelText={"Password"}
                 placeholder={"Password"}
                 type={isPasswordVisible ? "text" : "password"}
+                value={passwordValue}
                 onChange={setPasswordValue}
                 validateType={"password"}
+                onError={setPasswordError}
                 imageSrc={EyeOffIcon}
                 isVisible={isPasswordVisible}
                 onIconClick={() => setIsPasswordVisible((prev) => !prev)}
@@ -72,7 +80,10 @@ const ResetPassword = () => {
                 labelText={"Verify Password"}
                 placeholder={"Verify Password"}
                 type={isConfirmPasswordVisible ? "text" : "password"}
+                value={confirmPasswordValue}
                 onChange={setConfirmPasswordValue}
+                validateType={"password"}
+                onError={setConfirmPasswordError}
                 imageSrc={EyeOffIcon}
                 isVisible={isConfirmPasswordVisible}
                 onIconClick={() => setIsConfirmPasswordVisible((prev) => !prev)}
@@ -83,7 +94,17 @@ const ResetPassword = () => {
             </div>
 
             <BtnBox>
-              <CustomButton onClick={handleClickFinish}>Continue</CustomButton>
+              <CustomButton
+                onClick={handleClickContinue}
+                disabled={
+                  passwordError ||
+                  !isPasswordMatch ||
+                  !passwordValue ||
+                  !confirmPasswordValue
+                }
+              >
+                Continue
+              </CustomButton>
               {error && <ErrorMessage>{error}</ErrorMessage>}
             </BtnBox>
           </ResetForm>

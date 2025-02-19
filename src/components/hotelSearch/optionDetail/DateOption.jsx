@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useColors } from "../../../context/ColorContext";
 import styled from "styled-components";
 import moment from "moment";
-import useSearchOptionsStore from "store/useSearchOptionsStore";
+import Calendar from "react-calendar";
 
 import CalendarIcon from "assets/icons/calendar-outline.svg";
-import Calendar from "react-calendar";
 
 const DateOption = () => {
   const colors = useColors();
+  const calendarRef = useRef(null);
 
   const today = moment();
   const tomorrow = moment().add(1, "days");
 
-  const { showDateOptions, setShowDateOptions } = useSearchOptionsStore();
+  // const [showDateOptions, setShowDateOptions] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     `${today.format("YYYY.MM.DD")} - ${tomorrow.format("YYYY.MM.DD")}`
   );
@@ -23,38 +23,27 @@ const DateOption = () => {
   ]);
 
   const handleDateChange = (newDates) => {
-    if (Array.isArray(newDates)) {
-      if (newDates.length >= 2) {
-        const uniqueDates = [
-          ...new Set(newDates.map((date) => date.toLocaleDateString())),
-        ];
-
-        if (uniqueDates.length >= 2) {
-          setSelectedRange(uniqueDates);
-          setSelectedDate(
-            `${moment(newDates[0]).format("YYYY.MM.DD")} - ${moment(
-              newDates[1]
-            ).format("YYYY.MM.DD")}`
-          );
-          setShowDateOptions(false);
-        }
-      } else {
-        setSelectedRange([]);
-        setSelectedDate(
-          today.toLocaleDateString("ko-KR", {
-            month: "2-digit",
-            day: "2-digit",
-          })
-        );
-      }
+    if (Array.isArray(newDates) && newDates.length >= 2) {
+      setSelectedRange([newDates[0], newDates[1]]);
+      setSelectedDate(
+        `${moment(newDates[0]).format("YYYY.MM.DD")} - ${moment(
+          newDates[1]
+        ).format("YYYY.MM.DD")}`
+      );
+    } else {
+      setSelectedRange([today.toDate(), tomorrow.toDate()]);
+      setSelectedDate(
+        `${today.format("YYYY.MM.DD")} - ${tomorrow.format("YYYY.MM.DD")}`
+      );
     }
   };
 
   return (
     <OptionWrapper>
       <DateInput
+        className="date-input"
         color={colors.main}
-        onClick={() => setShowDateOptions((prev) => !prev)}
+        // onClick={() => setShowDateOptions((prev) => !prev)}
       >
         <InputIcon>
           <img src={CalendarIcon} alt="calendar-icon" />
@@ -62,27 +51,27 @@ const DateOption = () => {
         {selectedDate}
       </DateInput>
 
-      {showDateOptions && (
-        <StyledCalendarWrapper color={colors.main}>
-          <StyledCalendar
-            selectRange={true}
-            value={
-              selectedRange.length
-                ? [new Date(selectedRange[0]), new Date(selectedRange[1])]
-                : []
-            }
-            onChange={handleDateChange}
-            formatDay={(locale, date) => moment(date).format("D")}
-            formatYear={(locale, date) => moment(date).format("YYYY")}
-            formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
-            calendarType="gregory"
-            showNeighboringMonth={false}
-            next2Label={null}
-            prev2Label={null}
-            minDate={new Date()}
-          />
-        </StyledCalendarWrapper>
-      )}
+      {/* {showDateOptions && ( */}
+      <StyledCalendarWrapper ref={calendarRef} color={colors.main}>
+        <StyledCalendar
+          selectRange={true}
+          value={
+            selectedRange.length
+              ? [new Date(selectedRange[0]), new Date(selectedRange[1])]
+              : []
+          }
+          onChange={handleDateChange}
+          formatDay={(locale, date) => moment(date).format("D")}
+          formatYear={(locale, date) => moment(date).format("YYYY")}
+          formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
+          calendarType="gregory"
+          showNeighboringMonth={false}
+          next2Label={null}
+          prev2Label={null}
+          minDate={new Date()}
+        />
+      </StyledCalendarWrapper>
+      {/* )} */}
     </OptionWrapper>
   );
 };

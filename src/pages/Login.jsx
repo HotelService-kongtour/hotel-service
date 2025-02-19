@@ -151,7 +151,7 @@ const Login = () => {
           </LoginForm>
 
           <OauthContainer>
-            <OauthText>Other ways to sign in</OauthText>
+            {/* <OauthText>Other ways to sign in</OauthText> */}
             <CustomButton
               bgColor={"#fff"}
               textColor={"#666"}
@@ -172,8 +172,8 @@ const Login = () => {
               Sign in with Apple
             </CustomButton>
             <PolicyText color={colors.sub}>
-              By continueting, you agree to Kong tour Terms of use, read use
-              Privacy Policy.
+              Continuing means you agree to HanTour's Terms of Use and Privacy
+              Policy.
             </PolicyText>
           </OauthContainer>
         </Container>

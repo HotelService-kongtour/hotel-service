@@ -8,17 +8,46 @@ import XIcon from "assets/icons/x-mark.svg";
 import StarIcon from "assets/icons/star.svg";
 import StarFillIcon from "assets/icons/star-fill.svg";
 
-const ReviewModal = ({ setShowReviewModal }) => {
+const ReviewModal = ({ setShowReviewModal, reviews }) => {
   const colors = useColors();
+
   const [rating, setRating] = useState(0);
+  const [hotelNameValue, setHotelNameValue] = useState("");
+  const [idValue, setIdValue] = useState("");
+  const [contentValue, setContentValue] = useState("");
+  const [errors, setErrors] = useState({});
+
+  // 유효성 검사
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (rating === 0) newErrors.rating = "Please select a rating";
+    if (!hotelNameValue.trim()) newErrors.hotelName = "Please enter hotel name";
+    if (!idValue.trim()) newErrors.id = "Please enter ID";
+    if (!contentValue.trim()) newErrors.content = "Please enter review content";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleStarClick = (index) => {
     setRating(index + 1);
   };
 
+  // 리뷰등록
   const handleClickCreate = () => {
-    alert("Your review has been registered.");
-    setShowReviewModal(false);
+    // if (!validateForm()) return;
+    // const maskedId = idValue.slice(0, 3) + "***";
+    // const reviewData = {
+    //   id: reviews.length + 1,
+    //   userId: maskedId,
+    //   rating,
+    //   text: contentValue,
+    //   createdAt: new Date().toISOString().split("T")[0], // YYYY-MM-DD 형식
+    // };
+    // console.log("New Review Data:", reviewData);
+    // alert("Your review has been registered.");
+    // setShowReviewModal(false);
   };
 
   return (
@@ -40,14 +69,27 @@ const ReviewModal = ({ setShowReviewModal }) => {
                 onClick={() => handleStarClick(index)}
               />
             ))}
+            {errors.rating && <ErrorMessage>{errors.rating}</ErrorMessage>}
           </StarBox>
           <InputBox>
             <Label>Hotel Name</Label>
-            <CustomInput placeholder={"Hotel Name"} />
+            <CustomInput
+              placeholder={"Hotel Name"}
+              value={hotelNameValue}
+              onChange={(value) => setHotelNameValue(value)}
+            />
+            {errors.hotelName && (
+              <ErrorMessage>{errors.hotelName}</ErrorMessage>
+            )}
           </InputBox>
           <InputBox>
             <Label>ID</Label>
-            <CustomInput placeholder={"ID"} />
+            <CustomInput
+              placeholder={"ID"}
+              value={idValue}
+              onChange={(value) => setIdValue(value)}
+            />
+            {errors.id && <ErrorMessage>{errors.id}</ErrorMessage>}
           </InputBox>
           <InputBox>
             <Label>Content</Label>
@@ -55,7 +97,10 @@ const ReviewModal = ({ setShowReviewModal }) => {
               typeof="text"
               placeholder="Please write a review."
               color={colors.sub}
+              value={contentValue}
+              onChange={(e) => setContentValue(e.target.value)}
             />
+            {errors.content && <ErrorMessage>{errors.content}</ErrorMessage>}
           </InputBox>
         </InputContainer>
 
@@ -147,4 +192,10 @@ const TextInput = styled.textarea`
 const CreateBtn = styled.div`
   width: 100%;
   margin-top: 2rem;
+`;
+
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 4px;
 `;

@@ -87,6 +87,7 @@ const HotelInfomation = () => {
               <span>+ ₩60,000</span>
             </div>
           </MealLabel>
+
           <PersonsOption />
         </SelectionBox>
       </InfoContainer>

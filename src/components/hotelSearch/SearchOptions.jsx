@@ -1,38 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import AreaOption from "./optionDetail/AreaOption";
 import DateOption from "./optionDetail/DateOption";
 import CustomButton from "components/custom/CustomButton";
-import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 const SearchOptions = ({ selectedArea }) => {
-  const optionsRef = useRef(null);
-
-  const { setShowPlaceOptions, setShowDateOptions } = useSearchOptionsStore();
-
-  const handleClickCompleteBtn = () => {
-    setShowPlaceOptions(false);
-    setShowDateOptions(false);
-  };
-
-  const handleClickOutside = (event) => {
-    if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-      setShowPlaceOptions(false);
-      setShowDateOptions(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const handleClickCompleteBtn = () => {};
 
   return (
     <OptionsContainer>
-      <Options ref={optionsRef}>
+      <Options>
         <AreaOption selectedArea={selectedArea} />
         <DateOption />
       </Options>

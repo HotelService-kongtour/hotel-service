@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useColors } from "../../../context/ColorContext";
-import useSearchOptionsStore from "store/useSearchOptionsStore";
 
 import GlobeIcon from "assets/icons/globe-outline.svg";
 import MapIcon from "assets/icons/map-outline.svg";
@@ -21,9 +20,9 @@ const locationList = [
 
 const AreaOption = ({ selectedArea }) => {
   const colors = useColors();
+  const modalRef = useRef(null);
 
-  const { showPlaceOptions, setShowPlaceOptions } = useSearchOptionsStore();
-
+  const [showPlaceOptions, setShowPlaceOptions] = useState(false);
   const [selected, setSelected] = useState(selectedArea);
 
   useEffect(() => {
@@ -47,15 +46,30 @@ const AreaOption = ({ selectedArea }) => {
     setShowPlaceOptions(false);
   };
 
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setShowPlaceOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showPlaceOptions) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showPlaceOptions]);
+
   return (
-    <OptionWrapper>
+    <OptionWrapper ref={modalRef}>
       <InputIcon>
         <img src={GlobeIcon} alt="globe-icon" />
       </InputIcon>
-      <PlaceInput
-        color={colors.main}
-        onClick={() => setShowPlaceOptions((prev) => !prev)}
-      >
+      <PlaceInput color={colors.main} onClick={() => setShowPlaceOptions(true)}>
         {selected}
       </PlaceInput>
 
@@ -142,7 +156,7 @@ const OptionsModal = styled.div`
   background-color: #fff;
   color: #333;
   position: absolute;
-  z-index: 99;
+  z-index: 999;
   top: 60px;
   overflow-y: auto;
 `;

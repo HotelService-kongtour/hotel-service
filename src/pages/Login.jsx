@@ -11,6 +11,7 @@ import Logo from "assets/logo/logo-H.svg";
 import LogoName from "assets/logo/logo-Hantour.svg";
 import AppleLogo from "assets/logo/logo-Apple.svg";
 import GoogleLogo from "assets/logo/logo-Google.svg";
+import EyeOffIcon from "assets/icons/eye-off-outline.svg";
 
 const Login = () => {
   const colors = useColors();
@@ -21,6 +22,7 @@ const Login = () => {
   const [autoLogin, setAutoLogin] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -106,10 +108,13 @@ const Login = () => {
             <CustomInput
               labelText={"Password"}
               placeholder={"Password"}
-              type={"password"}
+              type={isPasswordVisible ? "text" : "password"}
               onChange={setPasswordValue}
               validateType={"password"}
               onError={setPasswordError}
+              // imageSrc={EyeOffIcon}
+              isVisible={isPasswordVisible}
+              onIconClick={() => setIsPasswordVisible((prev) => !prev)}
             />
 
             <CheckboxContainer>

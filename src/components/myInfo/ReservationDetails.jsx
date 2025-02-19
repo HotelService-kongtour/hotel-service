@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CustomButton from "components/custom/CustomButton";
 import { useColors } from "context/ColorContext";
@@ -35,6 +35,18 @@ const ReservationDetails = ({ state }) => {
   const colors = useColors();
 
   const [isShowCancelModal, setIsShowCancelModal] = useState(false);
+
+  useEffect(() => {
+    if (isShowCancelModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isShowCancelModal]);
 
   return (
     <Wrapper>

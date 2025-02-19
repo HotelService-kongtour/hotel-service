@@ -36,21 +36,19 @@ const HotelRooms = () => {
   const [roomCounts, setRoomCounts] = useState({});
 
   const handleChangeCount = (roomName, type) => {
-    setRoomCounts((prevCounts) => {
-      const currentCount = prevCounts[roomName] || 0;
-      let newCount = currentCount;
-
-      if (type === "plus") {
-        newCount = currentCount < 5 ? currentCount + 1 : 5;
-      } else if (type === "minus" && currentCount > 0) {
-        newCount = currentCount - 1;
-      }
-
-      return {
-        ...prevCounts,
-        [roomName]: newCount,
-      };
-    });
+    // setRoomCounts((prevCounts) => {
+    //   const currentCount = prevCounts[roomName] || 0;
+    //   let newCount = currentCount;
+    //   if (type === "plus") {
+    //     newCount = currentCount < 5 ? currentCount + 1 : 5;
+    //   } else if (type === "minus" && currentCount > 0) {
+    //     newCount = currentCount - 1;
+    //   }
+    //   return {
+    //     ...prevCounts,
+    //     [roomName]: newCount,
+    //   };
+    // });
   };
 
   const handleClickRoomResercation = () => {

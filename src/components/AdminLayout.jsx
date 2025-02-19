@@ -10,7 +10,7 @@ function AdminLayout() {
         <NavContainer>
           <MenuList>
             <MenuLink to="/admin/hotel-management">호텔 내역</MenuLink>
-            <MenuLink to="/admin/reservation-management">예약 내역</MenuLink>
+            {/* <MenuLink to="/admin/reservation-management">예약 내역</MenuLink> */}
           </MenuList>
           {/* 임시링크 */}
           <Link to={"/"}>

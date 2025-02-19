@@ -112,7 +112,7 @@ const Login = () => {
               onChange={setPasswordValue}
               validateType={"password"}
               onError={setPasswordError}
-              imageSrc={EyeOffIcon}
+              // imageSrc={EyeOffIcon}
               isVisible={isPasswordVisible}
               onIconClick={() => setIsPasswordVisible((prev) => !prev)}
             />

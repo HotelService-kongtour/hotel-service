@@ -63,9 +63,9 @@ const SignUp = () => {
                 <img src={LogoName} alt="logo-name" />
               </LogoBox>
             </Link>
-            <Script>
+            {/* <Script>
               Find the perfect space for your cherished moments with Kong tour
-            </Script>
+            </Script> */}
           </LogoContainer>
 
           <SignupForm>
@@ -201,15 +201,18 @@ const Container = styled.div`
 
 const LogoContainer = styled.div`
   width: 60%;
-  height: 15%;
   margin: auto;
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: 1440px) {
+    margin-bottom: 1rem;
+  }
 `;
 const LogoBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
 `;
 const Script = styled.p`
   font-size: 0.9rem;
@@ -226,6 +229,10 @@ const FormInner = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media screen and (max-width: 1440px) {
+    gap: 0.5rem;
+  }
 `;
 const EmailBox = styled.div`
   display: flex;
@@ -263,4 +270,8 @@ const BtnBox = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
+
+  @media screen and (max-width: 1440px) {
+    bottom: -2rem;
+  }
 `;

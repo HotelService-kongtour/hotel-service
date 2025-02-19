@@ -92,9 +92,9 @@ const Login = () => {
                 <img src={LogoName} alt="logo-name" />
               </LogoBox>
             </Link>
-            <Script>
+            {/* <Script>
               Find the perfect space for your cherished moments with Kong tour
-            </Script>
+            </Script> */}
           </LogoContainer>
           <LoginForm onSubmit={handleLogin}>
             <CustomInput
@@ -221,19 +221,24 @@ const NavTitle = styled.div`
 
 const Container = styled.div`
   padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const LogoContainer = styled.div`
   width: 60%;
   margin: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+
+  @media screen and (max-width: 1440px) {
+    margin-bottom: 2rem;
+  }
 `;
 const LogoBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
 `;
 const Script = styled.p`
   font-size: 0.9rem;
@@ -276,7 +281,11 @@ const OauthContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 5rem;
+
+  @media screen and (max-width: 1440px) {
+    margin-top: 2rem;
+  }
 `;
 const OauthText = styled.p`
   font-size: 0.8rem;

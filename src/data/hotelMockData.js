@@ -2,7 +2,7 @@ export const hotelMockData = [
   {
     hotelName: "그랜드호텔",
     region: "서울",
-    theme: "Korean-Traditional",
+    theme: "Spring",
     availableRooms: 15,
     reservationCount: 45,
     hotelNumber: "02-2292-2222",
@@ -11,7 +11,7 @@ export const hotelMockData = [
   {
     hotelName: "시티호텔",
     region: "부산",
-    theme: "Pet-friendly",
+    theme: "Fall",
     availableRooms: 8,
     reservationCount: 32,
     hotelNumber: "02-2292-2223",

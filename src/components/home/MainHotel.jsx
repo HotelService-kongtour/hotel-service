@@ -100,16 +100,9 @@ const MainHotel = () => {
     prevArrow: <CirclePrevArrow />,
     responsive: [
       {
-        breakpoint: 1440,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
-      },
-      {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
@@ -138,7 +131,7 @@ const MainHotel = () => {
           {attractionMockData.map((attraction) => (
             <Link to={``} key={attraction.attractionName}>
               <AttractionList
-                $imageurl={MainPrepare}
+                $imageurl={attraction.imageURL}
                 color={colors.mainLight}
                 key={attraction.attractionName}
               >
@@ -146,12 +139,10 @@ const MainHotel = () => {
                   <AttractionText>
                     <p>{attraction.attractionName}</p>
                     <p style={{ fontSize: "0.8em", opacity: 0.8 }}>
-                      {attraction.type}
+                      {attraction.openTime} - {attraction.closeTime}
                     </p>
                     <p style={{ fontSize: "0.8em", opacity: 0.8 }}>
-                      {attraction.price === "free"
-                        ? "free"
-                        : `₩${attraction.price.toLocaleString()}`}
+                      ${attraction.price}
                     </p>
                   </AttractionText>
                 </AttractionTextContainer>
@@ -307,13 +298,17 @@ const AttractionList = styled(List)`
   padding: 0.5rem;
   width: 200px;
   height: 280px;
+  background-image: ${({ $imageurl }) => `url("${$imageurl}")`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   &:hover {
     border: none;
   }
 
   @media screen and (max-width: 1440px) {
-    /* width: 205px; */
+    width: 200px;
     height: 240px;
   }
 `;

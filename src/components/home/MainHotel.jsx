@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
 import MainSeoul from "assets/images/main-seoul.jpeg";
+import MainIncheon from "assets/images/main-incheon.jpg";
 import MainBusan from "assets/images/main-busan.jpeg";
 import MainCasino from "assets/images/main-casino.jpeg";
 import MainTradition from "assets/images/main-tradition.jpeg";
@@ -14,8 +15,8 @@ import PrevArrowIcon from "assets/icons/arrow-back-dark.svg";
 
 const locations = [
   { area: "Seoul", imageURL: MainSeoul },
+  { area: "Incheon", imageURL: MainIncheon },
   { area: "Busan", imageURL: MainBusan },
-  { area: "Incheon", imageURL: MainPrepare },
   { area: "Gangneung", imageURL: MainPrepare },
   { area: "Daejeon", imageURL: MainPrepare },
   { area: "Daegu", imageURL: MainPrepare },

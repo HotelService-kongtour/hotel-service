@@ -2,27 +2,7 @@ import React, { useState } from "react";
 import AdminTable from "components/admin/AdminTable";
 import CustomSearchbar from "components/custom/CustomSearchBar";
 import Pagination from "components/admin/Pagination";
-
-const hotelData = [
-  {
-    hotelName: "그랜드호텔",
-    region: "서울",
-    theme: "Korean-Traditional",
-    availableRooms: 15,
-    reservationCount: 45,
-    hotelNumber: "02-2292-2222",
-    review: null,
-  },
-  {
-    hotelName: "시티호텔",
-    region: "부산",
-    theme: "Pet-friendly",
-    availableRooms: 8,
-    reservationCount: 32,
-    hotelNumber: "02-2292-2222",
-    review: null,
-  },
-];
+import { hotelMockData } from "../../data/hotelMockData";
 
 const HotelManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,7 +21,7 @@ const HotelManagement = () => {
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return hotelData.slice(startIndex, endIndex);
+    return hotelMockData.slice(startIndex, endIndex);
   };
 
   const handleReviewClick = (rowData) => {
@@ -66,7 +46,7 @@ const HotelManagement = () => {
         onThemeChange={handleThemeChange}
       />
       <Pagination
-        totalItems={hotelData.length}
+        totalItems={hotelMockData.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}

@@ -2,33 +2,8 @@ import React, { useState } from "react";
 import CustomSearchbar from "components/custom/CustomSearchBar";
 import AdminTable from "components/admin/AdminTable";
 import Pagination from "components/admin/Pagination";
+import { reservationMockData } from "../../data/reservationMockData";
 
-const reservationData = [
-  {
-    reservationDate: "24.02.17",
-    reservationNumber: "RSV001",
-    agencyName: "행복여행사",
-    agencyId: "AGC001",
-    hotelName: "그랜드호텔",
-    guestName: "김철수",
-    numberOfGuests: 2,
-    numberOfRooms: 1,
-    approval: false,
-    payment: "미결제",
-  },
-  {
-    reservationDate: "24.02.18",
-    reservationNumber: "RSV002",
-    agencyName: "즐거운여행",
-    agencyId: "AGC002",
-    hotelName: "시티호텔",
-    guestName: "이영희",
-    numberOfGuests: 4,
-    numberOfRooms: 2,
-    approval: false,
-    payment: "미결제",
-  },
-];
 const ReservationManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -49,7 +24,7 @@ const ReservationManagement = () => {
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return reservationData.slice(startIndex, endIndex);
+    return reservationMockData.slice(startIndex, endIndex);
   };
 
   const handleApprove = (rowData) => {
@@ -69,13 +44,13 @@ const ReservationManagement = () => {
       <CustomSearchbar placeholder="예약번호 또는 예약 회사명을 입력해주세요" />
       <AdminTable
         headers={reservationHeaders}
-        data={reservationData}
+        data={reservationMockData}
         onApprove={handleApprove}
         onPaymentChange={handlePaymentChange}
       />
 
       <Pagination
-        totalItems={reservationData.length}
+        totalItems={reservationMockData.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         onPageChange={handlePageChange}

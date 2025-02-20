@@ -84,7 +84,7 @@ const HotelReview = () => {
             <GradeBox>
               <StarRating rating={review.rating} />
             </GradeBox>
-            <ReviewDate>{formatDate(review.createdAt)}</ReviewDate>
+            {/* <ReviewDate>{formatDate(review.createdAt)}</ReviewDate> */}
           </ReviewTitle>
           <Script>{review.text}</Script>
         </ReviewBox>

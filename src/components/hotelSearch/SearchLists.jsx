@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import CustomMainInput from "../custom/CustomMainInput";
 import { useColors } from "context/ColorContext";
@@ -14,8 +14,32 @@ const hotelLists = [
     room_type_02_price: "204,000",
   },
   {
-    name: "Best Western",
+    name: "Lotte Hotel Busan",
+    place: "Busan",
+    room_type_01: "Superior Twin",
+    room_type_02: "Superior Double",
+    room_type_01_price: "169,000",
+    room_type_02_price: "204,000",
+  },
+  {
+    name: "Best Western Gangnam",
     place: "Seoul",
+    room_type_01: "Superior Twin",
+    room_type_02: "Superior Double",
+    room_type_01_price: "169,000",
+    room_type_02_price: "204,000",
+  },
+  {
+    name: "Best Western Cheongdam",
+    place: "Seoul",
+    room_type_01: "Superior Twin",
+    room_type_02: "Superior Double",
+    room_type_01_price: "169,000",
+    room_type_02_price: "204,000",
+  },
+  {
+    name: "Best Western Incheon",
+    place: "Incheon",
     room_type_01: "Superior Twin",
     room_type_02: "Superior Double",
     room_type_01_price: "169,000",
@@ -23,15 +47,37 @@ const hotelLists = [
   },
 ];
 
-const SearchLists = () => {
+const SearchLists = ({ searchKeyword }) => {
   const colors = useColors();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const selectedArea = queryParams.get("area") || "Seoul";
+
+  // const filteredHotels = hotelLists.filter((hotel) =>
+  //   hotel.name.toLowerCase().includes(searchKeyword?.toLowerCase() || "")
+  // );
+
+  const filteredHotels = hotelLists.filter((hotel) => {
+    const matchesSearch = hotel.name
+      .toLowerCase()
+      .includes(searchKeyword?.toLowerCase() || "");
+    const matchesArea = hotel.place === selectedArea;
+
+    if (selectedArea === "Other") {
+      return (
+        matchesSearch && !["Seoul", "Busan", "Incheon"].includes(hotel.place)
+      );
+    }
+
+    return matchesSearch && matchesArea;
+  });
 
   return (
     <Wrapper>
       <CustomMainInput />
       <ListsBox>
         <Lists>
-          {hotelLists.map((list) => (
+          {filteredHotels.map((list) => (
             <Link to={`/hotel-detail/${list.name}`} key={list.name}>
               <List color={colors.mainLight}>
                 <InfoBox>
@@ -72,6 +118,7 @@ const Wrapper = styled.div`
 const ListsBox = styled.div`
   height: 100%;
   overflow-y: auto;
+  padding-right: 1rem;
 `;
 
 const Lists = styled.ul`

@@ -8,11 +8,12 @@ const HotelSearch = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const areaFromUrl = queryParams.get("area") || "Seoul";
+  const searchFromUrl = queryParams.get("search") || "";
 
   return (
     <Wrapper>
       <SearchOptions selectedArea={areaFromUrl} />
-      <SearchLists />
+      <SearchLists searchKeyword={searchFromUrl} />
     </Wrapper>
   );
 };

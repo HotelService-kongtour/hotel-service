@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import LogoIcon from "../assets/logo/logo-H.svg";
 import LogoName from "../assets/logo/logo-Hantour.svg";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -40,9 +40,9 @@ const Footer = () => {
         </Terms>
 
         {/* 임시 관리자 */}
-        <Link to={"/admin"}>
+        {/* <Link to={"/admin"}>
           <Admin>관리자</Admin>
-        </Link>
+        </Link> */}
       </FooterInner>
     </MainFooter>
   );

@@ -52,7 +52,7 @@ const HotelRooms = () => {
   };
 
   const handleClickRoomResercation = () => {
-    alert("Your reservation is complete!");
+    // alert("Your reservation is complete!");
     navigate("/reservation-complete");
   };
 

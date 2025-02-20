@@ -88,12 +88,12 @@ const ResetPassword = () => {
                 isVisible={isConfirmPasswordVisible}
                 onIconClick={() => setIsConfirmPasswordVisible((prev) => !prev)}
               />
-              {!isPasswordMatch && confirmPasswordValue && (
-                <ErrorMessage>Passwords do not match</ErrorMessage>
-              )}
             </div>
 
             <BtnBox>
+              {!isPasswordMatch && confirmPasswordValue && (
+                <ErrorMessage>Passwords do not match</ErrorMessage>
+              )}
               <CustomButton
                 onClick={handleClickContinue}
                 disabled={
@@ -175,7 +175,7 @@ const PasswordBox = styled.div`
   }
 `;
 const ErrorMessage = styled.div`
-  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   color: red;
   font-size: 0.9rem;
   text-align: center;

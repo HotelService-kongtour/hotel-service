@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useColors } from "context/ColorContext";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
+import { attractionMockData } from "data/attractionMockData";
 
 import NextArrowIcon from "assets/icons/arrow-forward-dark.svg";
 import PrevArrowIcon from "assets/icons/arrow-back-dark.svg";
@@ -42,7 +43,7 @@ const themes = [
 const MainHotel = () => {
   const colors = useColors();
 
-  const PrevArrow = ({ onClick }) => {
+  const PrevArrow = ({ onClick, className }) => {
     return (
       <ArrowButton onClick={onClick} style={{ left: "-30px" }}>
         <img src={PrevArrowIcon} alt="prev-arrow" />
@@ -50,11 +51,27 @@ const MainHotel = () => {
     );
   };
 
-  const NextArrow = ({ onClick }) => {
+  const NextArrow = ({ onClick, className }) => {
     return (
       <ArrowButton onClick={onClick} style={{ right: "-30px" }}>
         <img src={NextArrowIcon} alt="next-arrow" />
       </ArrowButton>
+    );
+  };
+
+  const CirclePrevArrow = ({ onClick }) => {
+    return (
+      <CircleArrowButton onClick={onClick} style={{ left: "10px" }}>
+        <img src={PrevArrowIcon} alt="prev-arrow" />
+      </CircleArrowButton>
+    );
+  };
+
+  const CircleNextArrow = ({ onClick }) => {
+    return (
+      <CircleArrowButton onClick={onClick} style={{ right: "10px" }}>
+        <img src={NextArrowIcon} alt="next-arrow" />
+      </CircleArrowButton>
     );
   };
 
@@ -65,6 +82,38 @@ const MainHotel = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const attractionSliderSettings = {
+    ...sliderSettings,
+    slidesToShow: 5,
+    nextArrow: <CircleNextArrow />,
+    prevArrow: <CirclePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1440,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -81,6 +130,36 @@ const MainHotel = () => {
           ))}
         </Slider>
       </ListContainer>
+
+      {/* 관광명소 리스트 */}
+      <ListContainerAttraction>
+        <ListTitle>Tourist Attractions</ListTitle>
+        <Slider {...attractionSliderSettings}>
+          {attractionMockData.map((attraction) => (
+            <Link to={``} key={attraction.attractionName}>
+              <AttractionList
+                $imageurl={MainPrepare}
+                color={colors.mainLight}
+                key={attraction.attractionName}
+              >
+                <AttractionTextContainer>
+                  <AttractionText>
+                    <p>{attraction.attractionName}</p>
+                    <p style={{ fontSize: "0.8em", opacity: 0.8 }}>
+                      {attraction.type}
+                    </p>
+                    <p style={{ fontSize: "0.8em", opacity: 0.8 }}>
+                      {attraction.price === "free"
+                        ? "free"
+                        : `₩${attraction.price.toLocaleString()}`}
+                    </p>
+                  </AttractionText>
+                </AttractionTextContainer>
+              </AttractionList>
+            </Link>
+          ))}
+        </Slider>
+      </ListContainerAttraction>
 
       <ListContainer>
         <ListTitle>Hotels by Theme</ListTitle>
@@ -113,8 +192,17 @@ const MainWrapper = styled.div`
 `;
 
 const ListContainer = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   position: relative;
+
+  .slick-slide {
+    padding: 0 0.5rem;
+  }
+`;
+const ListContainerAttraction = styled(ListContainer)`
+  background-color: #ececec;
+  border-radius: 1rem;
+  padding: 4rem 2rem;
 
   .slick-slide {
     padding: 0 0.5rem;
@@ -139,6 +227,30 @@ const ArrowButton = styled.div`
 
   &:hover {
     opacity: 0.5;
+  }
+`;
+
+const CircleArrowButton = styled(ArrowButton)`
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+
+  img {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    left: ${(props) => (props.style?.left ? "4px" : "0")};
+  }
+
+  &:hover {
+    opacity: 1;
+    background: ${(props) => props.theme.colors?.mainLight || "#f8f8f8"};
   }
 `;
 
@@ -191,10 +303,40 @@ const List = styled.li`
   }
 `;
 
+const AttractionList = styled(List)`
+  padding: 0.5rem;
+  width: 200px;
+  height: 280px;
+
+  &:hover {
+    border: none;
+  }
+
+  @media screen and (max-width: 1440px) {
+    /* width: 205px; */
+    height: 240px;
+  }
+`;
+
 const Text = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   color: #fff;
   z-index: 3;
+`;
+
+const AttractionTextContainer = styled.div`
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  z-index: 3;
+`;
+
+const AttractionText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #333;
 `;

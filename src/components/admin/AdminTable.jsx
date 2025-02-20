@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const AdminTable = ({
@@ -9,6 +9,12 @@ const AdminTable = ({
   onPaymentChange,
   onThemeChange,
 }) => {
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [approvedRows, setApprovedRows] = useState({});
+  const [selectedThemes, setSelectedThemes] = useState({});
+  const [selectedPayments, setSelectedPayments] = useState({});
+
   const MIN_ROWS = 10;
 
   const paddedData = [...data];
@@ -23,30 +29,63 @@ const AdminTable = ({
     }
   }
 
-  const renderCell = (header, value) => {
-    if (value === "") {
-      return "";
-    }
+  const handleReviewClick = (rowData) => {
+    setSelectedHotel(rowData);
+    setIsModalOpen(true);
+  };
+
+  const handleApproval = (rowData) => {
+    setApprovedRows((prev) => ({
+      ...prev,
+      [rowData.reservationNumber]: true,
+    }));
+    onApprove(rowData);
+  };
+
+  const handleThemeChange = (value, rowData) => {
+    setSelectedThemes((prev) => ({
+      ...prev,
+      [rowData.hotelNumber]: value,
+    }));
+    onThemeChange(value, rowData);
+  };
+
+  const handlePaymentChange = (value, rowData) => {
+    setSelectedPayments((prev) => ({
+      ...prev,
+      [rowData.reservationNumber]: value,
+    }));
+    onPaymentChange(value, rowData);
+  };
+
+  const renderCell = (header, value, rowData) => {
+    if (value === "") return "";
 
     switch (header.type) {
       case "button":
+        if (header.key === "approval") {
+          const isApproved = approvedRows[rowData.reservationNumber];
+          return (
+            <Button
+              onClick={() => handleApproval(rowData)}
+              disabled={isApproved}
+              isApproved={isApproved}
+            >
+              {isApproved ? "승인완료" : "승인"}
+            </Button>
+          );
+        }
         return (
-          <Button
-            onClick={() =>
-              header.key === "approval"
-                ? onApprove(value)
-                : onReviewClick(value)
-            }
-          >
-            {header.key === "approval" ? "승인" : "호텔리뷰"}
-          </Button>
+          <Button onClick={() => handleReviewClick(rowData)}>호텔리뷰</Button>
         );
 
       case "payment":
+        const selectedPayment =
+          selectedPayments[rowData.reservationNumber] || value;
         return (
           <Select
-            value={value}
-            onChange={(e) => onPaymentChange(e.target.value)}
+            value={selectedPayment}
+            onChange={(e) => handlePaymentChange(e.target.value, rowData)}
           >
             <option value="미결제">미결제</option>
             <option value="결제완료">결제완료</option>
@@ -54,8 +93,12 @@ const AdminTable = ({
         );
 
       case "theme":
+        const selectedTheme = selectedThemes[rowData.hotelNumber] || value;
         return (
-          <Select value={value} onChange={(e) => onThemeChange(e.target.value)}>
+          <Select
+            value={selectedTheme}
+            onChange={(e) => handleThemeChange(e.target.value, rowData)}
+          >
             <option value="Korean-Traditional">Korean-Traditional</option>
             <option value="Casino">Casino</option>
             <option value="Pet-friendly">Pet-friendly</option>
@@ -69,36 +112,41 @@ const AdminTable = ({
   };
 
   return (
-    <TableWrapper>
-      <Table>
-        <colgroup>
-          {headers.map((header) => (
-            <col
-              key={header.key}
-              style={{ width: getColumnWidth(header.type) }}
-            />
-          ))}
-        </colgroup>
-        <thead>
-          <TR>
+    <>
+      <TableWrapper>
+        <Table>
+          <colgroup>
             {headers.map((header) => (
-              <TH key={header.key}>{header.label}</TH>
+              <col
+                key={header.key}
+                style={{ width: getColumnWidth(header.type) }}
+              />
             ))}
-          </TR>
-        </thead>
-        <tbody>
-          {paddedData.map((row, index) => (
-            <TR key={index}>
+          </colgroup>
+          <thead>
+            <TR>
               {headers.map((header) => (
-                <TD key={header.key}>{renderCell(header, row[header.key])}</TD>
+                <TH key={header.key}>{header.label}</TH>
               ))}
             </TR>
-          ))}
-        </tbody>
-      </Table>
-    </TableWrapper>
+          </thead>
+          <tbody>
+            {paddedData.map((row, index) => (
+              <TR key={index}>
+                {headers.map((header) => (
+                  <TD key={header.key}>
+                    {renderCell(header, row[header.key], row)}
+                  </TD>
+                ))}
+              </TR>
+            ))}
+          </tbody>
+        </Table>
+      </TableWrapper>
+    </>
   );
 };
+
 const getColumnWidth = (type) => {
   switch (type) {
     case "button":
@@ -169,9 +217,9 @@ const Button = styled.button`
   padding: 0.5rem 0.75rem;
   border: none;
   border-radius: 0.25rem;
-  background-color: #007bff;
+  background-color: ${(props) => (props.isApproved ? "#6c757d" : "#007bff")};
   color: white;
-  cursor: pointer;
+  cursor: ${(props) => (props.isApproved ? "default" : "pointer")};
   transition: background-color 0.2s;
   font-size: 0.875rem;
   margin: 0 auto;

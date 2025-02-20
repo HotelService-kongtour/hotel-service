@@ -4,14 +4,19 @@ import { useColors } from "context/ColorContext";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
+import NextArrowIcon from "assets/icons/arrow-forward-dark.svg";
+import PrevArrowIcon from "assets/icons/arrow-back-dark.svg";
+
+import MainPrepare from "assets/images/main-prepare.png";
 import MainSeoul from "assets/images/main-seoul.jpeg";
 import MainIncheon from "assets/images/main-incheon.jpg";
 import MainBusan from "assets/images/main-busan.jpeg";
 import MainCasino from "assets/images/main-casino.jpeg";
 import MainTradition from "assets/images/main-tradition.jpeg";
-import MainPrepare from "assets/images/main-prepare.png";
-import NextArrowIcon from "assets/icons/arrow-forward-dark.svg";
-import PrevArrowIcon from "assets/icons/arrow-back-dark.svg";
+import MainSpring from "assets/images/main-spring.jpg";
+import MainSummer from "assets/images/main-summer.jpg";
+import MainFall from "assets/images/main-fall.jpg";
+import MainWinter from "assets/images/main-winter.jpeg";
 
 const locations = [
   { area: "Seoul", imageURL: MainSeoul },
@@ -28,8 +33,10 @@ const locations = [
 const themes = [
   { area: "Casino", imageURL: MainCasino },
   { area: "Korea Traditional", imageURL: MainTradition },
-  { area: "Pet Friendly", imageURL: MainPrepare },
-  { area: "Eco Friendly", imageURL: MainPrepare },
+  { area: "Spring", imageURL: MainSpring },
+  { area: "Summer", imageURL: MainSummer },
+  { area: "Fall", imageURL: MainFall },
+  { area: "Winter", imageURL: MainWinter },
 ];
 
 const MainHotel = () => {
@@ -51,7 +58,7 @@ const MainHotel = () => {
     );
   };
 
-  const locationSettings = {
+  const sliderSettings = {
     infinite: true,
     speed: 500,
     slidesToShow: 5,
@@ -64,7 +71,7 @@ const MainHotel = () => {
     <MainWrapper>
       <ListContainer>
         <ListTitle>Hotels by Location</ListTitle>
-        <Slider {...locationSettings}>
+        <Slider {...sliderSettings}>
           {locations.map((loc) => (
             <Link to={`/hotel-search?area=${loc.area}`} key={loc.area}>
               <List $imageurl={loc.imageURL} color={colors.mainLight}>
@@ -77,9 +84,9 @@ const MainHotel = () => {
 
       <ListContainer>
         <ListTitle>Hotels by Theme</ListTitle>
-        <ListWrapper>
-          <Lists>
-            {themes.map((theme) => (
+        <Slider {...sliderSettings}>
+          {themes.map((theme) => (
+            <Link to={`/hotel-search?theme=${theme.area}`} key={theme.area}>
               <List
                 key={theme.area}
                 $imageurl={theme.imageURL}
@@ -91,9 +98,9 @@ const MainHotel = () => {
                   ))}
                 </Text>
               </List>
-            ))}
-          </Lists>
-        </ListWrapper>
+            </Link>
+          ))}
+        </Slider>
       </ListContainer>
     </MainWrapper>
   );
@@ -108,6 +115,10 @@ const MainWrapper = styled.div`
 const ListContainer = styled.div`
   margin-bottom: 2rem;
   position: relative;
+
+  .slick-slide {
+    padding: 0 0.5rem;
+  }
 `;
 
 const ListTitle = styled.h3`

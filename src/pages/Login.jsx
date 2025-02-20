@@ -92,9 +92,9 @@ const Login = () => {
                 <img src={LogoName} alt="logo-name" />
               </LogoBox>
             </Link>
-            <Script>
+            {/* <Script>
               Find the perfect space for your cherished moments with Kong tour
-            </Script>
+            </Script> */}
           </LogoContainer>
           <LoginForm onSubmit={handleLogin}>
             <CustomInput
@@ -151,7 +151,7 @@ const Login = () => {
           </LoginForm>
 
           <OauthContainer>
-            <OauthText>Other ways to sign in</OauthText>
+            {/* <OauthText>Other ways to sign in</OauthText> */}
             <CustomButton
               bgColor={"#fff"}
               textColor={"#666"}
@@ -172,8 +172,8 @@ const Login = () => {
               Sign in with Apple
             </CustomButton>
             <PolicyText color={colors.sub}>
-              By continueting, you agree to Kong tour Terms of use, read use
-              Privacy Policy.
+              Continuing means you agree to HanTour's Terms of Use and Privacy
+              Policy.
             </PolicyText>
           </OauthContainer>
         </Container>
@@ -226,14 +226,17 @@ const Container = styled.div`
 const LogoContainer = styled.div`
   width: 60%;
   margin: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+
+  @media screen and (max-width: 1440px) {
+    margin-bottom: 2rem;
+  }
 `;
 const LogoBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
 `;
 const Script = styled.p`
   font-size: 0.9rem;
@@ -245,6 +248,10 @@ const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media screen and (max-width: 1440px) {
+    gap: 0.5rem;
+  }
 `;
 
 const CheckboxContainer = styled.div`
@@ -276,7 +283,11 @@ const OauthContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 5rem;
+
+  @media screen and (max-width: 1440px) {
+    margin-top: 2rem;
+  }
 `;
 const OauthText = styled.p`
   font-size: 0.8rem;
@@ -287,4 +298,9 @@ const PolicyText = styled.p`
   font-size: 0.9rem;
   line-height: 1.8;
   color: ${(props) => props.color};
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
 `;

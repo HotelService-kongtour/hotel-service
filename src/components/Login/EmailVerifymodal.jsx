@@ -142,6 +142,11 @@ const EmailModal = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  @media screen and (max-width: 1440px) {
+    width: 30%;
+    height: 50%;
+  }
 `;
 const CloseBtn = styled.div`
   position: absolute;
@@ -169,7 +174,8 @@ const NumberWrapper = styled.div`
 const NumberContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
 `;
 const NumberBox = styled.input`
   width: 3rem;

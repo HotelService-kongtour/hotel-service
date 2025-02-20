@@ -3,6 +3,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import XIcon from "assets/icons/x-mark.svg";
+
 const ReservationCancelModal = ({ setIsShowCancelModal }) => {
   const navigate = useNavigate();
 
@@ -13,22 +15,15 @@ const ReservationCancelModal = ({ setIsShowCancelModal }) => {
   };
 
   return (
-    <Wrapper>
-      <Modal>
+    <Wrapper onClick={() => setIsShowCancelModal(false)}>
+      <Modal onClick={(e) => e.stopPropagation()}>
+        <CloseBtn onClick={() => setIsShowCancelModal(false)}>
+          <img src={XIcon} alt="x-icon" />
+        </CloseBtn>
         <Text>Are you sure you want to cancel your reservation?</Text>
         <BtnBox>
-          <CustomButton
-            width={"30%"}
-            bgColor={"#999"}
-            onClick={handleCancelReservation}
-          >
+          <CustomButton onClick={handleCancelReservation}>
             Cancel reservation
-          </CustomButton>
-          <CustomButton
-            width={"30%"}
-            onClick={() => setIsShowCancelModal(false)}
-          >
-            Go back
           </CustomButton>
         </BtnBox>
       </Modal>
@@ -58,17 +53,31 @@ const Modal = styled.div`
   border-radius: 0.5rem;
   position: relative;
 `;
+const CloseBtn = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
 
 const Text = styled.div`
   text-align: center;
   margin-top: 5rem;
+
+  @media screen and (max-width: 1440px) {
+    margin-top: 4rem;
+  }
 `;
 
 const BtnBox = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  width: 40%;
   position: absolute;
+  left: 50%;
   bottom: 2rem;
+  transform: translateX(-50%);
 `;

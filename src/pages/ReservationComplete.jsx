@@ -4,8 +4,10 @@ import CompleteImg from "assets/images/complete.jpg";
 import styled from "styled-components";
 import CustomButton from "components/custom/CustomButton";
 import { useNavigate } from "react-router-dom";
+import { useColors } from "context/ColorContext";
 
 const ReservationComplete = () => {
+  const colors = useColors();
   const navigate = useNavigate();
 
   const handleClickViewDetail = () => {
@@ -46,9 +48,15 @@ const ReservationComplete = () => {
           </InfoRoomDate>
         </InfoRoomBox>
 
-        <CustomButton onClick={handleClickViewDetail}>
-          View reservation details
-        </CustomButton>
+        <BtnBox>
+          <Script color={colors.sub}>
+            You will receive a final approval mail for your reservation in one
+            day and can make a payment.
+          </Script>
+          <CustomButton onClick={handleClickViewDetail}>
+            View reservation details
+          </CustomButton>
+        </BtnBox>
       </InfoContainer>
     </Wrapper>
   );
@@ -87,10 +95,6 @@ const InfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-
-  @media screen and (max-width: 1440px) {
-    width: 25%;
-  }
 `;
 const InfoTitle = styled.div`
   text-align: center;
@@ -162,4 +166,20 @@ const DateCheckIn = styled.div`
 `;
 const DateCheckOut = styled(DateCheckIn)`
   align-items: flex-end;
+`;
+
+const BtnBox = styled.div`
+  width: 100%;
+`;
+
+const Script = styled.div`
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  color: ${(props) => props.color};
+  margin-bottom: 0.5rem;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+  }
 `;

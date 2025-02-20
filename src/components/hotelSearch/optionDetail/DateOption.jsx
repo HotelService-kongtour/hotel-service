@@ -9,11 +9,12 @@ import CalendarIcon from "assets/icons/calendar-outline.svg";
 const DateOption = () => {
   const colors = useColors();
   const calendarRef = useRef(null);
+  const modalRef = useRef(null);
 
   const today = moment();
   const tomorrow = moment().add(1, "days");
 
-  // const [showDateOptions, setShowDateOptions] = useState(false);
+  const [showDateOptions, setShowDateOptions] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     `${today.format("YYYY.MM.DD")} - ${tomorrow.format("YYYY.MM.DD")}`
   );
@@ -30,6 +31,7 @@ const DateOption = () => {
           newDates[1]
         ).format("YYYY.MM.DD")}`
       );
+      setShowDateOptions(false);
     } else {
       setSelectedRange([today.toDate(), tomorrow.toDate()]);
       setSelectedDate(
@@ -38,12 +40,30 @@ const DateOption = () => {
     }
   };
 
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setShowDateOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    if (setShowDateOptions) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowDateOptions]);
+
   return (
-    <OptionWrapper>
+    <OptionWrapper ref={modalRef}>
       <DateInput
         className="date-input"
         color={colors.main}
-        // onClick={() => setShowDateOptions((prev) => !prev)}
+        onClick={() => setShowDateOptions((prev) => !prev)}
       >
         <InputIcon>
           <img src={CalendarIcon} alt="calendar-icon" />
@@ -51,27 +71,27 @@ const DateOption = () => {
         {selectedDate}
       </DateInput>
 
-      {/* {showDateOptions && ( */}
-      <StyledCalendarWrapper ref={calendarRef} color={colors.main}>
-        <StyledCalendar
-          selectRange={true}
-          value={
-            selectedRange.length
-              ? [new Date(selectedRange[0]), new Date(selectedRange[1])]
-              : []
-          }
-          onChange={handleDateChange}
-          formatDay={(locale, date) => moment(date).format("D")}
-          formatYear={(locale, date) => moment(date).format("YYYY")}
-          formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
-          calendarType="gregory"
-          showNeighboringMonth={false}
-          next2Label={null}
-          prev2Label={null}
-          minDate={new Date()}
-        />
-      </StyledCalendarWrapper>
-      {/* )} */}
+      {showDateOptions && (
+        <StyledCalendarWrapper ref={calendarRef} color={colors.main}>
+          <StyledCalendar
+            selectRange={true}
+            value={
+              selectedRange.length
+                ? [new Date(selectedRange[0]), new Date(selectedRange[1])]
+                : []
+            }
+            onChange={handleDateChange}
+            formatDay={(locale, date) => moment(date).format("D")}
+            formatYear={(locale, date) => moment(date).format("YYYY")}
+            formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
+            calendarType="gregory"
+            showNeighboringMonth={false}
+            next2Label={null}
+            prev2Label={null}
+            minDate={new Date()}
+          />
+        </StyledCalendarWrapper>
+      )}
     </OptionWrapper>
   );
 };

@@ -1,12 +1,6 @@
 const { createGlobalStyle } = require("styled-components");
 
 const GlobalStyle = createGlobalStyle`
-  /* 기본 폰트 (영어, 숫자) */
-  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap');
-  
-  /* 한글 폰트 */
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -32,6 +26,7 @@ a {
 
 img {
   display: block;
+  width: 100%;
   max-width: fit-content;
 }
 

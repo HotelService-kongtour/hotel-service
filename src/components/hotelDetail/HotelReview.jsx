@@ -52,7 +52,6 @@ const HotelReview = () => {
     setShowReviewModal(true);
   };
 
-  // 날짜 포맷팅 함수 수정
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date

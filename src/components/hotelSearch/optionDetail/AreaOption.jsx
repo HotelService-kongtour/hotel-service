@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useColors } from "../../../context/ColorContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import GlobeIcon from "assets/icons/globe-outline.svg";
 import MapIcon from "assets/icons/map-outline.svg";
@@ -8,8 +9,8 @@ import XIcon from "assets/icons/x-mark.svg";
 
 const locationList = [
   { area: "Seoul", nation: "Korea" },
-  { area: "Busan", nation: "Korea" },
   { area: "Incheon", nation: "Korea" },
+  { area: "Busan", nation: "Korea" },
   { area: "Gangneung", nation: "Korea" },
   { area: "Daejeon", nation: "Korea" },
   { area: "Daegu", nation: "Korea" },
@@ -21,6 +22,8 @@ const locationList = [
 const AreaOption = ({ selectedArea }) => {
   const colors = useColors();
   const modalRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [showPlaceOptions, setShowPlaceOptions] = useState(false);
   const [selected, setSelected] = useState(selectedArea);
@@ -44,6 +47,14 @@ const AreaOption = ({ selectedArea }) => {
   const handleChangeArea = (area) => {
     setSelected(area);
     setShowPlaceOptions(false);
+
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set("area", area);
+
+    navigate({
+      pathname: "/hotel-search",
+      search: queryParams.toString(),
+    });
   };
 
   const handleClickOutside = (e) => {

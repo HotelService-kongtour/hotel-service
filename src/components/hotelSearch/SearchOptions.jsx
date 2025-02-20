@@ -15,7 +15,7 @@ const SearchOptions = ({ selectedArea }) => {
       </Options>
 
       <BtnWrapper onClick={handleClickCompleteBtn}>
-        <CustomButton>Complete</CustomButton>
+        <CustomButton>Search</CustomButton>
       </BtnWrapper>
     </OptionsContainer>
   );

@@ -28,6 +28,9 @@ const Header = () => {
         <Link to="/login">
           <Menu color={colors.main}>Login</Menu>
         </Link>
+        <Link to="/admin">
+          <Menu color={colors.main}>Admin</Menu>
+        </Link>
       </Menus>
     </HeaderMain>
   );

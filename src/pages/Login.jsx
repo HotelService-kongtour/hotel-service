@@ -112,7 +112,7 @@ const Login = () => {
               onChange={setPasswordValue}
               validateType={"password"}
               onError={setPasswordError}
-              // imageSrc={EyeOffIcon}
+              imageSrc={EyeOffIcon}
               isVisible={isPasswordVisible}
               onIconClick={() => setIsPasswordVisible((prev) => !prev)}
             />
@@ -228,11 +228,7 @@ const Container = styled.div`
 const LogoContainer = styled.div`
   width: 60%;
   margin: auto;
-  margin-bottom: 3rem;
-
-  @media screen and (max-width: 1440px) {
-    margin-bottom: 2rem;
-  }
+  margin-bottom: 2rem;
 `;
 const LogoBox = styled.div`
   display: flex;
@@ -250,6 +246,10 @@ const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media screen and (max-width: 1440px) {
+    gap: 0.5rem;
+  }
 `;
 
 const CheckboxContainer = styled.div`
@@ -296,4 +296,9 @@ const PolicyText = styled.p`
   font-size: 0.9rem;
   line-height: 1.8;
   color: ${(props) => props.color};
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
 `;

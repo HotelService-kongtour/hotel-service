@@ -99,10 +99,12 @@ const AdminTable = ({
             value={selectedTheme}
             onChange={(e) => handleThemeChange(e.target.value, rowData)}
           >
-            <option value="Korean-Traditional">Spring</option>
-            <option value="Casino">Summer</option>
-            <option value="Pet-friendly">Fall</option>
-            <option value="Eco-friendly">Winter</option>
+            <option value="Casino">Casino</option>
+            <option value="Korean-Traditional">Korean-Traditional</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Fall">Fall</option>
+            <option value="Winter">Winter</option>
           </Select>
         );
 

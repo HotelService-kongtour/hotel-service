@@ -133,6 +133,11 @@ const Label = styled.label`
   font-size: 0.9rem;
   color: #333;
   margin-bottom: 4px;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+  }
 `;
 
 const Input = styled.input`
@@ -168,4 +173,9 @@ const ErrorMessage = styled.div`
   margin-top: 0.5rem;
   color: red;
   font-size: 0.9rem;
+
+  @media screen and (max-width: 1440px) {
+    font-size: 0.8rem;
+    margin-top: 0rem;
+  }
 `;

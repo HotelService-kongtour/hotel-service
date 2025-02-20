@@ -120,10 +120,11 @@ export default EmailVerifymodal;
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 99;
 `;
 
 const EmailModal = styled.div`
@@ -143,7 +144,7 @@ const EmailModal = styled.div`
   justify-content: space-between;
 
   @media screen and (max-width: 1440px) {
-    width: 25%;
+    width: 30%;
     height: 50%;
   }
 `;
@@ -173,7 +174,8 @@ const NumberWrapper = styled.div`
 const NumberContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
 `;
 const NumberBox = styled.input`
   width: 3rem;

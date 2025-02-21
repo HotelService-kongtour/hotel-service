@@ -59,6 +59,20 @@ const SignUp = () => {
     }
   };
 
+  const handleVerifyEmail = async () => {
+    if (!emailValue || emailError) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      await sendVerificationEmailApi(emailValue, "SIGNUP");
+      setShowEmailModal(true);
+    } catch (error) {
+      alert("Failed to send verification email");
+    }
+  };
+
   const handleClickContinue = () => {
     setIsEmailVerified(true);
     setIsBtnDisabled(true);
@@ -66,7 +80,7 @@ const SignUp = () => {
     alert("Email verification completed successfully!");
   };
 
-  const handleClickCreateBtn = async () => {
+  const handleClickCreateBtn = async async () => {
     if (!isEmailVerified) {
       alert("Please verify your email first");
       return;
@@ -88,8 +102,32 @@ const SignUp = () => {
         lastName,
         companyName
       );
+      if (!isEmailVerified) {
+      alert("Please verify your email first");
+      return;
+    }
+    if (!isPasswordMatch || passwordError) {
+      alert("Please check your password");
+      return;
+    }
+    if (!firstName || !lastName || !companyName) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    try {
+      await signupApi(
+        emailValue,
+        passwordValue,
+        firstName,
+        lastName,
+        companyName
+      );
       alert("Congratulations on your membership!");
-      navigate("/login");
+        navigate("/login");
+    } catch (error) {
+      alert("Failed to create account. Please try again.");
+    }
     } catch (error) {
       alert("Failed to create account. Please try again.");
     }
@@ -342,8 +380,4 @@ const BtnBox = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
-
-  @media screen and (max-width: 1440px) {
-    bottom: -3rem;
-  }
 `;

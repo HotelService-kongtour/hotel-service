@@ -188,6 +188,8 @@ const NavTitle = styled.div`
 
 const Container = styled.div`
   padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const LogoContainer = styled.div`

@@ -2,13 +2,16 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useColors } from "context/ColorContext";
 import CustomButton from "components/custom/CustomButton";
+import { verifyEmailApi } from "api";
 
 import XIcon from "assets/icons/x-mark.svg";
 
 const EmailVerifymodal = ({
   setShowEmailModal,
   onContinueClick,
+  email,
   language = "en",
+  verificationType = "SIGNUP",
 }) => {
   const colors = useColors();
   const inputRefs = useRef([]);
@@ -37,7 +40,7 @@ const EmailVerifymodal = ({
     setVerifyNumber(updatedVerifyNumber);
   };
 
-  const handleContinueClick = () => {
+  const handleContinueClick = async () => {
     if (verifyNumber.includes("")) {
       setNumberError(
         language === "ko"
@@ -45,8 +48,18 @@ const EmailVerifymodal = ({
           : "Please enter all your authentication numbers"
       );
     } else {
-      setNumberError("");
-      onContinueClick();
+      try {
+        const code = verifyNumber.join("");
+        await verifyEmailApi(email, code, verificationType);
+        setNumberError("");
+        onContinueClick(code);
+      } catch (error) {
+        setNumberError(
+          language === "ko"
+            ? "인증번호가 올바르지 않습니다"
+            : "Invalid verification code"
+        );
+      }
     }
   };
 

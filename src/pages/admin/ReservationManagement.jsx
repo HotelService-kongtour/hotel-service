@@ -12,7 +12,7 @@ const ReservationManagement = () => {
     { key: "reservationDate", label: "예약일", type: "text" },
     { key: "reservationNumber", label: "예약번호", type: "text" },
     { key: "agencyName", label: "여행사", type: "text" },
-    { key: "agencyId", label: "여행사ID", type: "text" },
+    { key: "agencyId", label: "예약자ID", type: "text" },
     { key: "hotelName", label: "호텔명", type: "text" },
     { key: "guestName", label: "투숙자 성명", type: "text" },
     { key: "numberOfGuests", label: "인원", type: "text" },

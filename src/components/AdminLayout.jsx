@@ -1,26 +1,29 @@
 import { Outlet, NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import LogoImage from "assets/logo/hantour-admin-logo.svg";
-
+import LogoImage from "assets/logo/logo-all-H.svg";
+import Header from "components/Header";
 function AdminLayout() {
   return (
     <AdminContainer>
-      <Sidebar>
-        <Logo src={LogoImage} alt="Hotel Admin Logo" />
-        <NavContainer>
-          <MenuList>
-            <MenuLink to="/admin/hotel-management">호텔 내역</MenuLink>
-            <MenuLink to="/admin/reservation-management">예약 내역</MenuLink>
-          </MenuList>
-          {/* 임시링크 */}
-          <Link to={"/"}>
-            <LogoutButton>로그아웃</LogoutButton>
-          </Link>
-        </NavContainer>
-      </Sidebar>
-      <Content>
-        <Outlet />
-      </Content>
+      <Header />
+
+      <MainContainer>
+        <Sidebar>
+          <NavContainer>
+            <MenuList>
+              <MenuLink to="/admin/hotel-management">호텔 내역</MenuLink>
+              <MenuLink to="/admin/reservation-management">예약 내역</MenuLink>
+            </MenuList>
+            {/* 임시링크 */}
+            <Link to={"/"}>
+              <LogoutButton>로그아웃</LogoutButton>
+            </Link>
+          </NavContainer>
+        </Sidebar>
+        <Content>
+          <Outlet />
+        </Content>
+      </MainContainer>
     </AdminContainer>
   );
 }
@@ -28,8 +31,11 @@ function AdminLayout() {
 export default AdminLayout;
 
 const AdminContainer = styled.div`
-  display: flex;
   min-height: 100vh;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
 `;
 
 const Sidebar = styled.div`

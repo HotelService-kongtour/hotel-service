@@ -2,12 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import MainHotel from "../components/home/MainHotel";
 import CustomMainInput from "../components/custom/CustomMainInput";
-
+// import FlightSearchResults from "components/home/FlightSearchResults";
+// import WeekendDeals from "components/home/WeekendDeals";
 const Home = () => {
   return (
     <Wrapper>
       <CustomMainInput />
       <MainHotel />
+      {/* <FlightSearchResults /> */}
+      {/* <WeekendDeals /> */}
     </Wrapper>
   );
 };

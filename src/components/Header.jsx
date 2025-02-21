@@ -1,13 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useColors } from "../context/ColorContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import LogoIcon from "assets/logo/logo-H.svg";
 import LogoName from "assets/logo/logo-Hantour.svg";
 
 const Header = () => {
   const colors = useColors();
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
+
+    setIsLoggedIn(!!token);
+    setIsAdmin(userInfo.email === "admin@example.com");
+  }, []);
+
+  const handleLogout = () => {
+    try {
+      // refreshToken 쿠키 제거
+      document.cookie =
+        "refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+
+      // 로컬 스토리지의 데이터 삭제
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userInfo");
+
+      // 상태 초기화
+      setIsLoggedIn(false);
+      setIsAdmin(false);
+
+      // 로그인 페이지로 이동
+      navigate("/login");
+    } catch (error) {
+      console.error("로그아웃 에러:", error);
+      alert("Failed to logout. Please try again.");
+
+      // 에러 발생 시에도 로컬 데이터는 삭제 시도
+      try {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userInfo");
+        document.cookie =
+          "refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        setIsLoggedIn(false);
+        setIsAdmin(false);
+      } catch (storageError) {
+        console.error("데이터 삭제 에러:", storageError);
+        alert(
+          "Failed to clear login data. Please clear your browser data manually."
+        );
+      }
+      navigate("/login");
+    }
+  };
 
   return (
     <HeaderMain>
@@ -25,12 +74,22 @@ const Header = () => {
         <Link to="/my-info">
           <Menu color={colors.main}>My Info</Menu>
         </Link>
-        <Link to="/login">
-          <Menu color={colors.main}>Login</Menu>
-        </Link>
-        <Link to="/admin">
-          <Menu color={colors.main}>Admin</Menu>
-        </Link>
+        {isLoggedIn ? (
+          <Menu color={colors.main} onClick={handleLogout}>
+            Logout
+          </Menu>
+        ) : (
+          <Link to="/login">
+            <Menu color={colors.main}>Login</Menu>
+          </Link>
+        )}
+
+        {/* Admin 메뉴는 admin 계정일 때만 표시 */}
+        {isAdmin && (
+          <Link to="/admin">
+            <Menu color={colors.main}>Admin</Menu>
+          </Link>
+        )}
       </Menus>
     </HeaderMain>
   );

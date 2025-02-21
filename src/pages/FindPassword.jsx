@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import EmailVerifymodal from "components/Login/EmailVerifymodal";
+import { sendVerificationEmailApi } from "api";
 
 import XIcon from "assets/icons/x-mark.svg";
 
@@ -14,9 +15,29 @@ const FindPassword = () => {
   const [emailError, setEmailError] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
 
-  const handleClickContinue = () => {
+  const handleVerifyEmail = async () => {
+    if (!emailValue || emailError) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      await sendVerificationEmailApi(emailValue, "PASSWORD_RESET");
+      setShowEmailModal(true);
+    } catch (error) {
+      alert("Failed to send verification email");
+      console.error("이메일 인증 요청 에러:", error);
+    }
+  };
+
+  const handleClickContinue = (verificationCode) => {
     alert("Email authentication has been completed.");
-    navigate("/reset-password");
+    navigate("/reset-password", {
+      state: {
+        email: emailValue,
+        code: verificationCode,
+      },
+    });
   };
 
   return (
@@ -30,7 +51,7 @@ const FindPassword = () => {
         </NavTitle>
 
         <Container>
-          <FindForm>
+          <FindForm onSubmit={(e) => e.preventDefault()}>
             <EmailBox>
               <CustomInput
                 labelText={"Email"}
@@ -44,7 +65,7 @@ const FindPassword = () => {
               <p>Please enter the email you registered with during sign-up</p>
             </EmailBox>
             <CustomButton
-              onClick={() => setShowEmailModal(true)}
+              onClick={handleVerifyEmail}
               disabled={emailError || !emailValue}
             >
               Continue
@@ -58,6 +79,8 @@ const FindPassword = () => {
         <EmailVerifymodal
           setShowEmailModal={setShowEmailModal}
           onContinueClick={handleClickContinue}
+          email={emailValue}
+          verificationType="PASSWORD_RESET"
         />
       )}
     </Wrapper>

@@ -30,8 +30,20 @@ const Wrapper = styled.div`
   @media screen and (max-width: 1440px) {
     padding: 2rem 10rem;
   }
+
+  @media screen and (max-width: 1280px) {
+    padding: 2rem 6rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding: 2rem 4rem;
+  }
 `;
 
 const ContentsWrapper = styled.div`
   width: 60%;
+
+  @media screen and (max-width: 1024px) {
+    width: 63%;
+  }
 `;

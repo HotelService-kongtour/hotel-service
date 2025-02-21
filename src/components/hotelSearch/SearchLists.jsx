@@ -53,10 +53,6 @@ const SearchLists = ({ searchKeyword }) => {
   const queryParams = new URLSearchParams(location.search);
   const selectedArea = queryParams.get("area") || "Seoul";
 
-  // const filteredHotels = hotelLists.filter((hotel) =>
-  //   hotel.name.toLowerCase().includes(searchKeyword?.toLowerCase() || "")
-  // );
-
   const filteredHotels = hotelLists.filter((hotel) => {
     const matchesSearch = hotel.name
       .toLowerCase()
@@ -113,12 +109,20 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media screen and (max-width: 1280px) {
+    width: 68%;
+  }
 `;
 
 const ListsBox = styled.div`
   height: 100%;
   overflow-y: auto;
   padding-right: 1rem;
+
+  @media screen and (max-width: 1280px) {
+    padding-right: 0.5rem;
+  }
 `;
 
 const Lists = styled.ul`
@@ -135,6 +139,10 @@ const List = styled.li`
 
   &:hover {
     border-color: ${(props) => props.color};
+  }
+
+  @media screen and (max-width: 1280px) {
+    padding: 1rem;
   }
 `;
 

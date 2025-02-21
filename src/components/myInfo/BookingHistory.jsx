@@ -65,6 +65,10 @@ const Wrapper = styled.div`
   position: relative;
   overflow-y: auto;
   overscroll-behavior: contain;
+
+  @media screen and (max-width: 1024px) {
+    height: calc(92vh - 4rem);
+  }
 `;
 
 const Menus = styled.div`
@@ -100,6 +104,14 @@ const DetailsWrapper = styled.div`
   border-radius: 0.5rem;
   padding: 2rem;
   z-index: 10;
+
+  @media screen and (max-width: 1280px) {
+    padding: 1.5rem;
+  }
+
+  @media screen and (max-width: 1280px) {
+    padding: 1.2rem;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -110,4 +122,14 @@ const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 0.5rem;
+
+  @media screen and (max-width: 1280px) {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
 `;

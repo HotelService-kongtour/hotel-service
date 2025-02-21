@@ -75,6 +75,14 @@ const Wrapper = styled.div`
     height: 66vh;
     padding: 2rem 10rem;
   }
+
+  @media screen and (max-width: 1280px) {
+    padding: 2rem 6rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding: 2rem 4rem;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -95,7 +103,12 @@ const InfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+
+  @media screen and (max-width: 1024px) {
+    width: 35%;
+  }
 `;
+
 const InfoTitle = styled.div`
   text-align: center;
 

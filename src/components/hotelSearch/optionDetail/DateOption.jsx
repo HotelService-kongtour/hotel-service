@@ -116,6 +116,12 @@ const InputIcon = styled.div`
     width: 100%;
     height: 100%;
   }
+
+  @media screen and (max-width: 1280px) {
+    left: 0.5rem;
+    width: 20px;
+    height: 20px;
+  }
 `;
 const DateInput = styled.div`
   width: 100%;
@@ -134,6 +140,10 @@ const DateInput = styled.div`
   &:focus {
     outline: none;
     border-color: ${(props) => props.color};
+  }
+
+  @media screen and (max-width: 1280px) {
+    padding-left: 2rem;
   }
 `;
 

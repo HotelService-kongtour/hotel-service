@@ -195,7 +195,11 @@ const Container = styled.div`
 const LogoContainer = styled.div`
   width: 60%;
   margin: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+
+  @media screen and (max-width: 1440px) {
+    margin-bottom: 2rem;
+  }
 `;
 const LogoBox = styled.div`
   display: flex;

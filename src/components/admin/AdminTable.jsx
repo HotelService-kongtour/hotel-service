@@ -80,16 +80,10 @@ const AdminTable = ({
         );
 
       case "payment":
-        const selectedPayment =
-          selectedPayments[rowData.reservationNumber] || value;
-        return (
-          <Select
-            value={selectedPayment}
-            onChange={(e) => handlePaymentChange(e.target.value, rowData)}
-          >
-            <option value="미결제">미결제</option>
-            <option value="결제완료">결제완료</option>
-          </Select>
+        return value === "미결제" ? (
+          <PaymentText>미결제</PaymentText>
+        ) : (
+          <PaymentText>결제완료</PaymentText>
         );
 
       case "theme":
@@ -244,4 +238,11 @@ const Select = styled.select`
   cursor: pointer;
   margin: 0 auto;
   display: block;
+`;
+
+const PaymentText = styled.span`
+  display: block;
+  text-align: center;
+  font-size: 0.875rem;
+  color: ${(props) => (props.children === "미결제" ? "#dc3545" : "#28a745")};
 `;

@@ -11,7 +11,7 @@ const ReservationManagement = () => {
   const reservationHeaders = [
     { key: "reservationDate", label: "예약일", type: "text" },
     { key: "reservationNumber", label: "예약번호", type: "text" },
-    { key: "agencyName", label: "여행사명", type: "text" },
+    { key: "agencyName", label: "여행사", type: "text" },
     { key: "agencyId", label: "여행사ID", type: "text" },
     { key: "hotelName", label: "호텔명", type: "text" },
     { key: "guestName", label: "투숙자 성명", type: "text" },
@@ -20,12 +20,6 @@ const ReservationManagement = () => {
     { key: "approval", label: "예약 승인", type: "button" },
     { key: "payment", label: "결제", type: "payment" },
   ];
-
-  const getCurrentPageData = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return reservationMockData.slice(startIndex, endIndex);
-  };
 
   const handleApprove = (rowData) => {
     console.log("예약 승인:", rowData);

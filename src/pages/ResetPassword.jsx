@@ -1,30 +1,44 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import { isValidPassword } from "utils/validation";
+import { resetPasswordApi } from "api";
 
 import EyeOffIcon from "assets/icons/eye-off-outline.svg";
 import XIcon from "assets/icons/x-mark.svg";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // 모든 useState hooks를 먼저 선언
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
-
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
   const [error, setError] = useState("");
 
+  // location.state 체크는 useState 선언 후에
+  if (!location.state) {
+    navigate("/find-password");
+    return null;
+  }
+
+  const { email, code } = location.state;
+
+  if (!email || !code) {
+    navigate("/find-password");
+    return null;
+  }
+
   const isPasswordMatch = passwordValue === confirmPasswordValue;
 
-  const handleClickContinue = () => {
+  const handleClickContinue = async () => {
     if (!passwordValue || !confirmPasswordValue) {
       setError("Please fill out both password fields.");
       return;
@@ -40,8 +54,14 @@ const ResetPassword = () => {
       return;
     }
 
-    alert("Your password has been changed.");
-    navigate("/login");
+    try {
+      await resetPasswordApi(email, code, passwordValue);
+      alert("Password has been reset successfully!");
+      navigate("/login");
+    } catch (error) {
+      console.error("비밀번호 재설정 에러:", error);
+      setError("Failed to reset password. Please try again.");
+    }
   };
 
   return (

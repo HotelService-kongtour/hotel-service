@@ -35,6 +35,12 @@ const Location = styled.div`
   img {
     width: 24px;
   }
+
+  @media screen and (max-width: 1280px) {
+    img {
+      width: 20px;
+    }
+  }
 `;
 
 const Map = styled.div`

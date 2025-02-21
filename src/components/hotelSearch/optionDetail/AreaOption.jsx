@@ -9,14 +9,12 @@ import XIcon from "assets/icons/x-mark.svg";
 
 const locationList = [
   { area: "Seoul", nation: "Korea" },
-  { area: "Incheon", nation: "Korea" },
   { area: "Busan", nation: "Korea" },
+  { area: "Jeju", nation: "Korea" },
+  { area: "Incheon", nation: "Korea" },
   { area: "Gangneung", nation: "Korea" },
   { area: "Daejeon", nation: "Korea" },
-  { area: "Daegu", nation: "Korea" },
-  { area: "Gyeongju", nation: "Korea" },
-  { area: "Jeju", nation: "Korea" },
-  { area: "Other", nation: "Korea" },
+  { area: "Gwangju", nation: "Korea" },
 ];
 
 const AreaOption = ({ selectedArea }) => {
@@ -137,6 +135,12 @@ const InputIcon = styled.div`
     width: 100%;
     height: 100%;
   }
+
+  @media screen and (max-width: 1280px) {
+    left: 0.5rem;
+    width: 20px;
+    height: 20px;
+  }
 `;
 const PlaceInput = styled.div`
   width: 100%;
@@ -155,6 +159,10 @@ const PlaceInput = styled.div`
   &:focus {
     outline: none;
     border-color: ${(props) => props.color};
+  }
+
+  @media screen and (max-width: 1280px) {
+    padding-left: 2rem;
   }
 `;
 
@@ -207,6 +215,10 @@ const TextArea = styled.p`
   @media screen and (max-width: 1440px) {
     font-size: 1rem;
   }
+
+  @media screen and (max-width: 1280px) {
+    font-size: 0.9rem;
+  }
 `;
 const TextNation = styled.span`
   font-size: 0.9rem;
@@ -214,6 +226,10 @@ const TextNation = styled.span`
 
   @media screen and (max-width: 1440px) {
     font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: 1280px) {
+    font-size: 0.7rem;
   }
 `;
 const Option = styled.li`
@@ -231,6 +247,14 @@ const Option = styled.li`
     img {
       transform: translateY(-3px);
       transition: transform 0.2s;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    padding: 0.5rem 0;
+
+    img {
+      width: 20px;
     }
   }
 `;

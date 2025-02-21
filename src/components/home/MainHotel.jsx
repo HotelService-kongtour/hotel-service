@@ -3,68 +3,146 @@ import styled from "styled-components";
 import { useColors } from "context/ColorContext";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
+import { attractionMockData } from "data/attractionMockData";
 
-import MainSeoul from "assets/images/main-seoul.jpeg";
-import MainIncheon from "assets/images/main-incheon.jpg";
-import MainBusan from "assets/images/main-busan.jpeg";
-import MainCasino from "assets/images/main-casino.jpeg";
-import MainTradition from "assets/images/main-tradition.jpeg";
-import MainPrepare from "assets/images/main-prepare.png";
 import NextArrowIcon from "assets/icons/arrow-forward-dark.svg";
 import PrevArrowIcon from "assets/icons/arrow-back-dark.svg";
 
+import MainPrepare from "assets/images/main-prepare.png";
+import MainSeoul from "assets/images/main-seoul.jpeg";
+import MainIncheon from "assets/images/main-incheon.jpg";
+import MainBusan from "assets/images/main-busan.jpeg";
+import MainJeju from "assets/images/main-jeju.jpg";
+import MainCasino from "assets/images/main-casino.jpeg";
+import MainTradition from "assets/images/main-tradition.jpeg";
+import MainSpring from "assets/images/main-spring.jpg";
+import MainSummer from "assets/images/main-summer.jpg";
+import MainFall from "assets/images/main-fall.jpg";
+import MainWinter from "assets/images/main-winter.jpeg";
+
 const locations = [
   { area: "Seoul", imageURL: MainSeoul },
-  { area: "Incheon", imageURL: MainIncheon },
   { area: "Busan", imageURL: MainBusan },
+  { area: "Jeju", imageURL: MainJeju },
+  { area: "Incheon", imageURL: MainIncheon },
   { area: "Gangneung", imageURL: MainPrepare },
   { area: "Daejeon", imageURL: MainPrepare },
-  { area: "Daegu", imageURL: MainPrepare },
-  { area: "Gyeongju", imageURL: MainPrepare },
-  { area: "Jeju", imageURL: MainPrepare },
-  { area: "Other", imageURL: MainPrepare },
+  { area: "Gwangju", imageURL: MainPrepare },
 ];
 
 const themes = [
   { area: "Casino", imageURL: MainCasino },
   { area: "Korea Traditional", imageURL: MainTradition },
-  { area: "Pet Friendly", imageURL: MainPrepare },
-  { area: "Eco Friendly", imageURL: MainPrepare },
+  { area: "Spring", imageURL: MainSpring },
+  { area: "Summer", imageURL: MainSummer },
+  { area: "Fall", imageURL: MainFall },
+  { area: "Winter", imageURL: MainWinter },
 ];
 
 const MainHotel = () => {
   const colors = useColors();
 
-  const PrevArrow = ({ onClick }) => {
+  const PrevArrow = ({ onClick, className }) => {
     return (
-      <ArrowButton onClick={onClick} style={{ left: "-30px" }}>
+      <ArrowButton
+        onClick={onClick}
+        style={{ left: "-35px" }}
+        className="prev-arrow"
+      >
         <img src={PrevArrowIcon} alt="prev-arrow" />
       </ArrowButton>
     );
   };
 
-  const NextArrow = ({ onClick }) => {
+  const NextArrow = ({ onClick, className }) => {
     return (
-      <ArrowButton onClick={onClick} style={{ right: "-30px" }}>
+      <ArrowButton
+        onClick={onClick}
+        style={{ right: "-30px" }}
+        className="next-arrow"
+      >
         <img src={NextArrowIcon} alt="next-arrow" />
       </ArrowButton>
     );
   };
 
-  const locationSettings = {
+  const CirclePrevArrow = ({ onClick }) => {
+    return (
+      <CircleArrowButton
+        onClick={onClick}
+        style={{ left: "-20px" }}
+        className="circle-prev-arrow"
+      >
+        <img src={PrevArrowIcon} alt="prev-arrow" />
+      </CircleArrowButton>
+    );
+  };
+
+  const CircleNextArrow = ({ onClick }) => {
+    return (
+      <CircleArrowButton
+        onClick={onClick}
+        style={{ right: "10px" }}
+        className="circle-next-arrow"
+      >
+        <img src={NextArrowIcon} alt="next-arrow" />
+      </CircleArrowButton>
+    );
+  };
+
+  const sliderSettings = {
     infinite: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const attractionSliderSettings = {
+    ...sliderSettings,
+    slidesToShow: 5,
+    nextArrow: <CircleNextArrow />,
+    prevArrow: <CirclePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
     <MainWrapper>
       <ListContainer>
         <ListTitle>Hotels by Location</ListTitle>
-        <Slider {...locationSettings}>
+        <Slider {...sliderSettings}>
           {locations.map((loc) => (
             <Link to={`/hotel-search?area=${loc.area}`} key={loc.area}>
               <List $imageurl={loc.imageURL} color={colors.mainLight}>
@@ -75,11 +153,39 @@ const MainHotel = () => {
         </Slider>
       </ListContainer>
 
+      {/* 관광명소 리스트 */}
+      <ListContainerAttraction>
+        <ListTitle>Tourist Attractions</ListTitle>
+        <Slider {...attractionSliderSettings}>
+          {attractionMockData.map((attraction) => (
+            <Link to={``} key={attraction.attractionName}>
+              <AttractionList
+                $imageurl={attraction.imageURL}
+                color={colors.mainLight}
+                key={attraction.attractionName}
+              >
+                <AttractionTextContainer>
+                  <AttractionText>
+                    <p>{attraction.attractionName}</p>
+                    <p style={{ fontSize: "0.8em", opacity: 0.8 }}>
+                      {attraction.openTime} - {attraction.closeTime}
+                    </p>
+                    <p style={{ fontSize: "0.8em", opacity: 0.8 }}>
+                      ${attraction.price}
+                    </p>
+                  </AttractionText>
+                </AttractionTextContainer>
+              </AttractionList>
+            </Link>
+          ))}
+        </Slider>
+      </ListContainerAttraction>
+
       <ListContainer>
         <ListTitle>Hotels by Theme</ListTitle>
-        <ListWrapper>
-          <Lists>
-            {themes.map((theme) => (
+        <Slider {...sliderSettings}>
+          {themes.map((theme) => (
+            <Link to={`/hotel-search?theme=${theme.area}`} key={theme.area}>
               <List
                 key={theme.area}
                 $imageurl={theme.imageURL}
@@ -91,9 +197,9 @@ const MainHotel = () => {
                   ))}
                 </Text>
               </List>
-            ))}
-          </Lists>
-        </ListWrapper>
+            </Link>
+          ))}
+        </Slider>
       </ListContainer>
     </MainWrapper>
   );
@@ -106,8 +212,13 @@ const MainWrapper = styled.div`
 `;
 
 const ListContainer = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   position: relative;
+`;
+const ListContainerAttraction = styled(ListContainer)`
+  background-color: #ececec;
+  border-radius: 1rem;
+  padding: 4rem 2rem;
 `;
 
 const ListTitle = styled.h3`
@@ -129,17 +240,82 @@ const ArrowButton = styled.div`
   &:hover {
     opacity: 0.5;
   }
+
+  @media screen and (max-width: 1440px) {
+    &.prev-arrow {
+      left: -25px !important;
+    }
+    &.next-arrow {
+      right: -15px !important;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    &.next-arrow {
+      right: -25px !important;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    &.next-arrow {
+      right: -15px !important;
+    }
+  }
 `;
 
-const ListWrapper = styled.div`
-  width: 100%;
-  overflow: hidden;
-`;
-
-const Lists = styled.ul`
+const CircleArrowButton = styled(ArrowButton)`
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
   display: flex;
-  gap: 1rem;
-  transition: transform 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+
+  img {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    left: ${(props) => (props.style?.left ? "4px" : "0")};
+  }
+
+  &:hover {
+    opacity: 1;
+    background: ${(props) => props.theme.colors?.mainLight || "#f8f8f8"};
+  }
+
+  @media screen and (max-width: 1440px) {
+    width: 32px;
+    height: 32px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    &.circle-next-arrow {
+      right: 5px !important;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    &.circle-next-arrow {
+      right: 0px !important;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    &.circle-next-arrow {
+      right: 5px !important;
+    }
+  }
 `;
 
 const List = styled.li`
@@ -180,10 +356,44 @@ const List = styled.li`
   }
 `;
 
+const AttractionList = styled(List)`
+  padding: 0.5rem;
+  width: 200px;
+  height: 280px;
+  background-image: ${({ $imageurl }) => `url("${$imageurl}")`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  &:hover {
+    border: none;
+  }
+
+  @media screen and (max-width: 1440px) {
+    width: 180px;
+    height: 240px;
+  }
+`;
+
 const Text = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   color: #fff;
   z-index: 3;
+`;
+
+const AttractionTextContainer = styled.div`
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  z-index: 3;
+`;
+
+const AttractionText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #333;
 `;

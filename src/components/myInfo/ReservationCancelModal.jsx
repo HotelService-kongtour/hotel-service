@@ -52,6 +52,10 @@ const Modal = styled.div`
   background-color: #fff;
   border-radius: 0.5rem;
   position: relative;
+
+  @media screen and (max-width: 1440px) {
+    width: 40%;
+  }
 `;
 const CloseBtn = styled.div`
   position: absolute;

@@ -176,6 +176,10 @@ const OptionsModal = styled.div`
   position: absolute;
   z-index: 99;
   top: 60px;
+
+  @media screen and (max-width: 1280px) {
+    top: 55px;
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -211,6 +215,11 @@ const Options = styled.div`
   flex-direction: column;
   align-items: flex-end;
   gap: 1rem;
+
+  @media screen and (max-width: 1280px) {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
 `;
 
 const OptionBox = styled.div`

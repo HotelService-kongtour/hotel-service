@@ -59,20 +59,6 @@ const SignUp = () => {
     }
   };
 
-  const handleVerifyEmail = async () => {
-    if (!emailValue || emailError) {
-      alert("Please enter a valid email address");
-      return;
-    }
-
-    try {
-      await sendVerificationEmailApi(emailValue, "SIGNUP");
-      setShowEmailModal(true);
-    } catch (error) {
-      alert("Failed to send verification email");
-    }
-  };
-
   const handleClickContinue = () => {
     setIsEmailVerified(true);
     setIsBtnDisabled(true);
@@ -80,7 +66,7 @@ const SignUp = () => {
     alert("Email verification completed successfully!");
   };
 
-  const handleClickCreateBtn = async async () => {
+  const handleClickCreateBtn = async () => {
     if (!isEmailVerified) {
       alert("Please verify your email first");
       return;
@@ -103,31 +89,31 @@ const SignUp = () => {
         companyName
       );
       if (!isEmailVerified) {
-      alert("Please verify your email first");
-      return;
-    }
-    if (!isPasswordMatch || passwordError) {
-      alert("Please check your password");
-      return;
-    }
-    if (!firstName || !lastName || !companyName) {
-      alert("Please fill in all fields");
-      return;
-    }
+        alert("Please verify your email first");
+        return;
+      }
+      if (!isPasswordMatch || passwordError) {
+        alert("Please check your password");
+        return;
+      }
+      if (!firstName || !lastName || !companyName) {
+        alert("Please fill in all fields");
+        return;
+      }
 
-    try {
-      await signupApi(
-        emailValue,
-        passwordValue,
-        firstName,
-        lastName,
-        companyName
-      );
-      alert("Congratulations on your membership!");
+      try {
+        await signupApi(
+          emailValue,
+          passwordValue,
+          firstName,
+          lastName,
+          companyName
+        );
+        alert("Congratulations on your membership!");
         navigate("/login");
-    } catch (error) {
-      alert("Failed to create account. Please try again.");
-    }
+      } catch (error) {
+        alert("Failed to create account. Please try again.");
+      }
     } catch (error) {
       alert("Failed to create account. Please try again.");
     }

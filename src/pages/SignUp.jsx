@@ -344,6 +344,6 @@ const BtnBox = styled.div`
   left: 0;
 
   @media screen and (max-width: 1440px) {
-    bottom: -3rem;
+    bottom: -2rem;
   }
 `;

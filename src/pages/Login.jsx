@@ -188,16 +188,14 @@ const NavTitle = styled.div`
 
 const Container = styled.div`
   padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const LogoContainer = styled.div`
   width: 60%;
   margin: auto;
-  margin-bottom: 4rem;
-
-  @media screen and (max-width: 1440px) {
-    margin-bottom: 2rem;
-  }
+  margin-bottom: 2rem;
 `;
 const LogoBox = styled.div`
   display: flex;

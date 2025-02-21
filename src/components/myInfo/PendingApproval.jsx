@@ -79,6 +79,11 @@ const List = styled.li`
   gap: 2rem;
   border-bottom: 1px solid #ececec;
   padding: 1.5rem 0;
+
+  @media screen and (max-width: 1024px) {
+    gap: 1rem;
+    padding: 1rem 0;
+  }
 `;
 
 const TextBox = styled.div``;
@@ -86,6 +91,10 @@ const HotelName = styled.h4``;
 const Date = styled.p`
   font-size: 1rem;
   color: #666;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const PriceBox = styled.div`
@@ -96,6 +105,10 @@ const PriceBox = styled.div`
 const Price = styled.h3`
   @media screen and (max-width: 1440px) {
     font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    font-size: 1rem;
   }
 `;
 const BtnBox = styled.div`

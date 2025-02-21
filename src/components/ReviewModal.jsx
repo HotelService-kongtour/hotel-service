@@ -131,6 +131,11 @@ const Modal = styled.div`
   background-color: #fff;
   border-radius: 0.5rem;
   position: relative;
+
+  @media screen and (max-width: 1280px) {
+    width: 50%;
+    padding: 1.5rem;
+  }
 `;
 const CloseBtn = styled.div`
   position: absolute;
@@ -142,10 +147,19 @@ const CloseBtn = styled.div`
   &:hover {
     opacity: 1;
   }
+
+  @media screen and (max-width: 1280px) {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
 `;
 
 const Title = styled.h3`
   margin-bottom: 2rem;
+
+  @media screen and (max-width: 1280px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -161,6 +175,10 @@ const StarBox = styled.div`
 `;
 const Star = styled.img`
   width: 48px;
+
+  @media screen and (max-width: 1280px) {
+    width: 40px;
+  }
 `;
 
 const InputBox = styled.div`

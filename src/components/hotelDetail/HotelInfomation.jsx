@@ -108,6 +108,11 @@ const ImagesContainer = styled.div`
   background-color: #ccc;
   overflow: hidden;
   position: relative;
+
+  @media screen and (max-width: 1280px) {
+    width: 80%;
+    height: 400px;
+  }
 `;
 const Images = styled.div`
   display: flex;
@@ -137,6 +142,14 @@ const ArrowBtn = styled.button`
   &:hover {
     opacity: 1;
   }
+
+  @media screen and (max-width: 1280px) {
+    padding-left: 8px;
+
+    img {
+      width: 32px;
+    }
+  }
 `;
 
 const InfoContainer = styled.div`
@@ -151,6 +164,10 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media screen and (max-width: 1280px) {
+    gap: 0.5rem;
+  }
 `;
 const NameBox = styled.div``;
 const Name = styled.h3`
@@ -197,6 +214,10 @@ const ServicesBox = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 1rem;
+
+  @media screen and (max-width: 1280px) {
+    gap: 0.5rem;
+  }
 `;
 const Services = styled.ul`
   padding-left: 3rem;
@@ -218,6 +239,11 @@ const SelectionBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media screen and (max-width: 1280px) {
+    width: 35%;
+    gap: 0.5rem;
+  }
 `;
 const MealLabel = styled.label`
   border: 2px solid #ececec;

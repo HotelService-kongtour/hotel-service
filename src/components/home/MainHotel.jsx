@@ -12,6 +12,7 @@ import MainPrepare from "assets/images/main-prepare.png";
 import MainSeoul from "assets/images/main-seoul.jpeg";
 import MainIncheon from "assets/images/main-incheon.jpg";
 import MainBusan from "assets/images/main-busan.jpeg";
+import MainJeju from "assets/images/main-jeju.jpg";
 import MainCasino from "assets/images/main-casino.jpeg";
 import MainTradition from "assets/images/main-tradition.jpeg";
 import MainSpring from "assets/images/main-spring.jpg";
@@ -21,14 +22,12 @@ import MainWinter from "assets/images/main-winter.jpeg";
 
 const locations = [
   { area: "Seoul", imageURL: MainSeoul },
-  { area: "Incheon", imageURL: MainIncheon },
   { area: "Busan", imageURL: MainBusan },
+  { area: "Jeju", imageURL: MainJeju },
+  { area: "Incheon", imageURL: MainIncheon },
   { area: "Gangneung", imageURL: MainPrepare },
   { area: "Daejeon", imageURL: MainPrepare },
-  { area: "Daegu", imageURL: MainPrepare },
-  { area: "Gyeongju", imageURL: MainPrepare },
-  { area: "Jeju", imageURL: MainPrepare },
-  { area: "Other", imageURL: MainPrepare },
+  { area: "Gwangju", imageURL: MainPrepare },
 ];
 
 const themes = [
@@ -45,7 +44,11 @@ const MainHotel = () => {
 
   const PrevArrow = ({ onClick, className }) => {
     return (
-      <ArrowButton onClick={onClick} style={{ left: "-30px" }}>
+      <ArrowButton
+        onClick={onClick}
+        style={{ left: "-35px" }}
+        className="prev-arrow"
+      >
         <img src={PrevArrowIcon} alt="prev-arrow" />
       </ArrowButton>
     );
@@ -53,7 +56,11 @@ const MainHotel = () => {
 
   const NextArrow = ({ onClick, className }) => {
     return (
-      <ArrowButton onClick={onClick} style={{ right: "-30px" }}>
+      <ArrowButton
+        onClick={onClick}
+        style={{ right: "-30px" }}
+        className="next-arrow"
+      >
         <img src={NextArrowIcon} alt="next-arrow" />
       </ArrowButton>
     );
@@ -61,7 +68,11 @@ const MainHotel = () => {
 
   const CirclePrevArrow = ({ onClick }) => {
     return (
-      <CircleArrowButton onClick={onClick} style={{ left: "10px" }}>
+      <CircleArrowButton
+        onClick={onClick}
+        style={{ left: "-20px" }}
+        className="circle-prev-arrow"
+      >
         <img src={PrevArrowIcon} alt="prev-arrow" />
       </CircleArrowButton>
     );
@@ -69,7 +80,11 @@ const MainHotel = () => {
 
   const CircleNextArrow = ({ onClick }) => {
     return (
-      <CircleArrowButton onClick={onClick} style={{ right: "10px" }}>
+      <CircleArrowButton
+        onClick={onClick}
+        style={{ right: "10px" }}
+        className="circle-next-arrow"
+      >
         <img src={NextArrowIcon} alt="next-arrow" />
       </CircleArrowButton>
     );
@@ -83,6 +98,13 @@ const MainHotel = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
@@ -99,6 +121,13 @@ const MainHotel = () => {
     nextArrow: <CircleNextArrow />,
     prevArrow: <CirclePrevArrow />,
     responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
@@ -185,19 +214,11 @@ const MainWrapper = styled.div`
 const ListContainer = styled.div`
   margin-bottom: 3rem;
   position: relative;
-
-  .slick-slide {
-    padding: 0 0.5rem;
-  }
 `;
 const ListContainerAttraction = styled(ListContainer)`
   background-color: #ececec;
   border-radius: 1rem;
   padding: 4rem 2rem;
-
-  .slick-slide {
-    padding: 0 0.5rem;
-  }
 `;
 
 const ListTitle = styled.h3`
@@ -218,6 +239,32 @@ const ArrowButton = styled.div`
 
   &:hover {
     opacity: 0.5;
+  }
+
+  @media screen and (max-width: 1440px) {
+    &.prev-arrow {
+      left: -25px !important;
+    }
+    &.next-arrow {
+      right: -15px !important;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    &.next-arrow {
+      right: -25px !important;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    &.next-arrow {
+      right: -15px !important;
+    }
   }
 `;
 
@@ -243,17 +290,32 @@ const CircleArrowButton = styled(ArrowButton)`
     opacity: 1;
     background: ${(props) => props.theme.colors?.mainLight || "#f8f8f8"};
   }
-`;
 
-const ListWrapper = styled.div`
-  width: 100%;
-  overflow: hidden;
-`;
+  @media screen and (max-width: 1440px) {
+    width: 32px;
+    height: 32px;
 
-const Lists = styled.ul`
-  display: flex;
-  gap: 1rem;
-  transition: transform 0.3s ease;
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    &.circle-next-arrow {
+      right: 5px !important;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    &.circle-next-arrow {
+      right: 0px !important;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    &.circle-next-arrow {
+      right: 5px !important;
+    }
+  }
 `;
 
 const List = styled.li`
@@ -308,7 +370,7 @@ const AttractionList = styled(List)`
   }
 
   @media screen and (max-width: 1440px) {
-    width: 200px;
+    width: 180px;
     height: 240px;
   }
 `;

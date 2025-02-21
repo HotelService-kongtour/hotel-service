@@ -13,8 +13,8 @@ const Header = () => {
     <HeaderMain>
       <Link to="/">
         <Logo>
-          <img src={LogoIcon} alt="logo-icon" />
-          <img src={LogoName} alt="logo-name" />
+          <img src={LogoIcon} alt="logo-icon" className="logo-icon" />
+          <img src={LogoName} alt="logo-name" className="logo-name" />
         </Logo>
       </Link>
 
@@ -49,11 +49,29 @@ const HeaderMain = styled.header`
   @media screen and (max-width: 1440px) {
     padding: 0 10rem;
   }
+
+  @media screen and (max-width: 1280px) {
+    padding: 0 6rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    height: 8vh;
+    padding: 0 4rem;
+  }
 `;
 const Logo = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  @media screen and (max-width: 1024px) {
+    .logo-icon {
+      width: 24px;
+    }
+    .logo-name {
+      width: 80px;
+    }
+  }
 `;
 const Menus = styled.ul`
   display: flex;

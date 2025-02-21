@@ -29,6 +29,11 @@ const OptionsContainer = styled.div`
   padding: 0.5rem 1.5rem 0 0;
   border-right: 1px solid #ccc;
   position: relative;
+
+  @media screen and (max-width: 1280px) {
+    padding: 0.5rem 1rem 0 0;
+    width: 30%;
+  }
 `;
 
 const Options = styled.div`

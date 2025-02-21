@@ -72,13 +72,31 @@ const NavContainer = styled.div`
   padding: 0.5rem 2rem 0 0;
   border-right: 1px solid #ccc;
   position: relative;
+
+  @media screen and (max-width: 1024px) {
+    width: 35%;
+    height: calc(92vh - 4rem);
+    padding: 0.5rem 1rem 0 0;
+  }
 `;
 
 const NameBox = styled.div`
   margin-bottom: 2rem;
 `;
-const Name = styled.h2``;
-const Email = styled.div``;
+const Name = styled.h2`
+  @media screen and (max-width: 1280px) {
+    font-size: 1.3rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    font-size: 1.2rem;
+  }
+`;
+const Email = styled.div`
+  @media screen and (max-width: 1280px) {
+    font-size: 1rem;
+  }
+`;
 
 const Menus = styled.ul`
   width: 100%;
@@ -105,11 +123,23 @@ const MenuInner = styled.div`
   img {
     width: 32px;
   }
+
+  @media screen and (max-width: 1024px) {
+    img {
+      width: 28px;
+    }
+  }
 `;
 const MenuText = styled.div`
   p {
     font-size: 0.9rem;
     color: #999;
+  }
+
+  @media screen and (max-width: 1024px) {
+    p {
+      font-size: 0.8rem;
+    }
   }
 `;
 

@@ -25,6 +25,8 @@ import AdminLayout from "./components/AdminLayout";
 import EditMyInfo from "components/myInfo/EditMyInfo";
 import BookingHistory from "components/myInfo/BookingHistory";
 
+// test
+
 function Layout() {
   return (
     <>

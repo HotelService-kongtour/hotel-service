@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import EmailVerifymodal from "components/Login/EmailVerifymodal";
+import { verifyEmailApi, sendVerificationEmailApi, signupApi } from "api";
 
 import Logo from "assets/logo/logo-H.svg";
 import LogoName from "assets/logo/logo-Hantour.svg";
@@ -30,6 +31,7 @@ const SignUp = () => {
 
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const isPasswordMatch = passwordValue === confirmPasswordValue;
 
@@ -43,15 +45,78 @@ const SignUp = () => {
     }
   };
 
-  const handleClickContinue = () => {
-    alert("Email authentication has been completed.");
-    setShowEmailModal(false);
-    setIsBtnDisabled(true);
+  const handleVerifyEmail = async () => {
+    if (!emailValue || emailError) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    try {
+      await sendVerificationEmailApi(emailValue, "SIGNUP");
+      setShowEmailModal(true);
+    } catch (error) {
+      alert("Failed to send verification email");
+    }
   };
 
-  const handleClickCreateBtn = () => {
-    alert("Congratulations on your membership!");
-    navigate("/login");
+  const handleClickContinue = () => {
+    setIsEmailVerified(true);
+    setIsBtnDisabled(true);
+    setShowEmailModal(false);
+    alert("Email verification completed successfully!");
+  };
+
+  const handleClickCreateBtn = async () => {
+    if (!isEmailVerified) {
+      alert("Please verify your email first");
+      return;
+    }
+    if (!isPasswordMatch || passwordError) {
+      alert("Please check your password");
+      return;
+    }
+    if (!firstName || !lastName || !companyName) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    try {
+      await signupApi(
+        emailValue,
+        passwordValue,
+        firstName,
+        lastName,
+        companyName
+      );
+      if (!isEmailVerified) {
+        alert("Please verify your email first");
+        return;
+      }
+      if (!isPasswordMatch || passwordError) {
+        alert("Please check your password");
+        return;
+      }
+      if (!firstName || !lastName || !companyName) {
+        alert("Please fill in all fields");
+        return;
+      }
+
+      try {
+        await signupApi(
+          emailValue,
+          passwordValue,
+          firstName,
+          lastName,
+          companyName
+        );
+        alert("Congratulations on your membership!");
+        navigate("/login");
+      } catch (error) {
+        alert("Failed to create account. Please try again.");
+      }
+    } catch (error) {
+      alert("Failed to create account. Please try again.");
+    }
   };
 
   return (
@@ -87,14 +152,15 @@ const SignUp = () => {
                   onChange={setEmailValue}
                   validateType={"email"}
                   onError={setEmailError}
+                  disabled={isEmailVerified}
                 />
-                <VerifyBtn onClick={() => setShowEmailModal(true)}>
+                <VerifyBtn onClick={handleVerifyEmail}>
                   <CustomButton
                     fontSize={"0.9rem"}
                     fontWeight={"500"}
                     disabled={isBtnDisabled}
                   >
-                    Verify
+                    {isEmailVerified ? "Verified" : "Verify"}
                   </CustomButton>
                 </VerifyBtn>
               </EmailBox>
@@ -169,6 +235,7 @@ const SignUp = () => {
         <EmailVerifymodal
           setShowEmailModal={setShowEmailModal}
           onContinueClick={handleClickContinue}
+          email={emailValue}
         />
       )}
     </Wrapper>
@@ -299,8 +366,4 @@ const BtnBox = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
-
-  @media screen and (max-width: 1440px) {
-    bottom: -3rem;
-  }
 `;

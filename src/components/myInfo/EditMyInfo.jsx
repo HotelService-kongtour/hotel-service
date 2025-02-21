@@ -109,6 +109,11 @@ const Wrapper = styled.div`
   border-radius: 0.5rem;
   padding: 2rem 1rem;
   position: relative;
+
+  @media screen and (max-width: 1024px) {
+    height: 75vh;
+    padding: 1rem 1rem;
+  }
 `;
 
 const TitleBox = styled.div`
@@ -116,6 +121,10 @@ const TitleBox = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 3rem;
+
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 2rem;
+  }
 `;
 const Title = styled.h3``;
 const EditBtn = styled.div`

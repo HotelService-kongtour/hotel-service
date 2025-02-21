@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "components/custom/CustomInput";
 import CustomButton from "components/custom/CustomButton";
 import { useColors } from "context/ColorContext";
-import axios from "axios";
+import { loginApi } from "api";
 
 import XIcon from "assets/icons/x-mark.svg";
 import Logo from "assets/logo/logo-H.svg";
@@ -28,50 +28,17 @@ const Login = () => {
     e.preventDefault();
 
     if (emailError || passwordError) {
-      console.log("유효성 검사 오류:", { emailError, passwordError });
+      alert("Please check your email and password");
       return;
     }
 
     try {
-      const response = await axios.post(
-        "http://210.178.0.131/api/auth/login",
-        {
-          email: emailValue,
-          password: passwordValue,
-          autoLogin,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-
-      console.log("로그인 응답:", response);
-
-      const accessToken = response.headers["authorization"];
-      const refreshToken =
-        response.data.refreshToken || response.data.data?.refreshToken;
-      const userInfo = response.data.userInfo || response.data.data;
-
-      if (accessToken) {
-        localStorage.setItem("accessToken", accessToken); // ✅ "Bearer " 포함됨
-        console.log("Access Token 저장 완료:", accessToken);
-
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        console.log("사용자 정보 저장됨:", userInfo);
-
-        console.log("로그인 성공:", response.data.message);
-        navigate("/", { replace: true });
-      } else {
-        console.error("❌ Access Token이 응답 헤더에 없습니다.");
-      }
+      const response = await loginApi(emailValue, passwordValue, autoLogin);
+      console.log("로그인 성공:", response.message);
+      navigate("/", { replace: true });
     } catch (error) {
-      console.error("로그인 실패:", {
-        에러메시지: error.response?.data || error.message,
-        상태코드: error.response?.status,
-      });
+      alert("Failed to login. Please check your credentials.");
+      console.error("로그인 실패:", error);
     }
   };
 
@@ -221,6 +188,8 @@ const NavTitle = styled.div`
 
 const Container = styled.div`
   padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const LogoContainer = styled.div`

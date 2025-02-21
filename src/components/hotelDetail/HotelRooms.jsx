@@ -51,6 +51,14 @@ const HotelRooms = () => {
     });
   };
 
+  const calculateTotalPrice = () => {
+    return hotelRoomInfo.reduce((total, room) => {
+      const count = roomCounts[room.name] || 0;
+      const price = parseInt(room.price.replace(/,/g, ""));
+      return total + price * count;
+    }, 0);
+  };
+
   const handleClickRoomResercation = () => {
     // alert("Your reservation is complete!");
     navigate("/reservation-complete");
@@ -88,6 +96,11 @@ const HotelRooms = () => {
           </RoomInfoBox>
         </RoomBox>
       ))}
+
+      <TotalPrice>
+        Total Price: ₩ {calculateTotalPrice().toLocaleString()}
+      </TotalPrice>
+
       <Btn>
         <CustomButton
           padding={"0.75rem 0"}
@@ -115,6 +128,12 @@ const RoomBox = styled.div`
   display: flex;
   gap: 2rem;
   border-bottom: 1px solid #ececec;
+
+  @media screen and (max-width: 1280px) {
+    img {
+      width: 200px;
+    }
+  }
 `;
 
 const RoomInfoBox = styled.div`
@@ -174,7 +193,13 @@ const Count = styled.div`
   }
 `;
 
+const TotalPrice = styled.h3`
+  text-align: right;
+  color: #333;
+  margin-top: 2rem;
+`;
+
 const Btn = styled.div`
   width: 30%;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
 `;
